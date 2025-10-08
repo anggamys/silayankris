@@ -13,7 +13,7 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="text-center mb-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="mb-2"
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" class="mb-2"
                         style="height: 56px; width: 56px; object-fit: contain;">
                     <h2 class="fw-bold">KEBAYAPAIS</h2>
                 </div>
