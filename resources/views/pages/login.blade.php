@@ -3,23 +3,30 @@
 @section('title', 'Login')
 
 @section('content')
+    <h4 class="mb-2">Login</h4>
+    <p class="text-muted mb-4">Masukkan email dan password untuk login</p>
     <form method="POST" action="{{ route('login') }}">
         @csrf
-        <div class="mb-4">
-            <label class="block mb-1 font-semibold" for="email">Email</label>
-            <input class="w-full border rounded-md px-3 py-2" type="email" name="email" id="email" required autofocus>
+        <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email</label>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
+                required autofocus>
             @error('email')
-                <p class="text-red-500 text-sm">{{ $message }}</p>
+                <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-        <div class="mb-6">
-            <label class="block mb-1 font-semibold" for="password">Password</label>
-            <input class="w-full border rounded-md px-3 py-2" type="password" name="password" id="password" required>
+        <div class="mb-4">
+            <label for="password" class="form-label fw-semibold">Password</label>
+            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
+                id="password" required>
             @error('password')
-                <p class="text-red-500 text-sm">{{ $message }}</p>
+                <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-            type="submit">Login</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+
+        {{-- @guest
+            <p class="mt-3">Belum memiliki akun? <a href="{{ route('login') }}">Daftar di sini</a></p>
+        @endguest --}}
     </form>
 @endsection
