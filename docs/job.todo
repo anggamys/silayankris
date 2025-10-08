@@ -1,0 +1,28 @@
+landing page reference: https://sites.google.com/view/paiskotasurabaya/beranda?authuser=0
+
+job todo:
+  guest: 
+    - main landing page
+    - profile page
+    - berita page (dynamic)
+    - karya tulis page (dynamic)
+    - contact page
+
+  admin panel:
+    - login page 
+    - dashboard page
+    - user management
+    - berita management
+    - karya tulis management
+    - hero content management (video/photo)
+
+form reference: https://serv.ptspkotamalang.net/senyum/index.php/layanan/pais/jaga-pais
+
+job todo:
+  guest:
+    - form page
+  
+  admin panel / spreadsheet + drive:
+    - form management
+
+
