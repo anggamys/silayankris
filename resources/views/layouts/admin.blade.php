@@ -16,7 +16,7 @@
             <nav class="col-md-2 d-none d-md-block bg-light sidebar border-end p-0">
                 <div class="d-flex flex-column pt-3" style="position:sticky; top:0; height:100vh;">
                     <div class="text-center py-4 border-bottom">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo"
+                        <img src="{{ asset('/assets/images/logo.png') }}" alt="Logo"
                             style="height:48px;width:48px;object-fit:contain;">
                         <h5 class="mt-2 mb-0">KEBAYAPAIS</h5>
                     </div>
