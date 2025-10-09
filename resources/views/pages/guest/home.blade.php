@@ -12,7 +12,7 @@
 
             @auth
                 <button>
-                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                 </button>
             @endauth
         </div>
