@@ -12,7 +12,6 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // Allow only authenticated users (customize as needed)
         return Auth::check();
     }
 
@@ -26,7 +25,9 @@ class UserRequest extends FormRequest
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->user?->id],
+            'profile_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
+
         // Only require password on create
         if ($this->isMethod('post')) {
             $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
