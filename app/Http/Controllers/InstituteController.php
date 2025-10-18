@@ -84,7 +84,7 @@ class InstituteController extends Controller
     {
         // Gate::authorize('update', $institute);
         $this->service->update($institute, $request->validated());
-        return redirect()->route('admin.institutes.show', $institute)->with('success', 'Institute updated successfully.');
+        return redirect()->route('admin.institutes.index', $institute)->with('success', 'Institute updated successfully.');
     }
 
     /**
