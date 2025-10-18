@@ -87,7 +87,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted py-4">
+                                <td colspan="8" class="text-center text-muted py-4">
                                     <i class="bi bi-person-x fs-4 d-block mb-2"></i>
                                     Tidak ada data institusi.
                                 </td>
