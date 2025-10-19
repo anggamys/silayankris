@@ -1,6 +1,7 @@
 @extends('layouts.newapp')
 
 @section('title', 'Dashboard')
+@section('page-title', 'Dashboard')
 
 @section('content')
  {{-- <div class="card">

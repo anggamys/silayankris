@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login')
+@section('title', 'Login - SILAYANKRIS')
 
 @section('content')
 <div class="card">

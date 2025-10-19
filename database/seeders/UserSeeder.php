@@ -18,16 +18,25 @@ class UserSeeder extends Seeder
         'status' => 'active',
       ],
       [
-        'name' => 'Sang User',
-        'email' => 'user@gmail.com',
-        'password' => bcrypt('user123'),
-        'role' => 'user',
-        'status' => 'inactive',
+        'name' => 'Sang Guru',
+        'email' => 'guru@gmail.com',
+        'password' => bcrypt('guru123'),
+        'role' => 'guru',
+        'status' => 'active',
+      ],
+      [
+        'name' => 'Sang Gereja',
+        'email' => 'gereja@gmail.com',
+        'password' => bcrypt('gereja123'),
+        'role' => 'pengurus-gereja',
+        'status' => 'active',
       ],
     ];
 
     foreach ($users as $user) {
       User::create($user);
     }
+
+    User::factory()->count(10)->create();
   }
 }
