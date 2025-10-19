@@ -3,57 +3,83 @@
 @section('title', 'Login - SILAYANKRIS')
 
 @section('content')
-    <div class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
-        <div class="card shadow-lg border-0 rounded-4" style="max-width: 450px; width: 100%;">
-            <div class="card-body p-5 text-center">
-                {{-- Logo & Title --}}
-                <div class="mb-4">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Kemenag" width="80" class="mb-3">
-                    <h3 class="fw-bold text-primary">SILAYANKRIS</h3>
-                    <p class="text-muted mb-0">Kementerian Agama Kota Surabaya</p>
-                </div>
-
-                {{-- Dynamic Title --}}
-                @if (request('type') === 'gereja')
-                    <h5 class="fw-semibold mt-4 mb-2 text-dark">Login Layanan Gereja</h5>
-                    <p class="text-muted mb-4">Silakan login untuk mengakses data dan layanan gereja Anda.</p>
-                @elseif (request('type') === 'tpg')
-                    <h5 class="fw-semibold mt-4 mb-2 text-dark">Login Pelayanan TPG Guru</h5>
-                    <p class="text-muted mb-4">Masukkan akun Anda untuk mengelola berkas TPG guru secara online.</p>
-                @else
-                    <h5 class="fw-semibold mt-4 mb-2 text-dark">Login SILAYANKRIS</h5>
-                    <p class="text-muted mb-4">Silakan login untuk melanjutkan ke layanan Anda.</p>
-                @endif
-
-                {{-- Login Form --}}
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="mb-3 text-start">
-                        <label for="email" class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control rounded-3 @error('email') is-invalid @enderror"
-                            name="email" id="email" placeholder="Masukkan email" required autofocus>
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4 text-start">
-                        <label for="password" class="form-label fw-semibold">Password</label>
-                        <input type="password" class="form-control rounded-3 @error('password') is-invalid @enderror"
-                            name="password" id="password" placeholder="Masukkan password" required>
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold rounded-3">
-                        <i class="bi bi-box-arrow-in-right me-2"></i> Login
-                    </button>
-                </form>
-            </div>
-        </div>
+<div class="card">
+  <div class="card-body">
+    <!-- Logo -->
+    <div class="app-brand justify-content-center">
+      <a href="{{ url('/') }}" class="app-brand-link gap-2">
+        <span class="app-brand-logo demo">
+          <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" width="40">
+        </span>
+        <span class="app-brand-text demo text-body fw-bolder">SILAYANKRIS</span>
+      </a>
     </div>
+    <!-- /Logo -->
 
+    <h4 class="mb-2">Welcome Back 👋</h4>
+    <p class="mb-4">Please sign in to your account</p>
 
+    <form id="formAuthentication" method="POST" action="{{ route('login') }}">
+      @csrf
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control @error('email') is-invalid @enderror"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          value="{{ old('email') }}"
+          required autofocus
+        />
+        @error('email')
+          <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+      </div>
 
+      <div class="mb-3 form-password-toggle">
+        <div class="d-flex justify-content-between">
+          <label class="form-label" for="password">Password</label>
+          <a href="">
+            <small>Forgot Password?</small>
+          </a>
+        </div>
+        <div class="input-group input-group-merge">
+          <input
+            type="password"
+            id="password"
+            class="form-control @error('password') is-invalid @enderror"
+            name="password"
+            placeholder="••••••••••"
+            required
+          />
+          <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+          @error('password')
+            <div class="invalid-feedback d-block">{{ $message }}</div>
+          @enderror
+        </div>
+      </div>
+
+      {{-- <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="remember-me" name="remember">
+          <label class="form-check-label" for="remember-me">Remember Me</label>
+        </div>
+      </div> --}}
+
+      <div class="mb-3">
+        <button class="btn btn-primary d-grid w-100" type="submit">Sign In</button>
+      </div>
+    </form>
+
+    @guest
+    <p class="text-center">
+      <span>New here?</span>
+      <a href="">
+        <span>Create an account</span>
+      </a>
+    </p>
+    @endguest
+  </div>
+</div>
 @endsection

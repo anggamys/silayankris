@@ -19,4 +19,5 @@ Route::middleware(['auth'])->as('admin.')->group(function () {
 
 });
 
+
 require __DIR__ . '/auth.php';
