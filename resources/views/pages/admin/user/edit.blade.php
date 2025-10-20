@@ -80,7 +80,7 @@
                         <i class="bi bi-arrow-left"></i> Batal
                     </a>
                     <button type="submit" class="btn btn-success">
-                        <i class="bi bi-save me-1"></i> Simpan Perubahan
+                        <i class="bi bi-save me-1"></i> Simpan
                     </button>
                 </div>
             </form>
