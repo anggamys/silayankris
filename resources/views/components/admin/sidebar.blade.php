@@ -59,7 +59,7 @@
     <div class="d-flex align-items-center">
       <div class="avatar flex-shrink-0 me-3">
         <span class="avatar-initial rounded-circle bg-primary text-white fw-bold">
-          {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+          {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
         </span>
       </div>
       <div class="d-flex flex-column">

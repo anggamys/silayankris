@@ -1,2 +1,11 @@
+/* Bootstrap */
 @import "bootstrap/scss/bootstrap";
+
+/* Icons */
 @import "bootstrap-icons/font/bootstrap-icons.css";
+@import "boxicons/css/boxicons.min.css";
+
+/* Sneat core (WAJIB) */
+@import "../sneat/css/core.css";
+@import "../sneat/css/theme-default.css";
+@import "../sneat/css/demo.css";  
