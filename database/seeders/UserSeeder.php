@@ -11,25 +11,28 @@ class UserSeeder extends Seeder
   {
     $users = [
       [
+        'id' => '00000000-0000-0000-0000-000000000001',
         'name' => 'Sang Admin',
         'email' => 'admin@gmail.com',
         'password' => bcrypt('admin123'),
         'role' => 'admin',
-        'status' => 'active',
+        'status' => 'aktif',
       ],
       [
+        'id' => '00000000-0000-0000-0000-000000000002',
         'name' => 'Sang Guru',
         'email' => 'guru@gmail.com',
         'password' => bcrypt('guru123'),
         'role' => 'guru',
-        'status' => 'active',
+        'status' => 'aktif',
       ],
       [
+        'id' => '00000000-0000-0000-0000-000000000003',
         'name' => 'Sang Gereja',
         'email' => 'gereja@gmail.com',
         'password' => bcrypt('gereja123'),
         'role' => 'pengurus-gereja',
-        'status' => 'active',
+        'status' => 'aktif',
       ],
     ];
 
@@ -37,6 +40,6 @@ class UserSeeder extends Seeder
       User::create($user);
     }
 
-    User::factory()->count(10)->create();
+    // User::factory()->count(10)->create();
   }
 }

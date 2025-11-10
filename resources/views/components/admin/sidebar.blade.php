@@ -39,17 +39,42 @@
         <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
             <a href="/institutes" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-building"></i>
-                <div>Institusi</div>
+                <div>Sekolah</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+            <a href="/institutes" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Gereja</div>
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="/documents" class="menu-link text-decoration-none">
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div>Dokumen</div>
+       
+
+         <!-- Master Data -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Guru</span>
+        </li>
+
+          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+            <a href="/institutes" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Perbulan</div>
             </a>
         </li>
-    </ul>
+          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+            <a href="/institutes" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Persemester</div>
+            </a>
+        </li>
+          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+            <a href="/institutes" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Pertahun</div>
+            </a>
+        </li>
+       
 
     <!-- PROFIL PENGGUNA -->
     <div class="menu-footer border-top p-3 mt-auto">
