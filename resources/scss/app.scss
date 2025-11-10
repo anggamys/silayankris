@@ -1,2 +1,7 @@
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
+.pagination {
+    --bs-pagination-active-bg: #198754 !important;
+    --bs-pagination-active-border: #198754 !important;
+}
