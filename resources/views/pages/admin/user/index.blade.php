@@ -61,8 +61,8 @@
                                
                                  <td>
                                     <span
-                                        class="badge w-100 {{ $user->status === 'active' ? 'badge bg-label-success' : ($user->status === 'inactive' ? 'badge bg-label-danger' : 'badge bg-label-warning') }}">
-                                        {{ $user->status  === 'active' ? 'Aktif' : ($user->status === 'inactive' ? 'Nonaktif' : 'Pending') }}
+                                        class="badge w-100 {{ $user->status === 'aktif' ? 'badge bg-label-success' : ($user->status === 'nonaktif' ? 'badge bg-label-danger' : 'badge bg-label-warning') }}">
+                                       {{ ucfirst($user->status) }}
                                     </span>
                                 </td>
                                 
