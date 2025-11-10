@@ -44,7 +44,7 @@
                 <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
-                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning">
+                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning text-light">
                     <i class="bi bi-pencil-square me-1"></i> Edit
                 </a>
             </div>

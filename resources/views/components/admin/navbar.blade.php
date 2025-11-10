@@ -1,18 +1,19 @@
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar">
     <!-- Toggle Sidebar (tampil hanya di layar kecil) -->
-    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="bx bx-menu bx-sm"></i>
-        </a>
-    </div>
+
 
     <div class="navbar-nav-right d-flex align-items-center w-100" id="navbar-collapse">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none ">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm  mt-2"></i>
+            </a>
+        </div>
         <!-- BREADCRUMB -->
         <div class="d-flex align-items-center flex-grow-1">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
-                    
+
                     {{-- Breadcrumb berikutnya dari halaman --}}
                     @yield('breadcrumb')
                 </ol>
