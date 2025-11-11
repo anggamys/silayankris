@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InstituteController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::middleware(['auth'])->as('admin.')->group(function () {
 
     Route::resource('institutes', InstituteController::class)->names('institutes');
 
+    Route::resource('sekolah', SekolahController::class)->names('sekolah');
 });
 
 
