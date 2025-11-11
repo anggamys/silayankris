@@ -19,7 +19,7 @@ class User extends Authenticatable
     protected $keyType = 'string';
     public $incrementing = false;
 
-     public const ROLE_ADMIN = 'admin';
+    public const ROLE_ADMIN = 'admin';
     public const ROLE_GURU = 'guru';
     public const ROLE_PENGURUS_GEREJA = 'pengurus-gereja';
 
