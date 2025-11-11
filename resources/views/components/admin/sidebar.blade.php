@@ -32,62 +32,74 @@
         <li class="menu-item {{ request()->is(ltrim('users*', '/')) ? 'active' : '' }}">
             <a href="/users" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-user"></i>
-                <div>Pengguna</div>
+                <div>Data Pengguna</div>
             </a>
         </li>
 
         <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
             <a href="/institutes" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-building"></i>
-                <div>Sekolah</div>
+                <div>Data Sekolah</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
-                <i class="menu-icon tf-icons bx bx-building"></i>
-                <div>Gereja</div>
-            </a>
-        </li>
+      
 
-       
 
-         <!-- Master Data -->
+
+
+ <!-- Master Data -->
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Guru</span>
+            <span class="menu-header-text">Pendataan</span>
+        </li>
+        
+        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+            <a href="/institutes" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-news"></i>
+                <div>Data Berita</div>
+            </a>
+        </li>
+          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+            <a href="/institutes" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bi bi-hospital"></i>
+                <div>Data Gereja</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="" class="menu-link menu-toggle text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-folder"></i>
+                <div data-i18n="Account Settings">Berkas TPG Guru</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+                    <a href="/institutes" class="menu-link text-decoration-none">
+                        <div>Perbulan</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+                    <a href="/institutes" class="menu-link text-decoration-none">
+                        <div>Persemester</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
+                    <a href="/institutes" class="menu-link text-decoration-none">
+                        <div>Pertahun</div>
+                    </a>
+                </li>
+            </ul>
         </li>
 
-          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
-                <i class="menu-icon tf-icons bx bx-building"></i>
-                <div>Perbulan</div>
-            </a>
-        </li>
-          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
-                <i class="menu-icon tf-icons bx bx-building"></i>
-                <div>Persemester</div>
-            </a>
-        </li>
-          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
-                <i class="menu-icon tf-icons bx bx-building"></i>
-                <div>Pertahun</div>
-            </a>
-        </li>
-       
-
-    <!-- PROFIL PENGGUNA -->
-    <div class="menu-footer border-top p-3 mt-auto">
-        <div class="d-flex align-items-center">
-            <div class="avatar flex-shrink-0 me-3">
-                <span class="avatar-initial rounded-circle bg-primary text-white fw-bold">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
-                </span>
-            </div>
-            <div class="d-flex flex-column">
-                <span class="fw-semibold">{{ Auth::user()->name ?? 'Admin' }}</span>
-                <small class="text-muted">{{ Auth::user()->role ?? 'Administrator' }}</small>
+        <!-- PROFIL PENGGUNA -->
+        <div class="menu-footer w-100 border-top p-3 mt-auto">
+            <div class="d-flex align-items-center">
+                <div class="avatar flex-shrink-0 me-3">
+                    <span class="avatar-initial rounded-circle bg-primary text-white fw-bold">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
+                    </span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="fw-semibold">{{ Auth::user()->name ?? 'Admin' }}</span>
+                    <small class="text-muted">{{ Auth::user()->role ?? 'Administrator' }}</small>
+                </div>
             </div>
         </div>
-    </div>
 </aside>
