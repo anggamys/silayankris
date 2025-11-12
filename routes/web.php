@@ -19,10 +19,7 @@ Route::middleware(['auth'])->as('admin.')->group(function () {
 
     Route::resource('users', UserController::class)->names('users');
 
-    Route::resource('institutes', InstituteController::class)->names('institutes');
-
-
-   Route::resource('berita', BeritaController::class)->parameters([
+    Route::resource('berita', BeritaController::class)->parameters([
     'berita' => 'berita'
 ])->names('berita');
 
