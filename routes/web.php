@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\InstituteController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::middleware(['auth'])->as('admin.')->group(function () {
     'berita' => 'berita'
 ])->names('berita');
 
+    Route::resource('sekolah', SekolahController::class)->names('sekolah');
 });
 
 
