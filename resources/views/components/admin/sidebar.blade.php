@@ -52,8 +52,8 @@
             <span class="menu-header-text">Pendataan</span>
         </li>
         
-        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
+        <li class="menu-item {{ request()->is(ltrim('berita*', '/')) ? 'active' : '' }}">
+            <a href="/berita" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-news"></i>
                 <div>Data Berita</div>
             </a>
