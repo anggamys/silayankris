@@ -27,7 +27,7 @@
                 <!-- Button: full width on mobile, auto-width on md+ and aligned to right -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.users.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah User
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
                     </a>
                 </div>
             </div>

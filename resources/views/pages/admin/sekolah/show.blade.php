@@ -3,15 +3,15 @@
 @section('title', 'Lihat Sekolah')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Manajemen Sekolah</a>
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Sekolah</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Lihat Sekolah</li>
+    <li class="breadcrumb-item active" aria-current="page">Detail Sekolah</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Lihat Sekolah</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Detail Sekolah</h5>
         </div>
         <div class="card-body">
                 <div class="mb-3">

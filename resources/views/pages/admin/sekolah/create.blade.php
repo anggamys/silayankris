@@ -3,7 +3,7 @@
 @section('title', 'Tambah Sekolah')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Manajemen Sekolah</a>
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Sekolah</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">Tambah Sekolah</li>
 @endsection
