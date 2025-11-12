@@ -72,7 +72,7 @@
                 </div>
                 <div class="d-flex justify-content-between mt-4">
                     <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
+                        <i class="bi bi-arrow-left"></i> Batal
                     </a>
                     <button type="submit" class="btn btn-success">
                         <i class="bi bi-save me-1"></i> Simpan

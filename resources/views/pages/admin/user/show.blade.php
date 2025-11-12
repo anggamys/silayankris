@@ -1,6 +1,6 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Detail User')
+@section('title', 'Lihat Detail User')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Manajemen User</a></li>
