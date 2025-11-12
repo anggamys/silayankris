@@ -34,28 +34,26 @@ class SekolahService
     /**
      * Update an existing sekolah.
      */
-    public function update(User $user, array $data)
+    public function update(Sekolah $sekolah, array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
-        } else {
-            unset($data['profile_path']);
-        }
-
+        // If there's a password in the payload, hash it; otherwise remove it so we don't set an empty password
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         } else {
             unset($data['password']);
         }
-        $user->update($data);
-        return $user;
+
+        $sekolah->update($data);
+
+        return $sekolah;
     }
 
     /**
-     * Delete a user.
+     * Delete a sekolah.
      */
-    public function delete(User $user)
+    public function delete(Sekolah $sekolah): void
     {
-        return $user->delete();
+        $sekolah->delete();
     }
+
 }

@@ -38,6 +38,7 @@ class SekolahController extends Controller
             'total',
             'sekolah',
             'search'
+            
         ));
     }
 
@@ -63,32 +64,40 @@ class SekolahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Sekolah $sekolah)
     {
-        //
+        Gate::authorize('view', $sekolah);
+        return view('pages.admin.sekolah.show', compact('sekolah'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Sekolah $sekolah)
     {
-        //
+        Gate::authorize('update', $sekolah);
+        return view('pages.admin.sekolah.edit', compact('sekolah'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    // SekolahController.php
+public function update(SekolahRequest $request, Sekolah $sekolah)
+{
+    Gate::authorize('update', $sekolah);
+    $this->service->update($sekolah, $request->validated());
+    return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah updated successfully.');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Sekolah $sekolah)
     {
-        //
+        Gate::authorize('delete', $sekolah);
+        $this->service->delete($sekolah);
+        return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah deleted successfully.');
     }
 }

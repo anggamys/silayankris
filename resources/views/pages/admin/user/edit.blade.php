@@ -1,16 +1,16 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Edit User')
+@section('title', 'Ubah Pengguna')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Manajemen User</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Ubah Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Edit User</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Ubah Pengguna</h5>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.users.update', $user) }}" method="POST">

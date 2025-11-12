@@ -36,8 +36,8 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
+        <li class="menu-item {{ request()->is(ltrim('sekolah*', '/')) ? 'active' : '' }}">
+            <a href="/sekolah" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-building"></i>
                 <div>Data Sekolah</div>
             </a>

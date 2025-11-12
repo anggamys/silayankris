@@ -3,15 +3,14 @@
 @section('title', 'Manajemen User')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Manajemen User</li>
+    <li class="breadcrumb-item active">Data Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
-       
         <div class="card-header bg-white border-0 mb-2">
             {{-- Row responsive: di mobile col-12 (full), di md col-6 untuk search dan auto untuk button --}}
-            <h5 class="card-title fw-semibold">Manajemen User</h5>
+            <h5 class="card-title fw-semibold">Daftar Data Pengguna</h5>
 
             <div class="row g-2 align-items-center">
 
@@ -28,7 +27,7 @@
                 <!-- Button: full width on mobile, auto-width on md+ and aligned to right -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.users.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah User
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
                     </a>
                 </div>
             </div>
@@ -58,11 +57,10 @@
                                         {{ ucfirst($user->role) }}
                                     </span>
                                 </td>
-                               
-                                 <td>
+                                <td>
                                     <span
                                         class="badge w-100 {{ $user->status === 'aktif' ? 'badge bg-label-success' : ($user->status === 'nonaktif' ? 'badge bg-label-danger' : 'badge bg-label-warning') }}">
-                                       {{ ucfirst($user->status) }}
+                                        {{ ucfirst($user->status) }}
                                     </span>
                                 </td>
                                 

@@ -1,16 +1,16 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Tambah User')
+@section('title', 'Tambah Pengguna')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Manajemen User</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Tambah Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Tambah User</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Tambah Pengguna</h5>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.users.store') }}" method="POST">
@@ -72,7 +72,7 @@
                 </div>
                 <div class="d-flex justify-content-between mt-4">
                     <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
+                        <i class="bi bi-arrow-left"></i> Batal
                     </a>
                     <button type="submit" class="btn btn-success">
                         <i class="bi bi-save me-1"></i> Simpan
