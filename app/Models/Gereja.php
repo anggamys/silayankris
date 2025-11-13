@@ -15,7 +15,7 @@ class Gereja extends Model
     protected $table = 'gerejas';
 
     /**
-     * Kolom yang boleh diisi secara massal.
+     * Kolom yang boleh diisi secara massal (fillable)
      */
     protected $fillable = [
         'nama',
@@ -26,23 +26,32 @@ class Gereja extends Model
         'kecamatan',
         'kab_kota',
         'jarak_gereja_lain',
+        'email',
         'nomor_telepon',
+        'nama_pendeta',
         'status_gereja',
         'jumlah_umat',
         'jumlah_majelis',
         'jumlah_guru_sekolah_minggu',
+        'jumlah_murid_sekolah_minggu',
         'jumlah_pemuda',
     ];
 
     /**
-     * Tipe data casting agar kolom JSON otomatis dikonversi ke array.
+     * Casting tipe data otomatis (JSON & tanggal)
      */
     protected $casts = [
         'jumlah_umat' => 'array',
         'jumlah_majelis' => 'array',
         'jumlah_guru_sekolah_minggu' => 'array',
+        'jumlah_murid_sekolah_minggu' => 'array',
         'jumlah_pemuda' => 'array',
         'tanggal_berdiri' => 'date',
         'tanggal_bergabung_sinode' => 'date',
     ];
+
+    public function staffGereja()
+    {
+        return $this->hasOne(StaffGereja::class);
+    }
 }
