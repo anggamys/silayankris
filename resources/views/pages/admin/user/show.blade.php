@@ -1,16 +1,16 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Detail User')
+@section('title', 'Lihat Detail User')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Manajemen User</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Detail User</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Detail Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Detail User</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Detail Pengguna</h5>
         </div>
         <div class="card-body">
             <div class="mb-3">

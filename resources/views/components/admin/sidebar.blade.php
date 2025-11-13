@@ -36,30 +36,29 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
+        <li class="menu-item {{ request()->is(ltrim('sekolah*', '/')) ? 'active' : '' }}">
+            <a href="/sekolah" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-building"></i>
                 <div>Data Sekolah</div>
             </a>
         </li>
-      
 
 
 
 
- <!-- Master Data -->
+<!-- Master Data -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pendataan</span>
         </li>
-        
-        <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
+
+        <li class="menu-item {{ request()->is(ltrim('berita*', '/')) ? 'active' : '' }}">
+            <a href="/berita" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-news"></i>
                 <div>Data Berita</div>
             </a>
         </li>
-          <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-            <a href="/institutes" class="menu-link text-decoration-none">
+        <li class="menu-item {{ request()->is(ltrim('gereja*', '/')) ? 'active' : '' }}">
+            <a href="/gereja" class="menu-link text-decoration-none">
                 <i class="menu-icon tf-icons bi bi-hospital"></i>
                 <div>Data Gereja</div>
             </a>
@@ -70,18 +69,18 @@
                 <div data-i18n="Account Settings">Berkas TPG Guru</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-                    <a href="/institutes" class="menu-link text-decoration-none">
+                <li class="menu-item {{ request()->is(ltrim('perbulan*', '/')) ? 'active' : '' }}">
+                    <a href="/perbulan" class="menu-link text-decoration-none">
                         <div>Perbulan</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-                    <a href="/institutes" class="menu-link text-decoration-none">
+                <li class="menu-item {{ request()->is(ltrim('persemester*', '/')) ? 'active' : '' }}">
+                    <a href="/persemester" class="menu-link text-decoration-none">
                         <div>Persemester</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->is(ltrim('institutes*', '/')) ? 'active' : '' }}">
-                    <a href="/institutes" class="menu-link text-decoration-none">
+                <li class="menu-item {{ request()->is(ltrim('pertahun*', '/')) ? 'active' : '' }}">
+                    <a href="/pertahun" class="menu-link text-decoration-none">
                         <div>Pertahun</div>
                     </a>
                 </li>

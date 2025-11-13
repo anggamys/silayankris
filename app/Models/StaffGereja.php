@@ -22,7 +22,6 @@ class StaffGereja extends Model
     protected $fillable = [
         'user_id',
         'gembala_sidang',
-        'nomor_telepon',
         'gereja_id',
     ];
 

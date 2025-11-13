@@ -13,15 +13,16 @@ class BeritaPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Berita $berita): bool
+    public function view(User $user, Berita $model): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
+
     }
 
     /**
@@ -29,7 +30,7 @@ class BeritaPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -37,7 +38,7 @@ class BeritaPolicy
      */
     public function update(User $user, Berita $berita): bool
     {
-        return false;
+       return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -45,7 +46,7 @@ class BeritaPolicy
      */
     public function delete(User $user, Berita $berita): bool
     {
-        return false;
+       return $user->role === User::ROLE_ADMIN;
     }
 
     /**

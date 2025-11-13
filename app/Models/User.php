@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 use App\Models\Guru;
 use App\Models\StaffGereja;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids;
 
     /**
      * Tipe primary key: UUID.
@@ -33,6 +34,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_path',
+        'nomor_telepon',
         'role',
         'status',
     ];
