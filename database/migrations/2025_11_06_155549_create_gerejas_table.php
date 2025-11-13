@@ -7,37 +7,40 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
         Schema::create('gerejas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->date('tanggal_berdiri');
-            $table->date('tanggal_bergabung_sinode');
-            $table->string('alamat');
-            $table->string('kel_desa');
-            $table->string('kecamatan');
-            $table->string('kab_kota');
-            $table->string('jarak_gereja_lain');
-            $table->string('nomor_telepon');
+            $table->date('tanggal_berdiri')->nullable();
+            $table->date('tanggal_bergabung_sinode')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('kel_desa')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kab_kota')->nullable();
+            $table->string('jarak_gereja_lain')->nullable();
+            $table->string('email')->nullable();
+            $table->string('nomor_telepon')->nullable();
+            $table->string('nama_pendeta')->nullable();
 
-            // $table->string('email');
-            // $table->string('nama_pendeta');
+            $table->enum('status_gereja', ['permanen', 'semi-permanen', 'tidak-permanen'])
+                  ->default('permanen')
+                  ->nullable();
 
-            $table->enum('status_gereja', ['permanen', 'semi-permanen', 'tidak-permanen'])->default('permanen');
-            $table->json('jumlah_umat');
-            $table->json('jumlah_majelis');
-            $table->json('jumlah_guru_sekolah_minggu');
-            $table->json('jumlah_pemuda');
+            $table->json('jumlah_umat')->nullable();
+            $table->json('jumlah_majelis')->nullable();
+            $table->json('jumlah_guru_sekolah_minggu')->nullable();
+            $table->json('jumlah_murid_sekolah_minggu')->nullable();
+            $table->json('jumlah_pemuda')->nullable();
 
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Batalkan migrasi.
      */
     public function down(): void
     {
