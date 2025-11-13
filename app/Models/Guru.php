@@ -23,7 +23,6 @@ class Guru extends Model
         'sekolah_id',
         'user_id',
         'nip',
-        'nomor_telepon',
         'tempat_lahir',
         'tanggal_lahir',        
     ];
