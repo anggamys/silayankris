@@ -25,7 +25,7 @@ class Guru extends Model
         'nip',
         'nomor_telepon',
         'tempat_lahir',
-        'tanggal_lahir',
+        'tanggal_lahir',        
     ];
 
     /**

@@ -34,7 +34,29 @@ class UserService
 
         $data['password'] = Hash::make($data['password']);
 
-        return User::create($data);
+        // Simpan user
+        $user = User::create($data);
+
+        // Jika role guru → buat relasi guru
+        if ($user->role === User::ROLE_GURU) {
+            $user->guru()->create([
+                'sekolah_id' => $data['sekolah_id'],
+                'nip' => $data['nip'],
+                'nomor_telepon' => $data['nomor_telepon'],
+                'tempat_lahir' => $data['tempat_lahir'],
+                'tanggal_lahir' => $data['tanggal_lahir'],
+            ]);
+        }
+
+        // Jika role pengurus gereja → buat relasi staff_gereja
+        if ($user->role === User::ROLE_PENGURUS_GEREJA) {
+            $user->staffGereja()->create([
+                'gembala_sidang' => $data['gembala_sidang'],
+                'nomor_telepon' => $data['nomor_telepon'],
+                'gereja_id' => $data['gereja_id'],
+            ]);
+        }
+        return $user;
     }
 
     /**
