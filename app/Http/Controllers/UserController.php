@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Models\Gereja;
+use App\Models\Sekolah;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
 
@@ -47,8 +49,8 @@ class UserController extends Controller
     public function create(User $user)
     {
         Gate::authorize('create', User::class);
-        $sekolahs = \App\Models\Sekolah::all();
-        $gerejas = \App\Models\Gereja::all();
+        $sekolahs = Sekolah::all();
+        $gerejas = Gereja::all();
 
         return view('pages.admin.user.create', compact('sekolahs', 'gerejas'));
     }
