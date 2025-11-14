@@ -20,9 +20,9 @@
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="role" class="form-label">Role</label>
+                    <label for="role" class="form-label">Peran</label>
                     <select id="role" name="role" class="form-select">
-                        <option value="">Pilih Role</option>
+                        <option value="">Pilih Peran</option>
                         <option value="guru">Guru</option>
                         <option value="staff-gereja">Pengurus Gereja</option>
                         <option value="admin">Admin</option>

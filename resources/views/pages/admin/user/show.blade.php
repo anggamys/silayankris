@@ -30,9 +30,9 @@
                 @endif
             </div>
 
-            {{-- ROLE --}}
+            {{-- PERAN --}}
             <div class="mb-3">
-                <label class="form-label">Role</label>
+                <label class="form-label">Peran</label>
                 <select class="form-select" disabled>
                     <option value="guru" {{ $user->role == 'guru' ? 'selected' : '' }}>Guru</option>
                     <option value="staff-gereja" {{ $user->role == 'staff-gereja' ? 'selected' : '' }}>Pengurus Gereja</option>
