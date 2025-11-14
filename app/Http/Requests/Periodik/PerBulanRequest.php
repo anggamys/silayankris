@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Periodik;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class BeritaRequest extends FormRequest
+class PerBulanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,12 @@ class BeritaRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'judul' => ['required', 'string', 'max:255'],
-            'isi' => ['required', 'string', 'max:5000'],
-            'gambar_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'daftar_gaji_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'daftar_hadir_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'rekening_bank_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'ceklist_berkas' => ['nullable', 'string', 'max:255'],
+            'status' => ['nullable', 'in:menunggu,diterima,ditolak'],
+            'catatan' => ['nullable', 'string', 'max:1000'],
         ];
 
         return $rules;

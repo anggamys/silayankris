@@ -23,22 +23,14 @@
                 {{-- Judul --}}
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul Berita</label>
-                    <input type="text" 
-                           class="form-control" 
-                           id="judul" 
-                           name="judul" readonly
-                           value="{{ $berita->judul }}" 
-                           >
+                    <input type="text" class="form-control" id="judul" name="judul" readonly
+                        value="{{ $berita->judul }}">
                 </div>
 
                 {{-- Isi --}}
                 <div class="mb-3">
                     <label for="isi" class="form-label">Isi Berita</label>
-                    <textarea class="form-control" 
-                              id="isi" 
-                              name="isi" 
-                              rows="6" 
-                              readonly>{{ $berita->isi }}</textarea>
+                    <textarea class="form-control" id="isi" name="isi" rows="6" readonly>{{ $berita->isi }}</textarea>
                 </div>
 
                 {{-- Gambar --}}
@@ -46,10 +38,8 @@
                     <label for="gambar_path" class="form-label">Gambar Berita</label>
                     @if ($berita->gambar_path)
                         <div class="mt-2">
-                            <img src="{{ asset('storage/' . $berita->gambar_path) }}" 
-                                 alt="Gambar Berita" 
-                                 class="img-fluid rounded shadow-sm border" 
-                                 style="max-width: 400px;">
+                            <img src="{{ asset('storage/' . $berita->gambar_path) }}" alt="Gambar Berita"
+                                class="img-fluid rounded shadow-sm border" style="max-width: 400px;">
                         </div>
                     @else
                         <p class="text-muted fst-italic">Tidak ada gambar yang diunggah.</p>
@@ -62,7 +52,11 @@
                         <strong>Ditulis oleh:</strong> {{ $berita->user->name ?? 'Tidak diketahui' }}
                     </p>
                     <p class="text-muted">
-                        <strong>Dibuat pada:</strong> {{ $berita->created_at->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i') }}
+                        <strong>Dibuat
+                            pada: </strong>{{ \Carbon\Carbon::parse($berita->created_at)->setTimezone('Asia/Jakarta')->locale('id')->translatedFormat('l, d F Y H:i') }}
+
+
+
                     </p>
                 </div>
 
