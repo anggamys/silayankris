@@ -3,7 +3,7 @@
 @section('title', 'Manajemen Berita')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Manajemen Berita</li>
+    <li class="breadcrumb-item active">Data Berita</li>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
 
-            <h5 class="card-title fw-semibold">Manajemen Berita</h5>
+            <h5 class="card-title fw-semibold">Daftar Data Berita</h5>
 
             <div class="row g-2 align-items-center">
 
@@ -41,7 +41,7 @@
                 <!-- Button tambah -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.berita.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah Berita
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
                     </a>
                 </div>
             </div>

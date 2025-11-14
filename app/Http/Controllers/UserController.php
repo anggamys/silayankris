@@ -71,7 +71,11 @@ class UserController extends Controller
     public function show(User $user)
     {
         Gate::authorize('view', $user);
-        return view('pages.admin.user.show', compact('user'));
+        // provide related lists used by the show view (selects)
+        $sekolahs = Sekolah::all();
+        $gerejas = Gereja::all();
+
+        return view('pages.admin.user.show', compact('user', 'sekolahs', 'gerejas'));
     }
 
     /**
