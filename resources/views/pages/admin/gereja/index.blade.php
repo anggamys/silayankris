@@ -1,23 +1,22 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Manajemen Berita')
+@section('title', 'Manajemen Gereja')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Manajemen Berita</li>
+    <li class="breadcrumb-item active">Manajemen Gereja</li>
 @endsection
 
 @section('content')
-    <!-- Component Toast -->
+
     <x-toast />
 
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
-
-            <h5 class="card-title fw-semibold">Manajemen Berita</h5>
+            
+            <h5 class="card-title fw-semibold">Manajemen Gereja</h5>
 
             <div class="row g-2 align-items-center">
-
-                <!-- Search -->
+               <!-- Search -->
                 <div class="col-12 col-md-6">
                     <form method="GET" class="w-100 d-flex align-items-center gap-2">
                         {{-- 🔍 Input pencarian --}}
@@ -36,48 +35,55 @@
                     </form>
                 </div>
 
-
-
                 <!-- Button tambah -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
-                    <a href="{{ route('admin.berita.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah Berita
+                    <a href="{{ route('admin.gereja.create') }}" class="btn btn-primary w-100 w-md-auto">
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Gereja
                     </a>
                 </div>
             </div>
         </div>
 
         <div class="card-body">
-            {{-- Tabel Berita --}}
+            {{-- Tabel Gereja --}}
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover">
                     <thead>
                         <tr class="text-start">
                             <th>#</th>
-                            <th>Judul</th>
-                            <th>Isi</th>
-                            <th class="text-center">Dibuat</th>
+                            <th>Nama Gereja</th>
+                            <th>Pengurus</th>
+                            <th>Alamat</th>
+                            <th>Tanggal Berdiri</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse($berita as $item)
+                        @forelse($gereja as $item)
                             <tr>
-                                <td>{{ $berita->firstItem() + $loop->index }}</td>
-                                <td class="fw-semibold">{{ Str::limit($item->judul, 20, '...') }}</td>
-                                <td>{{ Str::limit($item->isi, 55, '...') }}</td>
-
-                                <td class="text-center">
-                                    {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('d F Y') }}
+                                <td>{{ $gereja->firstItem() + $loop->index }}</td>
+                                <td class="fw-semibold">{{ $item->nama }}</td>
+                                <td>
+                                    {{ Str::limit($item->staffGereja->user->name ?? '-', 25, '...') }}
                                 </td>
 
+
+                                <td>{{ Str::limit($item->alamat ?? '-', 40, '...') }}</td>
+                                <td>
+                                    {{ $item->tanggal_berdiri
+                                        ? \Carbon\Carbon::parse($item->tanggal_berdiri)->locale('id')->translatedFormat('d F Y')
+                                        : '-' }}
+                                </td>
+
+
+
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('admin.berita.show', $item) }}"
+                                    <a href="{{ route('admin.gereja.show', $item) }}"
                                         class="btn btn-sm btn-info text-light">
                                         <i class="bx bx-info-circle"></i> Lihat
                                     </a>
-                                    <a href="{{ route('admin.berita.edit', $item) }}"
+                                    <a href="{{ route('admin.gereja.edit', $item) }}"
                                         class="btn btn-sm btn-warning text-light">
                                         <i class="bx bx-pencil"></i> Ubah
                                     </a>
@@ -93,14 +99,14 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
+                                                    <h5 class="modal-title">Konfirmasi</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
                                                         Apakah anda yakin ingin menghapus
-                                                        <strong>{{ Str::limit($item->judul, 15, '...') }}</strong> ?
+                                                        <strong>{{ $item->nama }}</strong> ?
                                                     </p>
 
                                                     <div class="modal-footer">
@@ -108,8 +114,9 @@
                                                             data-bs-dismiss="modal">
                                                             Tidak
                                                         </button>
-                                                        <form action="{{ route('admin.berita.destroy', $item) }}"
-                                                            method="POST" onsubmit=" ">
+                                                        <form action="{{ route('admin.gereja.destroy', $item) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Yakin hapus gereja ini?')">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger">
@@ -121,14 +128,13 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="6" class="text-center text-muted py-4">
                                     <i class="bi bi-file-earmark-x fs-4 d-block mb-2"></i>
-                                    Tidak ada data berita.
+                                    Tidak ada data gereja.
                                 </td>
                             </tr>
                         @endforelse
@@ -141,11 +147,11 @@
                 <div class="small text-muted">
                     Halaman <strong>{{ $currentPage }}</strong> dari <strong>{{ $lastPage }}</strong><br>
                     Menampilkan <strong>{{ $perPage }}</strong> per halaman (total
-                    <strong>{{ $total }}</strong> berita)
+                    <strong>{{ $total }}</strong> gereja)
                 </div>
 
                 <div>
-                    {{ $berita->links() }}
+                    {{ $gereja->links() }}
                 </div>
             </div>
         </div>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('profile_path')->nullable();
             $table->string('nomor_telepon')->nullable();
             $table->string('password');
+            $table->string('profile_photo_path')->nullable();
             $table->enum('role', ['admin', 'guru', 'pengurus-gereja'])->default('guru');
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->rememberToken();
