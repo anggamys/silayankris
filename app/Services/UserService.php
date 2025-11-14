@@ -49,7 +49,7 @@ class UserService
         }
 
         // Jika role pengurus gereja → buat relasi staff_gereja
-        if ($user->role === User::ROLE_PENGURUS_GEREJA) {
+        if ($user->role === User::ROLE_STAFF_GEREJA) {
             $user->staffGereja()->create([
                 'gembala_sidang' => $data['gembala_sidang'],
                 'nomor_telepon' => $data['nomor_telepon'],
