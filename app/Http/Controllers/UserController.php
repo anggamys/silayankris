@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         Gate::authorize('create', User::class);
         $user = $this->service->store($request->validated());
-        return redirect()->route('admin.users.index', $user)->with('success', 'User created successfully.');
+        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -96,7 +96,7 @@ class UserController extends Controller
     {
         Gate::authorize('update', $user);
         $this->service->update($user, $request->validated());
-        return redirect()->route('admin.users.show', $user)->with('success', 'User updated successfully.');
+        return redirect()->route('admin.users.show', $user)->with('success', ' Data Pengguna berhasil diperbarui.');
     }
 
     /**
@@ -106,6 +106,6 @@ class UserController extends Controller
     {
         Gate::authorize('delete', $user);
         $this->service->delete($user);
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil dihapus.');
     }
 }

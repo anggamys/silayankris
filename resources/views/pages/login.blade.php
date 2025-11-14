@@ -10,14 +10,14 @@
 					<span class="app-brand-logo demo">
 						<img src="{{ asset("assets/img/logo.png") }}" alt="Logo" width="40">
 					</span>
-					<span class="app-brand-text demo text-white fw-bolder" style="letter-spacing: 2px">SILAYANKRIS</span>
+					<span class="app-brand-text demo text-white fw-bolder" style="text-transform: uppercase; letter-spacing: 2px">SILAYANKRIS</span>
 				</a>
 			</div>
 		</div>
 		<div class="card-body pt-3">
 			<div class="text-center">
 				<h4 class="mb-2">Selamat Datang Kembali 👋</h4>
-				<p>Silakan masukkan akun Anda untuk mengakses layanan kami.</p>
+				<p>Silakan masukkan email dan password untuk mengakses layanan kami.</p>
 			</div>
 
 			<form id="formAuthentication" method="POST" action="{{ route("login", ["type" => request("type")]) }}">
