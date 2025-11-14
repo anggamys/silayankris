@@ -16,16 +16,8 @@
 		</div>
 		<div class="card-body pt-3">
 			<div class="text-center">
-				@if (request("type") === "gereja")
-					<h4 class="mb-2 text-primary">Login Layanan Gereja</h4>
-					<p>Silakan login untuk mengakses data dan layanan gereja Anda.</p>
-				@elseif (request("type") === "tpg")
-					<h4 class="mb-2 text-success">Login Pelayanan TPG Guru</h4>
-					<p>Masukkan akun Anda untuk mengelola berkas TPG guru secara online.</p>
-				@else
-					<h4 class="mb-2">Selamat Datang Kembali 👋</h4>
-					<p>Silakan masukkan akun Anda untuk mengakses layanan kami.</p>
-				@endif
+				<h4 class="mb-2">Selamat Datang Kembali 👋</h4>
+				<p>Silakan masukkan akun Anda untuk mengakses layanan kami.</p>
 			</div>
 
 			<form id="formAuthentication" method="POST" action="{{ route("login", ["type" => request("type")]) }}">
@@ -33,13 +25,13 @@
 				<div class="mb-3">
 					<label for="email" class="form-label">Email</label>
 					<div class="input-group input-group-merge">
-
 						<input type="email" class="form-control @error("email") is-invalid @enderror" id="email" name="email"
 							placeholder="Masukkan email anda" value="{{ old("email") }}" required autofocus />
-						@error("email")
-							<div class="invalid-feedback">{{ $message }}</div>
-						@enderror
 					</div>
+					@error("email")
+						<div class="text-danger mt-1 small">{{ $message }}</div>
+					@enderror
+
 				</div>
 
 				<div class="mb-3 form-password-toggle">
@@ -50,10 +42,10 @@
 						<input type="password" id="password" class="form-control @error("password") is-invalid @enderror" name="password"
 							placeholder="Masukkan password anda" required />
 						<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-						@error("password")
-							<div class="invalid-feedback d-block">{{ $message }}</div>
-						@enderror
 					</div>
+					@error("password")
+						<div class="text-danger mt-1 small">{{ $message }}</div>
+					@enderror
 				</div>
 
 				<div class="mb-3">
