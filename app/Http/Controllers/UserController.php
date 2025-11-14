@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         Gate::authorize('create', User::class);
         $user = $this->service->store($request->validated());
-        return redirect()->route('admin.users.show', $user)->with('success', 'User created successfully.');
+        return redirect()->route('admin.users.index', $user)->with('success', 'User created successfully.');
     }
 
     /**
@@ -80,7 +80,13 @@ class UserController extends Controller
     public function edit(User $user)
     {
         Gate::authorize('update', $user);
-        return view('pages.admin.user.edit', compact('user'));
+
+        $user->load(['guru', 'staffGereja']);
+
+        $sekolahs = Sekolah::all();
+        $gerejas = Gereja::all();
+
+        return view('pages.admin.user.edit', compact('user', 'sekolahs', 'gerejas'));
     }
 
     /**

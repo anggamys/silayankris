@@ -7,8 +7,10 @@
 @endsection
 
 @section('content')
-    <div class="card shadow-sm border-0 mb-4 p-3">
+    <!-- Component Toast -->
+    <x-toast />
 
+    <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
             {{-- Row responsive: di mobile col-12 (full), di md col-6 untuk search dan auto untuk button --}}
             <h5 class="card-title fw-semibold">Daftar Data Sekolah</h5>
@@ -17,13 +19,20 @@
 
                 <!-- Search -->
                 <div class="col-12 col-md-6">
-                    <form method="GET" class="w-100">
-                        <div class="input-group  w-100">
+                    <form method="GET" class="w-100 d-flex align-items-center gap-2">
+                        {{-- Input pencarian --}}
+                        <div class="input-group ">
                             <span class="input-group-text"><i class="bx bx-search"></i></span>
-                            <input type="text" name="search" value="{{ $search }}"
-                                class="form-control border-end-1 " placeholder="Cari nama atau alamat...">
+                            <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
+                                placeholder="Cari nama atau alamat...">
                             <button class="btn btn-outline-secondary border" type="submit">Cari</button>
                         </div>
+
+                        <a href="{{ url()->current() }}"
+                            class="btn btn-outline-secondary border d-flex align-items-center gap-1">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span>Reset</span>
+                        </a>
                     </form>
                 </div>
 
@@ -54,26 +63,52 @@
                                 <td class="fw-semibold">{{ $item->nama }}</td>
                                 <td>{{ $item->alamat }}</td>
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('admin.sekolah.show', $item) }}"
-                                        class="btn btn-sm btn-info align-items-center text-light" data-bs-toggle="tooltip"
-                                        title="Detail">
-                                        <i class="bx bx-info-circle"></i>
-                                        Lihat
+                                    <a href="{{ route('admin.sekolah.show', $item) }}" class="btn btn-sm btn-info text-light">
+                                        <i class="bx bx-info-circle"></i> Lihat
                                     </a>
                                     <a href="{{ route('admin.sekolah.edit', $item) }}"
-                                        class="btn btn-sm btn-warning text-light" data-bs-toggle="tooltip" title="Edit">
-                                        <i class="bx bx-pencil"></i>
-                                        Ubah
+                                        class="btn btn-sm btn-warning text-light">
+                                        <i class="bx bx-pencil"></i> Ubah
                                     </a>
-                                    <form action="{{ route('admin.sekolah.destroy', $item) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin hapus sekolah ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Hapus">
-                                            <i class="bx bx-trash"></i>
-                                            Hapus
-                                        </button>
-                                    </form>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modalCenter{{ $item->id }}">
+                                        <i class="bx bx-trash"></i> Hapus
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalCenter{{ $item->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Apakah anda yakin ingin menghapus
+                                                        <strong>{{ Str::limit($item->nama, 15, '...') }}</strong> ?
+                                                    </p>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            Tidak
+                                                        </button>
+                                                        <form action="{{ route('admin.sekolah.destroy', $item) }}"
+                                                            method="POST" onsubmit=" ">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger">
+                                                                <i class="bx bx-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
