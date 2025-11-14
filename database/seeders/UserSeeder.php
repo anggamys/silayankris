@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
         'name' => 'Sang Gereja',
         'email' => 'gereja@gmail.com',
         'password' => bcrypt('gereja123'),
-        'role' => 'pengurus-gereja',
+        'role' => 'staff-gereja',
         'status' => 'aktif',
       ],
     ];

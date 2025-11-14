@@ -27,6 +27,8 @@ class Handler extends ExceptionHandler
       // Handle JSON/API error responses
       return $this->renderJson($e);
     }
+
+    return parent::render($request, $e);
   }
 
   protected function renderJson(Throwable $e)
