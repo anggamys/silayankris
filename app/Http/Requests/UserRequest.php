@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->user?->id)],
             'nomor_telepon' => ['nullable', 'string', 'max:15'],
-            'profile_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'profile_photo_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_STAFF_GEREJA])],
         ];
 
