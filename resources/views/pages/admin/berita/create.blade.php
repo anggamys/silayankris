@@ -52,8 +52,6 @@
                     @error('gambar_path')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-
-
                 </div>
 
                 {{-- Tombol --}}
