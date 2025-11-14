@@ -20,7 +20,7 @@
                 <!-- Search -->
                 <div class="col-12 col-md-6">
                     <form method="GET" class="w-100 d-flex align-items-center gap-2">
-                        {{-- 🔍 Input pencarian --}}
+                        {{-- Input pencarian --}}
                         <div class="input-group ">
                             <span class="input-group-text"><i class="bx bx-search"></i></span>
                             <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
@@ -106,7 +106,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">
-                                                            Tidak
+                                                            Batal
                                                         </button>
                                                         <form action="{{ route('admin.berita.destroy', $item) }}"
                                                             method="POST" onsubmit=" ">
@@ -121,7 +121,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         @empty

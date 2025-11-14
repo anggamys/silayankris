@@ -28,8 +28,8 @@ class UserService
      */
     public function store(array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
+        if (isset($data['profile_photo_path'])) {
+            $data['profile_photo_path'] = $data['profile_photo_path']->store('profiles', 'public');
         }
 
         $data['password'] = Hash::make($data['password']);
@@ -64,10 +64,10 @@ class UserService
      */
     public function update(User $user, array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
+        if (isset($data['profile_photo_path'])) {
+            $data['profile_photo_path'] = $data['profile_photo_path']->store('profiles', 'public');
         } else {
-            unset($data['profile_path']);
+            unset($data['profile_photo_path']);
         }
 
         if (!empty($data['password'])) {
