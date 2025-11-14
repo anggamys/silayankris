@@ -22,7 +22,7 @@ class User extends Authenticatable
 
     public const ROLE_ADMIN = 'admin';
     public const ROLE_GURU = 'guru';
-    public const ROLE_STAFF_GEREJA = 'pengurus-gereja';
+    public const ROLE_STAFF_GEREJA = 'staff-gereja';
 
     public const STATUS_AKTIF = 'aktif';
     public const STATUS_NONAKTIF = 'nonaktif';

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nomor_telepon')->nullable();
             $table->string('password');
             $table->string('profile_photo_path')->nullable();
-            $table->enum('role', ['admin', 'guru', 'pengurus-gereja'])->default('guru');
+            $table->enum('role', ['admin', 'guru', 'staff-gereja'])->default('guru');
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->rememberToken();
             $table->timestamps();

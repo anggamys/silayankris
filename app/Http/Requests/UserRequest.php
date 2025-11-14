@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->user?->id)],
             'nomor_telepon' => ['nullable', 'string', 'max:15'],
             'profile_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_PENGURUS_GEREJA])],
+            'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_STAFF_GEREJA])],
         ];
 
         // Only require password on create
@@ -44,9 +44,9 @@ class UserRequest extends FormRequest
         if ($this->input('role') === User::ROLE_GURU) {
             $guruRules = $this->guruRules();
             $rules = array_merge($rules, $guruRules);
-        } elseif ($this->input('role') === User::ROLE_PENGURUS_GEREJA) {
-            $pengurusGerejaRules = $this->pengurusGerejaRules();
-            $rules = array_merge($rules, $pengurusGerejaRules);
+        } elseif ($this->input('role') === User::ROLE_STAFF_GEREJA) {
+            $staffGerejaRules = $this->staffGerejaRules();
+            $rules = array_merge($rules, $staffGerejaRules);
         }
 
         return $rules;
