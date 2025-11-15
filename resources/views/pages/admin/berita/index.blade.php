@@ -8,7 +8,6 @@
 
 @section('content')
     <!-- Component Toast -->
-    <x-toast />
 
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">

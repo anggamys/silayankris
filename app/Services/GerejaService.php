@@ -31,11 +31,7 @@ class GerejaService
      */
     public function store(array $data)
     {
-
-        if (isset($data['gambar_path'])) {
-            $data['gambar_path'] = $data['gambar_path']->store('beritas', 'public');
-        }
-        return Berita::create($data);
+        return Gereja::create($data);
     }
 
     /**
