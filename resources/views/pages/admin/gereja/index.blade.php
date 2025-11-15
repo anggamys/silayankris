@@ -8,7 +8,6 @@
 
 @section('content')
 
-    <x-toast />
 
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
@@ -20,7 +19,7 @@
                 <div class="col-12 col-md-6">
                     <form method="GET" class="w-100 d-flex align-items-center gap-2">
                         {{-- 🔍 Input pencarian --}}
-                        <div class="input-group ">
+                        <div class="input-group">
                             <span class="input-group-text"><i class="bx bx-search"></i></span>
                             <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
                                 placeholder="Cari judul berita...">
