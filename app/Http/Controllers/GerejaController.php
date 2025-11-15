@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GerejaRequest;
 use App\Models\Gereja;
 use App\Services\GerejaService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class GerejaController extends Controller
 {
@@ -19,6 +21,8 @@ class GerejaController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', Gereja::class);
+
            $search = $request->query('search');
         // $gere = $this->service->getAll($search);
         $gereja = $this->service->getAll($search);
@@ -42,15 +46,20 @@ class GerejaController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Gereja::class);
+        return view('pages.admin.gereja.create');   
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GerejaRequest $request)
     {
-        //
+        Gate::authorize('create', Gereja::class);
+        $data = $request->validated();   
+        $this->service->store($data);
+        return redirect()->route('admin.gereja.index')->with('success', 'Gereja berhasil ditambahkan.');
+
     }
 
     /**

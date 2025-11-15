@@ -11,11 +11,13 @@ class PerBulanService
 
   public function getAll(?string $search = null)
   {
-    $query = PerBulan::query();
+    $query = PerBulan::query()
+      ->with('guru.user');
     if ($search) {
       $query->where(function ($q) use ($search) {
-        $q->where('bulan', 'like', "%$search%")
-          ->orWhere('tahun', 'like', "%$search%");
+        $q->WhereHas('guru.user', function ($q2) use ($search) {
+          $q2->where('name', 'like', "%$search%");
+        });
       });
     }
     return $query->orderByDesc('updated_at')

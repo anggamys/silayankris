@@ -14,16 +14,29 @@ class FileUploads
     return $prefix . '_' . $ownerName . '_' . now()->format('Ymd');
   }
 
-  public static function upload(UploadedFile $file, string $path, string $prefix, string $ownerName)
+  public static function upload(UploadedFile $file, string $path, ?string $prefix = '', string $ownerName = '')
   {
-    $fileName = self::generateFileName($prefix, $ownerName);
+    $fileExt = $file->getClientOriginalExtension();
 
-    $filePath = "{$path}/{$fileName}.pdf";
+    if ($prefix  !== '' && $ownerName !== '') {
+      $fileName = self::generateFileName($prefix, $ownerName);
+    } else {
+      $fileName = $ownerName;
+    }
+
+    $filePath = "{$path}/{$fileName}.{$fileExt}";
 
     $fileStream = fopen($file->getRealPath(), 'r+');
 
     Gdrive::putStream($filePath, $fileStream);
 
     return $filePath;
+  }
+
+  public static function delete(string $path)
+  {
+    if ($path && Gdrive::exists($path)) {
+      Gdrive::delete($path);
+    }
   }
 }
