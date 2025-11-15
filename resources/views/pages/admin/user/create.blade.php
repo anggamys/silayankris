@@ -11,16 +11,20 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-semibold fs-4">Tambah Pengguna</h5>
+
+            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Batal
+            </a>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="role" class="form-label">Role</label>
+                    <label for="role" class="form-label">Peran</label>
                     <select id="role" name="role" class="form-select">
-                        <option value="">Pilih Role</option>
+                        <option value="">Pilih Peran</option>
                         <option value="guru">Guru</option>
-                        <option value="pengurus-gereja">Pengurus Gereja</option>
+                        <option value="staff-gereja">Pengurus Gereja</option>
                         <option value="admin">Admin</option>
                     </select>
                 </div>
@@ -74,13 +78,14 @@
                     <label for="profile_photo_path" class="form-label">Foto Profil</label>
 
                     {{-- Preview gambar di atas input --}}
-                    <div class="text-center mb-3" id="photo-preview-container" style="display:none;" >
+                    <div class="text-center mb-3" id="photo-preview-container" style="display:none;">
                         <img id="photo-preview" src="#" alt="Preview Foto Profil" class="img-thumbnail rounded"
                             style="max-width: 180px; border: 2px solid #dee2e6;">
                     </div>
 
                     <input type="file" class="form-control @error('profile_photo_path') is-invalid @enderror"
                         id="profile_photo_path" name="profile_photo_path" accept="image/*">
+                    <small class="text-muted">Format gambar: jpg, png, jpeg. Maksimal ukuran: 2MB.</small>
                     @error('profile_photo_path')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -91,19 +96,20 @@
                     <hr>
                     <h5>Data Guru</h5>
                     <div class="mb-3">
-                        <label>NIP</label>
-                        <input type="text" name="nip" class="form-control">
+                        <label for="nip" class="form-label">NIP</label>
+                        <input type="text" name="nip" class="form-control"
+                            placeholder="Masukkan NIP">
                     </div>
                     <div class="mb-3">
-                        <label>Tempat Lahir</label>
-                        <input type="text" name="tempat_lahir" class="form-control">
+                        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir">
                     </div>
                     <div class="mb-3">
-                        <label>Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" class="form-control">
+                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" class="form-control" placeholder="Masukkan Tanggal Lahir">
                     </div>
                     <div class="mb-3">
-                        <label>Sekolah</label>
+                        <label for="sekolah_id" class="form-label">Tempat Mengajar (Sekolah)</label>
                         <select name="sekolah_id" class="form-select" {{ $sekolahs->isEmpty() ? 'disabled' : '' }}>
                             @if ($sekolahs->isEmpty())
                                 <option value="">Tidak ada sekolah tersedia</option>
@@ -123,11 +129,11 @@
                     <hr>
                     <h5>Data Staff Gereja</h5>
                     <div class="mb-3">
-                        <label>Gembala Sidang</label>
-                        <input type="text" name="gembala_sidang" class="form-control">
+                        <label for="gembala_sidang" class="form-label">Gembala Sidang</label>
+                        <input type="text" name="gembala_sidang" class="form-control" placeholder="Masukkan Gembala Sidang">
                     </div>
                     <div class="mb-3">
-                        <label>Gereja</label>
+                        <label for="gereja_id" class="form-label">Gereja</label>
                         <select name="gereja_id" class="form-select" {{ $gerejas->isEmpty() ? 'disabled' : '' }}>
                             @if ($gerejas->isEmpty())
                                 <option value="">Tidak ada gereja tersedia</option>
@@ -141,16 +147,13 @@
                     </div>
                 </div>
 
-                <div class="d-flex
-							justify-content-between mt-4">
-                    <a href="{{ route('admin.sekolah.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Batal
-                    </a>
-                    <button type="submit" class="btn btn-success">
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save me-1"></i> Simpan
                     </button>
                 </div>
             </form>
+
             <script>
                 const role = document.getElementById('role');
                 const guruForm = document.getElementById('form-guru');
@@ -158,7 +161,7 @@
 
                 role.addEventListener('change', function() {
                     guruForm.style.display = (this.value === 'guru') ? 'block' : 'none';
-                    gerejaForm.style.display = (this.value === 'pengurus-gereja') ? 'block' : 'none';
+                    gerejaForm.style.display = (this.value === 'staff-gereja') ? 'block' : 'none';
                 });
 
                 // ======== Preview Foto Profil ==========

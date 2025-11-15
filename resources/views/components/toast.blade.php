@@ -9,13 +9,14 @@
 @foreach ($toastTypes as $type => $style)
     @if (session($type))
         <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
-            <div class="bs-toast toast fade  bg-dark" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="bs-toast toast fade bg-dark" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header text-white" style="background: {{ $style['gradient'] }};">
                     <i class="bx bx-bell me-2"></i>
                     <div class="me-auto fw-semibold">{{ $style['label'] }}</div>
                     <small>{{ now()->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</small>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
+
                 <div class="toast-body text-white pt-2" style="background: {{ $style['gradient'] }};">
                     {{ session($type) }}
                 </div>
@@ -23,37 +24,78 @@
         </div>
     @endif
 @endforeach
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const toastElList = document.querySelectorAll('.toast');
+
         toastElList.forEach(function(toastEl) {
             const toast = new bootstrap.Toast(toastEl, {
-                delay: 3000
+                autohide: false
             });
+
+            // Animasi masuk
+            toastEl.classList.add("animate-in");
             toast.show();
 
-            // Hilang otomatis setelah 3 detik
+            // Setelah 3 detik, animasi keluar
             setTimeout(() => {
-                toast.hide();
+                toastEl.classList.remove("animate-in");
+                toastEl.classList.add("animate-out");
+
+                toastEl.addEventListener("animationend", () => {
+                    toast.hide();
+                }, { once: true });
+
             }, 3000);
         });
     });
 </script>
 
 <style>
-    .toast {
-        animation: slideIn 0.4s ease-out;
+    /*  ============================
+        BORDER RADIUS BAWAH TOAST
+        ============================ */
+    .toast,
+    .bs-toast {
+        border-bottom-left-radius: 6px !important;
+        border-bottom-right-radius: 6px !important;
+        overflow: hidden;
+    }
+
+    /*  ============================
+        ANIMASI MASUK
+        ============================ */
+    .toast.animate-in {
+        animation: slideIn 0.45s ease-out forwards;
     }
 
     @keyframes slideIn {
         from {
-            transform: translateX(100%);
+            transform: translateX(120%);
             opacity: 0;
         }
-
         to {
             transform: translateX(0);
             opacity: 1;
+        }
+    }
+
+    /*  ============================
+        ANIMASI KELUAR
+        ============================ */
+    .toast.animate-out {
+        animation: slideOut 0.45s ease-in forwards;
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(120%);
+            opacity: 0;
         }
     }
 </style>

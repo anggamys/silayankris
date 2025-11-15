@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         Gate::authorize('create', User::class);
         $user = $this->service->store($request->validated());
-        return redirect()->route('admin.users.show', $user)->with('success', 'User created successfully.');
+        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -71,7 +71,11 @@ class UserController extends Controller
     public function show(User $user)
     {
         Gate::authorize('view', $user);
-        return view('pages.admin.user.show', compact('user'));
+        // provide related lists used by the show view (selects)
+        $sekolahs = Sekolah::all();
+        $gerejas = Gereja::all();
+
+        return view('pages.admin.user.show', compact('user', 'sekolahs', 'gerejas'));
     }
 
     /**
@@ -80,7 +84,13 @@ class UserController extends Controller
     public function edit(User $user)
     {
         Gate::authorize('update', $user);
-        return view('pages.admin.user.edit', compact('user'));
+
+        $user->load(['guru', 'staffGereja']);
+
+        $sekolahs = Sekolah::all();
+        $gerejas = Gereja::all();
+
+        return view('pages.admin.user.edit', compact('user', 'sekolahs', 'gerejas'));
     }
 
     /**
@@ -90,7 +100,7 @@ class UserController extends Controller
     {
         Gate::authorize('update', $user);
         $this->service->update($user, $request->validated());
-        return redirect()->route('admin.users.show', $user)->with('success', 'User updated successfully.');
+        return redirect()->route('admin.users.show', $user)->with('success', ' Data Pengguna berhasil diperbarui.');
     }
 
     /**
@@ -100,6 +110,6 @@ class UserController extends Controller
     {
         Gate::authorize('delete', $user);
         $this->service->delete($user);
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil dihapus.');
     }
 }

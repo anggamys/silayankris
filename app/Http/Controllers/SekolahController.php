@@ -58,7 +58,7 @@ class SekolahController extends Controller
     {
         Gate::authorize('create', Sekolah::class);
         $sekolah = $this->service->store($request->validated());
-        return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah created successfully.');
+        return redirect()->route('admin.sekolah.index')->with('success', ' Data Sekolah berhasil ditambahkan.');
     }
 
     /**
@@ -87,7 +87,7 @@ public function update(SekolahRequest $request, Sekolah $sekolah)
 {
     Gate::authorize('update', $sekolah);
     $this->service->update($sekolah, $request->validated());
-    return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah updated successfully.');
+    return redirect()->route('admin.sekolah.index')->with('success', ' Data Sekolah berhasil diperbarui.');
 }
 
 
@@ -98,6 +98,6 @@ public function update(SekolahRequest $request, Sekolah $sekolah)
     {
         Gate::authorize('delete', $sekolah);
         $this->service->delete($sekolah);
-        return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah deleted successfully.');
+        return redirect()->route('admin.sekolah.index')->with('success', ' Data Sekolah berhasil dihapus.');
     }
 }

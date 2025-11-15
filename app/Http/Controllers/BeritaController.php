@@ -31,7 +31,7 @@ class BeritaController extends Controller
         $perPage = $berita->perPage();
         $total = $berita->total();
         return view('pages.admin.berita.index', compact(
-           'berita',
+            'berita',
             'search',
             'currentPage',
             'lastPage',
@@ -55,7 +55,7 @@ class BeritaController extends Controller
      */
     public function store(BeritaRequest $request)
     {
-       Gate::authorize('create', Berita::class);
+        Gate::authorize('create', Berita::class);
       
         $data = $request->validated();
         $data['user_id'] = Auth::user()->id;

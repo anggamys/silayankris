@@ -13,6 +13,10 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-semibold fs-4">Tambah Berita</h5>
+            
+            <a href="{{ route('admin.berita.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Batal
+            </a>
         </div>
 
         <div class="card-body">
@@ -55,11 +59,8 @@
                 </div>
 
                 {{-- Tombol --}}
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('admin.berita.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
-                    </a>
-                    <button type="submit" class="btn btn-success">
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save me-1"></i> Simpan
                     </button>
                 </div>
