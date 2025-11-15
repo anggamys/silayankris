@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Utils\FileUploads;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -29,7 +30,7 @@ class UserService
     public function store(array $data)
     {
         if (isset($data['profile_photo_path'])) {
-            $data['profile_photo_path'] = $data['profile_photo_path']->store('profiles', 'public');
+            $data['profile_photo_path'] = FileUploads::upload($data['profile_photo_path'], 'profiles', '', $data['name']);
         }
 
         $data['password'] = Hash::make($data['password']);
@@ -65,7 +66,10 @@ class UserService
     public function update(User $user, array $data)
     {
         if (isset($data['profile_photo_path'])) {
-            $data['profile_photo_path'] = $data['profile_photo_path']->store('profiles', 'public');
+            // Hapus foto profil lama
+            FileUploads::delete($user->profile_photo_path);
+
+            $data['profile_photo_path'] = FileUploads::upload($data['profile_photo_path'], 'profiles', '', $data['name']);
         } else {
             unset($data['profile_photo_path']);
         }

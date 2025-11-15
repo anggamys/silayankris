@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
-<<<<<<< HEAD
-    data-assets-path="{{ asset('assets/') }}/" data-template="vertical-menu-template-free">
-=======
 	data-assets-path="{{ asset("assets/") }}/" data-template="vertical-menu-template-free">
->>>>>>> e756c3b47e7105798648f1f65a05fd9f5698c7a2
 
 <head>
 	<meta charset="utf-8" />
@@ -50,8 +46,8 @@
 			</div>
 		</div>
 
-    </div>
-    <x-toast />
+	</div>
+	<x-toast />
 
 </body>
 
