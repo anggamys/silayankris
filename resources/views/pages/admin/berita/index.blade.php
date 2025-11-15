@@ -3,7 +3,7 @@
 @section('title', 'Manajemen Berita')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Manajemen Berita</li>
+    <li class="breadcrumb-item active">Data Berita</li>
 @endsection
 
 @section('content')
@@ -12,14 +12,14 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
 
-            <h5 class="card-title fw-semibold">Manajemen Berita</h5>
+            <h5 class="card-title fw-semibold">Daftar Data Berita</h5>
 
             <div class="row g-2 align-items-center">
 
                 <!-- Search -->
                 <div class="col-12 col-md-6">
                     <form method="GET" class="w-100 d-flex align-items-center gap-2">
-                        {{-- 🔍 Input pencarian --}}
+                        {{-- Input pencarian --}}
                         <div class="input-group ">
                             <span class="input-group-text"><i class="bx bx-search"></i></span>
                             <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
@@ -40,7 +40,7 @@
                 <!-- Button tambah -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.berita.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah Berita
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
                     </a>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">
-                                                            Tidak
+                                                            Batal
                                                         </button>
                                                         <form action="{{ route('admin.berita.destroy', $item) }}"
                                                             method="POST" onsubmit=" ">
@@ -120,7 +120,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         @empty

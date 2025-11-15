@@ -5,7 +5,6 @@ use App\Http\Controllers\Periodik\PerBulanController;
 use App\Http\Controllers\GerejaController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\UserController;
-use App\Models\Gereja;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

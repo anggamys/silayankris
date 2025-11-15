@@ -13,6 +13,10 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-semibold fs-4">Detail Berita</h5>
+
+            <a href="{{ route('admin.berita.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
         </div>
 
         <div class="card-body">
@@ -55,19 +59,7 @@
                         <strong>Dibuat
                             pada: </strong>{{ \Carbon\Carbon::parse($berita->created_at)->setTimezone('Asia/Jakarta')->locale('id')->translatedFormat('l, d F Y H:i') }}
 
-
-
                     </p>
-                </div>
-
-                {{-- Tombol --}}
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('admin.berita.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
-                    </a>
-                    <a href="{{ route('admin.berita.edit', $berita->id) }}" class="btn btn-warning text-white">
-                        <i class="bi bi-pencil"></i> Edit
-                    </a>
                 </div>
             </form>
         </div>

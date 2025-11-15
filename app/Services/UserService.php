@@ -28,8 +28,8 @@ class UserService
      */
     public function store(array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
+        if (isset($data['profile_photo_path'])) {
+            $data['profile_photo_path'] = $data['profile_photo_path']->store('profiles', 'public');
         }
 
         $data['password'] = Hash::make($data['password']);
@@ -49,7 +49,7 @@ class UserService
         }
 
         // Jika role pengurus gereja → buat relasi staff_gereja
-        if ($user->role === User::ROLE_PENGURUS_GEREJA) {
+        if ($user->role === User::ROLE_STAFF_GEREJA) {
             $user->staffGereja()->create([
                 'gembala_sidang' => $data['gembala_sidang'],
                 'nomor_telepon' => $data['nomor_telepon'],
@@ -64,10 +64,10 @@ class UserService
      */
     public function update(User $user, array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
+        if (isset($data['profile_photo_path'])) {
+            $data['profile_photo_path'] = $data['profile_photo_path']->store('profiles', 'public');
         } else {
-            unset($data['profile_path']);
+            unset($data['profile_photo_path']);
         }
 
         if (!empty($data['password'])) {
