@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Utils\FileUploads;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -28,13 +29,42 @@ class UserService
      */
     public function store(array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
+        if (isset($data['profile_photo_path'])) {
+            $file = $data['profile_photo_path'];
+
+            $path = FileUploads::upload($file, 'profiles', '', $data['name']);
+
+            // generate local thumbnail
+            FileUploads::generateLocalThumbnail($file, $path);
+
+            $data['profile_photo_path'] = $path;
         }
 
         $data['password'] = Hash::make($data['password']);
 
-        return User::create($data);
+        // Simpan user
+        $user = User::create($data);
+
+        // Jika role guru → buat relasi guru
+        if ($user->role === User::ROLE_GURU) {
+            $user->guru()->create([
+                'sekolah_id' => $data['sekolah_id'],
+                'nip' => $data['nip'],
+                'nomor_telepon' => $data['nomor_telepon'],
+                'tempat_lahir' => $data['tempat_lahir'],
+                'tanggal_lahir' => $data['tanggal_lahir'],
+            ]);
+        }
+
+        // Jika role pengurus gereja → buat relasi staff_gereja
+        if ($user->role === User::ROLE_STAFF_GEREJA) {
+            $user->staffGereja()->create([
+                'gembala_sidang' => $data['gembala_sidang'],
+                'nomor_telepon' => $data['nomor_telepon'],
+                'gereja_id' => $data['gereja_id'],
+            ]);
+        }
+        return $user;
     }
 
     /**
@@ -42,10 +72,16 @@ class UserService
      */
     public function update(User $user, array $data)
     {
-        if (isset($data['profile_path'])) {
-            $data['profile_path'] = $data['profile_path']->store('profiles', 'public');
+        if (isset($data['profile_photo_path'])) {
+            // Hapus foto profil lama di Google Drive dan Lokal
+            FileUploads::delete($user->profile_photo_path, true);
+
+            $file = $data['profile_photo_path'];
+            $path = FileUploads::upload($file, 'profiles', '', $data['name']);
+            FileUploads::generateLocalThumbnail($file, $path);
+            $data['profile_photo_path'] = $path;
         } else {
-            unset($data['profile_path']);
+            unset($data['profile_photo_path']);
         }
 
         if (!empty($data['password'])) {
@@ -62,6 +98,9 @@ class UserService
      */
     public function delete(User $user)
     {
+        // Hapus foto profil di Google Drive dan Lokal
+        FileUploads::delete($user->profile_photo_path, true);
+
         return $user->delete();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,10 +24,15 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = $this->route('user');
+        
         $rules = [
+            
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->user?->id],
-            'profile_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user?->id)],
+            'nomor_telepon' => ['nullable', 'string', 'max:15'],
+            'profile_photo_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_STAFF_GEREJA])],
         ];
 
         // Only require password on create
@@ -33,7 +40,42 @@ class UserRequest extends FormRequest
             $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['password'] = ['nullable', 'string', 'min:8', 'confirmed'];
+            $rules['status'] = ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])];
         }
+
+        if ($this->input('role') === User::ROLE_GURU) {
+            $guruRules = $this->guruRules();
+            $rules = array_merge($rules, $guruRules);
+        } elseif ($this->input('role') === User::ROLE_STAFF_GEREJA) {
+            $staffGerejaRules = $this->staffGerejaRules();
+            $rules = array_merge($rules, $staffGerejaRules);
+        }
+
         return $rules;
+    }
+
+    public function guruRules(): array
+    {
+        $user = $this->route('user');
+        $guruRules = [
+            'nip' => ['required', 'string', 'max:50', Rule::unique('gurus', 'nip')->ignore($user->guru->id ?? null, 'id')->where(function ($query) use ($user) {
+                return $query->where('user_id', $user->id ?? null);
+            })],
+            'tempat_lahir' => ['required', 'string', 'max:100'],
+            'tanggal_lahir' => ['required', 'date'],
+            'sekolah_id' => ['required', 'exists:sekolahs,id'],
+        ];
+
+        return $guruRules;
+    }
+
+    public function staffGerejaRules(): array
+    {
+        $staffGerejaRules = [
+            'gembala_sidang' => ['required', 'string', 'max:100'],
+            'gereja_id' => ['required', 'exists:gerejas,id'],
+        ];
+
+        return $staffGerejaRules;
     }
 }

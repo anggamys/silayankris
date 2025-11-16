@@ -3,32 +3,43 @@
 @section('title', 'Manajemen User')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Manajemen User</li>
+    <li class="breadcrumb-item active">Data Pengguna</li>
 @endsection
 
 @section('content')
+    <!-- Component Toast -->
+    <x-toast />
+    
     <div class="card shadow-sm border-0 mb-4 p-3">
-       
         <div class="card-header bg-white border-0 mb-2">
             {{-- Row responsive: di mobile col-12 (full), di md col-6 untuk search dan auto untuk button --}}
-            <h5 class="card-title fw-semibold">Manajemen User</h5>
+            <h5 class="card-title fw-semibold">Daftar Data Pengguna</h5>
 
             <div class="row g-2 align-items-center">
 
-                <!-- Search: full width on mobile, half on md+ -->
+                <!-- Search -->
                 <div class="col-12 col-md-6">
-                    <div class="input-group  w-100">
-                        <span class="input-group-text"><i class="bx bx-search"></i></span>
-                        <input type="text" name="search" value="{{ $search }}" class="form-control border-end-1 "
-                            placeholder="Cari nama atau email...">
-                        <button class="btn btn-outline-secondary border" type="button">Cari</button>
-                    </div>
+                    <form method="GET" class="w-100 d-flex align-items-center gap-2">
+                        {{-- Input pencarian --}}
+                        <div class="input-group ">
+                            <span class="input-group-text"><i class="bx bx-search"></i></span>
+                            <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
+                                placeholder="Cari nama atau email...">
+                            <button class="btn btn-outline-secondary border" type="submit">Cari</button>
+                        </div>
+
+                        <a href="{{ url()->current() }}"
+                            class="btn btn-outline-secondary border d-flex align-items-center gap-1">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span>Reset</span>
+                        </a>
+                    </form>
                 </div>
 
                 <!-- Button: full width on mobile, auto-width on md+ and aligned to right -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.users.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah User
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
                     </a>
                 </div>
             </div>
@@ -42,8 +53,8 @@
                             <th>#</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th class="text-center">Dibuat</th>
+                            <th>Peran</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -55,38 +66,65 @@
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     <span>
-                                        {{ ucfirst($user->role) }}
+                                        {{ $user->role == 'staff-gereja' ? 'Pengurus Gereja' : ucfirst($user->role) }}
                                     </span>
                                 </td>
-                               
-                                 <td>
+                                <td>
                                     <span
                                         class="badge w-100 {{ $user->status === 'aktif' ? 'badge bg-label-success' : ($user->status === 'nonaktif' ? 'badge bg-label-danger' : 'badge bg-label-warning') }}">
-                                       {{ ucfirst($user->status) }}
+                                        {{ ucfirst($user->status) }}
                                     </span>
                                 </td>
-                                
+
 
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-info align-items-center text-light" 
-                                        data-bs-toggle="tooltip" title="Detail">
-                                        <i class="bx bx-info-circle"></i>
-                                        Lihat
+                                    <a href="{{ route('admin.users.show', $user) }}"
+                                        class="btn btn-sm btn-info text-light">
+                                        <i class="bx bx-info-circle"></i> Lihat
                                     </a>
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning text-light"
-                                        data-bs-toggle="tooltip" title="Edit">
-                                        <i class="bx bx-pencil"></i>
-                                        Ubah
+                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                        class="btn btn-sm btn-warning text-light">
+                                        <i class="bx bx-pencil"></i> Ubah
                                     </a>
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin hapus user ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Hapus">
-                                            <i class="bx bx-trash"></i>
-                                            Hapus
-                                        </button>
-                                    </form>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modalCenter{{ $user->id }}">
+                                        <i class="bx bx-trash"></i> Hapus
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalCenter{{ $user->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Apakah anda yakin ingin menghapus
+                                                        <strong>{{ Str::limit($user->name, 15, '...') }}</strong> ?
+                                                    </p>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            Tidak
+                                                        </button>
+                                                        <form action="{{ route('admin.users.destroy', $user) }}"
+                                                            method="POST" onsubmit=" ">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger">
+                                                                <i class="bx bx-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
