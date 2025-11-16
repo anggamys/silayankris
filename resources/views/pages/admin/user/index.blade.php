@@ -91,6 +91,7 @@
                                         data-bs-target="#modalCenter{{ $user->id }}">
                                         <i class="bx bx-trash"></i> Hapus
                                     </button>
+                                    
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalCenter{{ $user->id }}" tabindex="-1"
                                         aria-hidden="true">

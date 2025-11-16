@@ -1,203 +1,267 @@
-@extends("layouts.appadmin")
+@extends('layouts.appadmin')
 
-@section("title", "Ubah Pengguna")
+@section('title', 'Ubah Pengguna')
 
-@section("breadcrumb")
-	<li class="breadcrumb-item"><a href="{{ route("admin.users.index") }}" class="text-decoration-none">Data Pengguna</a></li>
-	<li class="breadcrumb-item active" aria-current="page">Ubah Pengguna</li>
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Ubah Pengguna</li>
 @endsection
 
-@section("content")
-	<div class="card shadow-sm border-0 mb-4 p-3">
-		<div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-			<h5 class="mb-0 fw-semibold fs-4">Ubah Pengguna</h5>
+@section('content')
+    <div class="card shadow-sm border-0 mb-4 p-3">
+        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-semibold fs-4">Ubah Pengguna</h5>
 
-			<a href="{{ route("admin.users.index") }}" class="btn btn-secondary">
-				<i class="bi bi-arrow-left"></i> Batal
-			</a>
-		</div>
+            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Batal
+            </a>
+        </div>
 
-		<div class="card-body">
-			<form action="{{ route("admin.users.update", $user) }}" method="POST" enctype="multipart/form-data">
-				@csrf
-				@method("PUT")
+        <div class="card-body">
+            <form action="{{ route('admin.users.update', $user) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-				{{-- PERAN --}}
-				<div class="mb-3">
-					<label class="form-label">Peran</label>
-					<select id="role" name="role" class="form-select">
-						<option value="" disabled selected>Pilih Peran</option>
-						<option value="guru" {{ $user->role == "guru" ? "selected" : "" }}>Guru</option>
-						<option value="staff-gereja" {{ $user->role == "staff-gereja" ? "selected" : "" }}>Pengurus Gereja
-						</option>
-						<option value="admin" {{ $user->role == "admin" ? "selected" : "" }}>Admin</option>
-					</select>
-				</div>
+                {{-- PERAN --}}
+                <div class="mb-3">
+                    <label class="form-label">Peran</label>
+                    <select id="role" name="role" class="form-select">
+                        <option value="" disabled selected>Pilih Peran</option>
+                        <option value="guru" {{ $user->role == 'guru' ? 'selected' : '' }}>Guru</option>
+                        <option value="staff-gereja" {{ $user->role == 'staff-gereja' ? 'selected' : '' }}>Pengurus Gereja
+                        </option>
+                        <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                    </select>
+                </div>
 
-				<div class="mb-3">
-					<label class="form-label">Status</label>
-					<select id="status" name="status" class="form-select">
-						<option value="" disabled selected>Pilih Status</option>
-						<option value="aktif" {{ $user->status == "aktif" ? "selected" : "" }}>Aktif</option>
-						<option value="nonaktif" {{ $user->status == "nonaktif" ? "selected" : "" }}>Nonaktif</option>
-					</select>
-				</div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select id="status" name="status" class="form-select">
+                        <option value="" disabled selected>Pilih Status</option>
+                        <option value="aktif" {{ $user->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="nonaktif" {{ $user->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                    </select>
+                </div>
 
-				{{-- NAMA --}}
-				<div class="mb-3">
-					<label class="form-label">Nama</label>
-					<input type="text" name="name" class="form-control" value="{{ old("name", $user->name) }}" required>
-				</div>
+                {{-- NAMA --}}
+                <div class="mb-3">
+                    <label class="form-label">Nama</label>
+                    <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}"
+                        required>
+                </div>
 
-				{{-- EMAIL --}}
-				<div class="mb-3">
-					<label class="form-label">Email</label>
-					<input type="email" name="email" class="form-control" value="{{ old("email", $user->email) }}" required>
-				</div>
+                {{-- EMAIL --}}
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}"
+                        required>
+                </div>
 
-				{{-- NOMOR TELEPON --}}
-				<div class="mb-3">
-					<label class="form-label">Nomor Telepon</label>
-					<input type="text" name="nomor_telepon" class="form-control"
-						value="{{ old("nomor_telepon", $user->nomor_telepon) }}" required>
-				</div>
+                {{-- NOMOR TELEPON --}}
+                <div class="mb-3">
+                    <label class="form-label">Nomor Telepon</label>
+                    <input type="text" name="nomor_telepon" class="form-control"
+                        value="{{ old('nomor_telepon', $user->nomor_telepon) }}" required>
+                </div>
+                {{-- PASSWORD --}}
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                            name="password" placeholder="Kosongkan jika tidak ingin mengubah">
 
-				{{-- PASSWORD --}}
-				<div class="mb-3">
-					<label class="form-label">Password (Opsional)</label>
-					<input type="password" name="password" class="form-control" placeholder="Kosongkan jika tidak ingin mengubah">
-				</div>
+                        <button type="button" class="btn password-toggle-btn" id="togglePassword">
+                            <i class="bi bi-eye-slash"></i>
+                        </button>
 
-				{{-- CONFIRM --}}
-				<div class="mb-3">
-					<label class="form-label">Konfirmasi Password</label>
-					<input type="password" name="password_confirmation" class="form-control"
-						placeholder="Ulangi password baru jika mengubah">
-				</div>
+                    </div>
 
-				{{-- FOTO --}}
-				<div class="mb-3">
-					<label class="form-label">Foto Profil</label>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-					{{-- Preview Foto Lama --}}
-					@if ($user->profile_photo_path)
-						<div class="text-center mb-3">
-							<img src="/gdrive/preview-file?path={{ urlencode($user->profile_photo_path) }}" class="img-thumbnail rounded"
-								style="max-width: 180px; border: 2px solid #dee2e6;">
-						</div>
-					@endif
+                {{-- KONFIRMASI PASSWORD --}}
+                <div class="mb-3">
+                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
 
-					{{-- Preview foto baru --}}
-					<div class="text-center mb-3" id="photo-preview-container" style="display:none;">
-						<img id="photo-preview" src="#" class="img-thumbnail rounded" style="max-width: 180px;">
-					</div>
+                    <div class="input-group">
+                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+                            id="password_confirmation" name="password_confirmation"
+                            placeholder="Ulangi password baru jika mengubah">
 
-					<input type="file" id="profile_photo_path" name="profile_photo_path" class="form-control" accept="image/*">
-					<small class="text-muted">Kosongkan jika tidak ingin mengubah foto.</small>
-				</div>
+                        <button type="button" class="btn password-toggle-btn" id="togglePasswordConfirm">
+                            <i class="bi bi-eye-slash"></i>
+                        </button>
 
-				{{-- FORM GURU --}}
-				<div id="form-guru" style="display:none;">
-					<hr>
-					<h5>Data Guru</h5>
+                    </div>
 
-					<div class="mb-3">
-						<label class="form-label">NIP</label>
-						<input type="text" name="nip" class="form-control" value="{{ old("nip", $user->guru->nip ?? "") }}">
-					</div>
+                    @error('password_confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-					<div class="mb-3">
-						<label class="form-label">Tempat Lahir</label>
-						<input type="text" name="tempat_lahir" class="form-control"
-							value="{{ old("tempat_lahir", $user->guru->tempat_lahir ?? "") }}">
-					</div>
+                {{-- FOTO --}}
+                <div class="mb-3">
+                    <label class="form-label">Foto Profil</label>
 
-					<div class="mb-3">
-						<label class="form-label">Tanggal Lahir</label>
-						<input type="date" name="tanggal_lahir" class="form-control"
-							value="{{ old("tanggal_lahir", isset($user->guru->tanggal_lahir) && $user->guru->tanggal_lahir ? \Carbon\Carbon::parse($user->guru->tanggal_lahir)->format("Y-m-d") : "") }}">
+                    {{-- Preview Foto Lama --}}
+                    @if ($user->profile_photo_path)
+                        <div class="text-center mb-3">
+                            <img src="/gdrive/preview-file?path={{ urlencode($user->profile_photo_path) }}"
+                                class="img-thumbnail rounded" style="max-width: 180px; border: 2px solid #dee2e6;">
+                        </div>
+                    @endif
 
-					</div>
+                    {{-- Preview foto baru --}}
+                    <div class="text-center mb-3" id="photo-preview-container" style="display:none;">
+                        <img id="photo-preview" src="#" class="img-thumbnail rounded" style="max-width: 180px;">
+                    </div>
 
-					<div class="mb-3">
-						<label class="form-label">Tempat Mengajar (Sekolah)</label>
-						<select name="sekolah_id" class="form-select">
-							<option value="">Pilih Sekolah</option>
-							@foreach ($sekolahs as $sekolah)
-								<option value="{{ $sekolah->id }}" {{ optional($user->guru)->sekolah_id == $sekolah->id ? "selected" : "" }}>
-									{{ $sekolah->nama }}
-								</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
+                    <input type="file" id="profile_photo_path" name="profile_photo_path" class="form-control"
+                        accept="image/*">
+                    <small class="text-muted">Kosongkan jika tidak ingin mengubah foto.</small>
+                </div>
 
-				{{-- FORM STAFF GEREJA --}}
-				<div id="form-gereja" style="display:none;">
-					<hr>
-					<h5>Data Staff Gereja</h5>
+                {{-- FORM GURU --}}
+                <div id="form-guru" style="display:none;">
+                    <hr>
+                    <h5>Data Guru</h5>
 
-					<div class="mb-3">
-						<label class="form-label">Gembala Sidang</label>
-						<input type="text" name="gembala_sidang" class="form-control"
-							value="{{ old("gembala_sidang", $user->staffGereja->gembala_sidang ?? "") }}">
-					</div>
+                    <div class="mb-3">
+                        <label class="form-label">NIP</label>
+                        <input type="text" name="nip" class="form-control"
+                            value="{{ old('nip', $user->guru->nip ?? '') }}">
+                    </div>
 
-					<div class="mb-3">
-						<label class="form-label">Gereja</label>
-						<select name="gereja_id" class="form-select">
-							<option value="">Pilih Gereja</option>
-							@foreach ($gerejas as $gereja)
-								<option value="{{ $gereja->id }}"
-									{{ optional($user->staffGereja)->gereja_id == $gereja->id ? "selected" : "" }}>
-									{{ $gereja->nama }}
-								</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
+                    <div class="mb-3">
+                        <label class="form-label">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="form-control"
+                            value="{{ old('tempat_lahir', $user->guru->tempat_lahir ?? '') }}">
+                    </div>
 
-				<div class="d-flex justify-content-end mt-4">
-					<button type="submit" class="btn btn-primary">
-						<i class="bi bi-save me-1"></i> Simpan
-					</button>
-				</div>
-			</form>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" class="form-control"
+                            value="{{ old('tanggal_lahir', isset($user->guru->tanggal_lahir) && $user->guru->tanggal_lahir ? \Carbon\Carbon::parse($user->guru->tanggal_lahir)->format('Y-m-d') : '') }}">
 
-			<script>
-				const role = document.getElementById('role');
-				const guruForm = document.getElementById('form-guru');
-				const gerejaForm = document.getElementById('form-gereja');
+                    </div>
 
-				// Tampilkan form sesuai role user saat halaman dibuka
-				function toggleForms() {
-					guruForm.style.display = (role.value === 'guru') ? 'block' : 'none';
-					gerejaForm.style.display = (role.value === 'staff-gereja') ? 'block' : 'none';
-				}
+                    <div class="mb-3">
+                        <label class="form-label">Tempat Mengajar (Sekolah)</label>
+                        <select name="sekolah_id" class="form-select">
+                            <option value="">Pilih Sekolah</option>
+                            @foreach ($sekolahs as $sekolah)
+                                <option value="{{ $sekolah->id }}"
+                                    {{ optional($user->guru)->sekolah_id == $sekolah->id ? 'selected' : '' }}>
+                                    {{ $sekolah->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
-				toggleForms();
-				role.addEventListener('change', toggleForms);
+                {{-- FORM STAFF GEREJA --}}
+                <div id="form-gereja" style="display:none;">
+                    <hr>
+                    <h5>Data Staff Gereja</h5>
 
-				// Preview foto baru
-				const photoInput = document.getElementById('profile_photo_path');
-				const previewContainer = document.getElementById('photo-preview-container');
-				const previewImage = document.getElementById('photo-preview');
+                    <div class="mb-3">
+                        <label class="form-label">Gembala Sidang</label>
+                        <input type="text" name="gembala_sidang" class="form-control"
+                            value="{{ old('gembala_sidang', $user->staffGereja->gembala_sidang ?? '') }}">
+                    </div>
 
-				photoInput.addEventListener('change', function(e) {
-					const file = e.target.files[0];
-					if (file) {
-						const reader = new FileReader();
-						reader.onload = (e) => {
-							previewImage.src = e.target.result;
-							previewContainer.style.display = 'block';
-						};
-						reader.readAsDataURL(file);
-					} else {
-						previewContainer.style.display = 'none';
-					}
-				});
-			</script>
+                    <div class="mb-3">
+                        <label class="form-label">Gereja</label>
+                        <select name="gereja_id" class="form-select">
+                            <option value="">Pilih Gereja</option>
+                            @foreach ($gerejas as $gereja)
+                                <option value="{{ $gereja->id }}"
+                                    {{ optional($user->staffGereja)->gereja_id == $gereja->id ? 'selected' : '' }}>
+                                    {{ $gereja->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
-		</div>
-	</div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i> Simpan
+                    </button>
+                </div>
+            </form>
+
+            <style>
+                .password-toggle-btn {
+                    border-color: #ced4da !important;
+                    background-color: #f8f9fa !important;
+                }
+
+                .password-toggle-btn:hover {
+                    background-color: #e9ecef !important;
+                    border-color: #c5cbd2 !important;
+                }
+            </style>
+
+            <script>
+                const role = document.getElementById('role');
+                const guruForm = document.getElementById('form-guru');
+                const gerejaForm = document.getElementById('form-gereja');
+
+                // Tampilkan form sesuai role user saat halaman dibuka
+                function toggleForms() {
+                    guruForm.style.display = (role.value === 'guru') ? 'block' : 'none';
+                    gerejaForm.style.display = (role.value === 'staff-gereja') ? 'block' : 'none';
+                }
+
+                toggleForms();
+                role.addEventListener('change', toggleForms);
+
+                // Preview foto baru
+                const photoInput = document.getElementById('profile_photo_path');
+                const previewContainer = document.getElementById('photo-preview-container');
+                const previewImage = document.getElementById('photo-preview');
+
+                photoInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            previewImage.src = e.target.result;
+                            previewContainer.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewContainer.style.display = 'none';
+                    }
+                });
+                // ======== Show / Hide Password ==========
+                const passwordInput = document.getElementById("password");
+                const togglePassword = document.getElementById("togglePassword");
+
+                togglePassword.addEventListener("click", function() {
+                    const type = passwordInput.type === "password" ? "text" : "password";
+                    passwordInput.type = type;
+
+                    this.querySelector("i").classList.toggle("bi-eye");
+                    this.querySelector("i").classList.toggle("bi-eye-slash");
+                });
+
+                // ======== Show / Hide Password Confirmation ==========
+                const passwordConfirmInput = document.getElementById("password_confirmation");
+                const togglePasswordConfirm = document.getElementById("togglePasswordConfirm");
+
+                togglePasswordConfirm.addEventListener("click", function() {
+                    const type = passwordConfirmInput.type === "password" ? "text" : "password";
+                    passwordConfirmInput.type = type;
+
+                    this.querySelector("i").classList.toggle("bi-eye");
+                    this.querySelector("i").classList.toggle("bi-eye-slash");
+                });
+            </script>
+
+        </div>
+    </div>
 @endsection
