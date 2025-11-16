@@ -31,7 +31,7 @@
                 <div class="mb-3">
                     <label for="address" class="form-label">Alamat</label>
                     <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
-                        name="alamat" required placeholder="Masukkan alamat Institusi">
+                        name="alamat" value="{{ old('alamat') }}" required placeholder="Masukkan alamat Institusi">
                     @error('alamat')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

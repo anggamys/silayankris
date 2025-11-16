@@ -67,7 +67,7 @@
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Kel/Desa</label>
+                        <label class="form-label">Kelurahan/Desa</label>
                         <input type="text" name="kel_desa" class="form-control @error('kel_desa') is-invalid @enderror"
                             value="{{ old('kel_desa') }}" placeholder="Kelurahan / Desa">
 
@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Kab/Kota</label>
+                        <label class="form-label">Kabupaten/Kota</label>
                         <input type="text" name="kab_kota" class="form-control @error('kab_kota') is-invalid @enderror"
                             value="{{ old('kab_kota') }}" placeholder="Kabupaten / Kota">
 

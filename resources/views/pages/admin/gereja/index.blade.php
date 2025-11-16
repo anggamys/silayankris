@@ -15,7 +15,7 @@
             <h5 class="card-title fw-semibold">Manajemen Gereja</h5>
 
             <div class="row g-2 align-items-center">
-               <!-- Search -->
+                <!-- Search -->
                 <div class="col-12 col-md-6">
                     <form method="GET" class="w-100 d-flex align-items-center gap-2">
                         {{-- 🔍 Input pencarian --}}
