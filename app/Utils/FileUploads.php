@@ -4,9 +4,33 @@ namespace App\Utils;
 
 use Illuminate\Http\UploadedFile;
 use Uraymr\GoogleDrive\Gdrive;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class FileUploads
 {
+
+  public static function generateLocalThumbnail($file, $path)
+  {
+    $manager = new ImageManager(new Driver());
+
+    $image = $manager->read($file->getRealPath());
+    $image = $image->cover(150, 150);
+
+    // change extension to .jpg
+    $path = preg_replace('/\.[a-zA-Z0-9]+$/', '.jpg', $path);
+
+    $savePath = storage_path('app/public/' . $path);
+    $dir = dirname($savePath);
+    if (!is_dir($dir)) {
+      mkdir($dir, 0755, true);
+    }
+
+    $image->toJpeg(85)->save($savePath);
+
+    return $path;
+  }
+
   public static function generateFileName(string $prefix = '', string $ownerName = '')
   {
     $ownerName = str_replace(' ', '_', strtolower($ownerName));
@@ -33,8 +57,16 @@ class FileUploads
     return $filePath;
   }
 
-  public static function delete(string $path)
+  public static function delete(string $path, bool $localDelete = false)
   {
+    if ($localDelete) {
+      $path = preg_replace('/\.[a-zA-Z0-9]+$/', '.jpg', $path);
+      $fullPath = storage_path('app/public/' . $path);
+      if (is_file($fullPath)) {
+        @unlink($fullPath);
+      }
+    }
+
     if ($path && Gdrive::exists($path)) {
       Gdrive::delete($path);
     }

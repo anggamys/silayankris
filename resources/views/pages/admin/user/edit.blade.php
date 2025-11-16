@@ -26,11 +26,20 @@
 				<div class="mb-3">
 					<label class="form-label">Peran</label>
 					<select id="role" name="role" class="form-select">
-						<option value="">Pilih Peran</option>
+						<option value="" disabled selected>Pilih Peran</option>
 						<option value="guru" {{ $user->role == "guru" ? "selected" : "" }}>Guru</option>
 						<option value="staff-gereja" {{ $user->role == "staff-gereja" ? "selected" : "" }}>Pengurus Gereja
 						</option>
 						<option value="admin" {{ $user->role == "admin" ? "selected" : "" }}>Admin</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Status</label>
+					<select id="status" name="status" class="form-select">
+						<option value="" disabled selected>Pilih Status</option>
+						<option value="aktif" {{ $user->status == "aktif" ? "selected" : "" }}>Aktif</option>
+						<option value="nonaktif" {{ $user->status == "nonaktif" ? "selected" : "" }}>Nonaktif</option>
 					</select>
 				</div>
 

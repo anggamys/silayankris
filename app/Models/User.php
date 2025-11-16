@@ -37,7 +37,6 @@ class User extends Authenticatable
         'profile_photo_path',
         'nomor_telepon',
         'role',
-        
         'status',
     ];
 
