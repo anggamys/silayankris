@@ -3,7 +3,7 @@
 @section('title', 'Manajemen Gereja')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Manajemen Gereja</li>
+    <li class="breadcrumb-item active">Data Gereja</li>
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
             
-            <h5 class="card-title fw-semibold">Manajemen Gereja</h5>
+            <h5 class="card-title fw-semibold">Daftar Data Gereja</h5>
 
             <div class="row g-2 align-items-center">
                 <!-- Search -->
@@ -98,14 +98,14 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Konfirmasi</h5>
+                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
                                                         Apakah anda yakin ingin menghapus
-                                                        <strong>{{ $item->nama }}</strong> ?
+                                                        <strong>{{ Str::limit($item->nama, 15, '...') }}</strong> ?
                                                     </p>
 
                                                     <div class="modal-footer">
@@ -114,8 +114,7 @@
                                                             Tidak
                                                         </button>
                                                         <form action="{{ route('admin.gereja.destroy', $item) }}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Yakin hapus gereja ini?')">
+                                                            method="POST" onsubmit=" ">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger">
