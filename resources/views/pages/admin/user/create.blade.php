@@ -4,13 +4,13 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Tambah Pengguna</li>
+    <li class="breadcrumb-item active" aria-current="page">Tambah Data Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Tambah Pengguna</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Pengguna</h5>
 
             <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
@@ -22,7 +22,7 @@
                 <div class="mb-3">
                     <label for="role" class="form-label">Peran</label>
                     <select id="role" name="role" class="form-select">
-                        <option value="">Pilih Peran</option>
+                        <option value="" disabled selected>Pilih Peran</option>
                         <option value="guru">Guru</option>
                         <option value="staff-gereja">Pengurus Gereja</option>
                         <option value="admin">Admin</option>
@@ -138,12 +138,12 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="sekolah_id" class="form-label">Tempat Mengajar (Sekolah)</label>
+                        <label for="sekolah_id" class="form-label">Asal Sekolah Induk</label>
                         <select name="sekolah_id" class="form-select" {{ $sekolahs->isEmpty() ? 'disabled' : '' }}>
                             @if ($sekolahs->isEmpty())
                                 <option value="">Tidak ada sekolah tersedia</option>
                             @else
-                                <option value="">Pilih Sekolah</option>
+                                <option value="" disabled selected>Pilih Sekolah</option>
                                 @foreach ($sekolahs as $sekolah)
                                     <option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
                                 @endforeach
@@ -154,7 +154,6 @@
                         @enderror
                     </div>
                 </div>
-
                 {{-- Bagian untuk STAFF GEREJA --}}
                 <div id="form-gereja" style="display:none;">
                     <hr>
@@ -173,7 +172,7 @@
                             @if ($gerejas->isEmpty())
                                 <option value="">Tidak ada gereja tersedia</option>
                             @else
-                                <option value="">Pilih Gereja</option>
+                                <option value="" disabled selected>Pilih Gereja</option>
                                 @foreach ($gerejas as $gereja)
                                     <option value="{{ $gereja->id }}">{{ $gereja->nama }}</option>
                                 @endforeach
