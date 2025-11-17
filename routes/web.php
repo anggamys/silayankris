@@ -12,7 +12,7 @@ Route::get('/', function () {
     return view('pages.guest.home');
 })->name('home');
 
-Route::middleware(['auth'])->as('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('pages.admin.dashboard');
     })->name('dashboard');
@@ -27,15 +27,14 @@ Route::middleware(['auth'])->as('admin.')->group(function () {
     Route::resource('sekolah', SekolahController::class)->names('sekolah');
 
     Route::resource('per-bulan', PerBulanController::class)->names('per-bulan');
+    Route::resource('per-semester', PerBulanController::class)->names('per-semester');
+    Route::resource('per-tahun', PerBulanController::class)->names('per-tahun');
+
     Route::resource('gereja', GerejaController::class)->names('gereja');
 
     Route::get('/get-kecamatan', [LokasiController::class, 'getKecamatan'])->name('lokasi.kecamatan');
     Route::get('/get-kelurahan', [LokasiController::class, 'getKelurahan'])->name('lokasi.kelurahan');
-
 });
-
-
-
 
 require __DIR__ . '/auth.php';
 
