@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
-        <a href="{{ route('admin.berita.index') }}" class="text-decoration-none">Manajemen Berita</a>
+        <a href="{{ route('admin.berita.index') }}" class="text-decoration-none">Data Berita</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">Detail Berita</li>
 @endsection

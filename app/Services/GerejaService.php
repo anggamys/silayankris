@@ -2,20 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\Berita;
 use App\Models\Gereja;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class GerejaService
 {
     /**
-     * Get all users with optional search.
+     * Get all gereja with optional search.
      */
     public function getAll(?string $search = null)
     {
         $query = Gereja::with('staffGereja.user');
+
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%$search%")
@@ -23,43 +20,62 @@ class GerejaService
                     ->orWhere('id', $search);
             });
         }
-        return $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
+        return $query->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
     }
 
     /**
-     * Store a new user.
+     * Store a new Gereja.
      */
-    public function store(array $data)
+    public function store(array $data): Gereja
     {
+        $this->prepareJsonFields($data);
+
         return Gereja::create($data);
     }
 
     /**
-     * Update an existing user.
+     * Update an existing Gereja.
      */
-    public function update(Berita $berita, array $data)
-{
-    if (isset($data['gambar_path'])) {
-        // Hapus gambar lama jika ada
-        if ($berita->gambar_path && Storage::disk('public')->exists($berita->gambar_path)) {
-            Storage::disk('public')->delete($berita->gambar_path);
-        }
+    public function update(Gereja $gereja, array $data): Gereja
+    {
+        $this->prepareJsonFields($data);
 
-        // Simpan gambar baru
-        $data['gambar_path'] = $data['gambar_path']->store('beritas', 'public');
-    } else {
-        unset($data['gambar_path']);
+        $gereja->update($data);
+
+        return $gereja;
     }
 
-    $berita->update($data);
-    return $berita;
-}
+    /**
+     * Delete gereja
+     */
+    public function delete(Gereja $gereja): bool
+    {
+        return $gereja->delete();
+    }
 
     /**
-     * Delete a user.
+     * Format JSON fields before saving.
      */
-    public function delete(Berita $berita)
+    private function prepareJsonFields(array &$data): void
     {
-        return $berita->delete();
+        $jsonFields = [
+            'jumlah_umat',
+            'jumlah_majelis',
+            'jumlah_pemuda',
+            'jumlah_guru_sekolah_minggu',
+            'jumlah_murid_sekolah_minggu',
+        ];
+
+        foreach ($jsonFields as $field) {
+            if (isset($data[$field]) && is_array($data[$field])) {
+                $data[$field] = [
+                    'laki_laki' => $data[$field]['laki_laki'] ?? 0,
+                    'perempuan' => $data[$field]['perempuan'] ?? 0,
+                ];
+            }
+        }
     }
 }

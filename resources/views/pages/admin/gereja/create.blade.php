@@ -13,6 +13,10 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-semibold fs-4">Tambah Gereja</h5>
+            
+            <a href="{{ route('admin.gereja.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Batal
+            </a>
         </div>
 
         <div class="card-body">
@@ -23,7 +27,7 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Gereja</label>
                     <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                        value="{{ old('nama') }}" placeholder="Masukkan nama gereja" >
+                        value="{{ old('nama') }}" placeholder="Masukkan nama gereja">
 
                     @error('nama')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -66,35 +70,40 @@
                 </div>
 
                 <div class="row">
+                    {{-- Kota --}}
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Kel/Desa</label>
-                        <input type="text" name="kel_desa" class="form-control @error('kel_desa') is-invalid @enderror"
-                            value="{{ old('kel_desa') }}" placeholder="Kelurahan / Desa">
-
-                        @error('kel_desa')
+                        <label class="form-label">Kabupaten/Kota</label>
+                        <select name="kab_kota" id="kab_kota" class="form-select">
+                            <option value="">Pilih Kota</option>
+                            <option value="Surabaya">Surabaya</option>
+                        </select>
+                        @error('kab_kota')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
+                    {{-- Kecamatan --}}
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Kecamatan</label>
-                        <input type="text" name="kecamatan" class="form-control @error('kecamatan') is-invalid @enderror"
-                            value="{{ old('kecamatan') }}" placeholder="Masukkan kecamatan">
-
+                        <select name="kecamatan" id="kecamatan" class="form-select">
+                            <option value="">Pilih Kecamatan</option>
+                        </select>
                         @error('kecamatan')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
+                    {{-- Kelurahan --}}
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Kab/Kota</label>
-                        <input type="text" name="kab_kota" class="form-control @error('kab_kota') is-invalid @enderror"
-                            value="{{ old('kab_kota') }}" placeholder="Kabupaten / Kota">
-
-                        @error('kab_kota')
+                        <label class="form-label">Kelurahan / Desa</label>
+                        <select name="kel_desa" id="kel_desa" class="form-select">
+                            <option value="">Pilih Kelurahan</option>
+                        </select>
+                        @error('kel_desa')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                 </div>
 
                 {{-- Jarak Gereja Lain --}}
@@ -145,29 +154,6 @@
                     @enderror
                 </div>
 
-
-                {{-- Kontak --}}
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}"
-                            placeholder="Masukkan email gereja">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nomor Telepon</label>
-                        <input type="text" name="nomor_telepon" class="form-control"
-                            value="{{ old('nomor_telepon') }}" placeholder="Masukkan nomor telepon">
-                    </div>
-                </div>
-
-                {{-- Nama Pendeta --}}
-                <div class="mb-3">
-                    <label class="form-label">Nama Pendeta</label>
-                    <input type="text" name="nama_pendeta" class="form-control" value="{{ old('nama_pendeta') }}"
-                        placeholder="Masukkan nama pendeta">
-                </div>
-
-
                 {{-- Status Gereja --}}
                 <div class="mb-3">
                     <label class="form-label">Status Gereja</label>
@@ -195,7 +181,8 @@
 
                         <div class="input-group mb-1">
                             <input type="number" name="jumlah_umat[laki_laki]" class="form-control"
-                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_umat.laki_laki', 0) }}"  min="0">
+                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_umat.laki_laki', 0) }}"
+                                min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Laki-laki
@@ -214,9 +201,9 @@
                                 Perempuan
                             </span>
                         </div>
-                         @error('jumlah_umat.perempuan')
+                        @error('jumlah_umat.perempuan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
-                         @enderror
+                        @enderror
                     </div>
 
                     {{-- Jumlah Majelis --}}
@@ -232,7 +219,7 @@
                                 Laki-laki
                             </span>
                         </div>
-                         @error('jumlah_majelis.laki_laki')
+                        @error('jumlah_majelis.laki_laki')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
 
@@ -245,7 +232,7 @@
                                 Perempuan
                             </span>
                         </div>
-                          @error('jumlah_majelis.perempuan')
+                        @error('jumlah_majelis.perempuan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
@@ -263,10 +250,10 @@
                                 Laki-laki
                             </span>
                         </div>
-                         @error('jumlah_pemuda.laki_laki')
+                        @error('jumlah_pemuda.laki_laki')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
-                        
+
                         <div class="input-group">
                             <input type="number" name="jumlah_pemuda[perempuan]" class="form-control"
                                 placeholder="Jumlah perempuan" value="{{ old('jumlah_pemuda.perempuan', 0) }}"
@@ -276,9 +263,9 @@
                                 Perempuan
                             </span>
                         </div>
-                         @error('jumlah_pemuda.perempuan')
+                        @error('jumlah_pemuda.perempuan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
-                         @enderror
+                        @enderror
                     </div>
 
                     {{-- Jumlah Guru Sekolah Minggu --}}
@@ -294,10 +281,10 @@
                                 Laki-laki
                             </span>
                         </div>
-                         @error('jumlah_guru_sekolah_minggu.laki_laki')
+                        @error('jumlah_guru_sekolah_minggu.laki_laki')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
-                        
+
                         <div class="input-group">
                             <input type="number" name="jumlah_guru_sekolah_minggu[perempuan]" class="form-control"
                                 placeholder="Jumlah perempuan"
@@ -307,9 +294,9 @@
                                 Perempuan
                             </span>
                         </div>
-                         @error('jumlah_guru_sekolah_minggu.perempuan')
+                        @error('jumlah_guru_sekolah_minggu.perempuan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
-                         @enderror
+                        @enderror
                     </div>
 
                     {{-- Jumlah Murid Sekolah Minggu --}}
@@ -325,10 +312,10 @@
                                 Laki-laki
                             </span>
                         </div>
-                         @error('jumlah_murid_sekolah_minggu.laki_laki')
+                        @error('jumlah_murid_sekolah_minggu.laki_laki')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
-                      
+
                         <div class="input-group">
                             <input type="number" name="jumlah_murid_sekolah_minggu[perempuan]" class="form-control"
                                 placeholder="Jumlah perempuan"
@@ -338,21 +325,58 @@
                                 Perempuan
                             </span>
                         </div>
-                           @error('jumlah_murid_sekolah_minggu.perempuan')
+                        @error('jumlah_murid_sekolah_minggu.perempuan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
-                         @enderror
+                        @enderror
                     </div>
 
                     {{-- Tombol --}}
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('admin.gereja.index') }}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i> Kembali
-                        </a>
-                        <button type="submit" class="btn btn-success">
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary">
                             <i class="bi bi-save me-1"></i> Simpan
                         </button>
                     </div>
             </form>
+
+            <script>
+                const kotaSelect = document.getElementById("kab_kota");
+                const kecSelect = document.getElementById("kecamatan");
+                const kelSelect = document.getElementById("kel_desa");
+
+                kotaSelect.addEventListener("change", function() {
+                    let kota = this.value;
+
+                    kecSelect.innerHTML = `<option value="">Pilih Kecamatan</option>`;
+                    kelSelect.innerHTML = `<option value="">Pilih Kelurahan</option>`;
+
+                    if (!kota) return;
+
+                    fetch(`/get-kecamatan?kota=${kota}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(kec => {
+                                kecSelect.innerHTML += `<option value="${kec}">${kec}</option>`;
+                            });
+                        });
+                });
+
+                // Load Kelurahan ketika Kecamatan dipilih
+                kecSelect.addEventListener("change", function() {
+                    let kota = kotaSelect.value;
+                    let kecamatan = this.value;
+
+                    kelSelect.innerHTML = `<option value="">Pilih Kelurahan</option>`;
+
+                    fetch(`/get-kelurahan?kota=${kota}&kecamatan=${kecamatan}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(kel => {
+                                kelSelect.innerHTML += `<option value="${kel}">${kel}</option>`;
+                            });
+                        });
+                });
+            </script>
+
         </div>
     </div>
 @endsection

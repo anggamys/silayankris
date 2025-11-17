@@ -30,7 +30,14 @@ class UserService
     public function store(array $data)
     {
         if (isset($data['profile_photo_path'])) {
-            $data['profile_photo_path'] = FileUploads::upload($data['profile_photo_path'], 'profiles', '', $data['name']);
+            $file = $data['profile_photo_path'];
+
+            $path = FileUploads::upload($file, 'profiles', '', $data['name']);
+
+            // generate local thumbnail
+            FileUploads::generateLocalThumbnail($file, $path);
+
+            $data['profile_photo_path'] = $path;
         }
 
         $data['password'] = Hash::make($data['password']);
@@ -66,10 +73,13 @@ class UserService
     public function update(User $user, array $data)
     {
         if (isset($data['profile_photo_path'])) {
-            // Hapus foto profil lama
-            FileUploads::delete($user->profile_photo_path);
+            // Hapus foto profil lama di Google Drive dan Lokal
+            FileUploads::delete($user->profile_photo_path, true);
 
-            $data['profile_photo_path'] = FileUploads::upload($data['profile_photo_path'], 'profiles', '', $data['name']);
+            $file = $data['profile_photo_path'];
+            $path = FileUploads::upload($file, 'profiles', '', $data['name']);
+            FileUploads::generateLocalThumbnail($file, $path);
+            $data['profile_photo_path'] = $path;
         } else {
             unset($data['profile_photo_path']);
         }
@@ -88,6 +98,9 @@ class UserService
      */
     public function delete(User $user)
     {
+        // Hapus foto profil di Google Drive dan Lokal
+        FileUploads::delete($user->profile_photo_path, true);
+
         return $user->delete();
     }
 }

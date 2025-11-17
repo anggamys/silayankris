@@ -38,7 +38,6 @@ class UserRequest extends FormRequest
         // Only require password on create
         if ($this->isMethod('post')) {
             $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
-            $rules['status'] = ['nullable', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])];
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['password'] = ['nullable', 'string', 'min:8', 'confirmed'];
             $rules['status'] = ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])];
