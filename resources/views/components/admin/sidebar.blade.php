@@ -48,13 +48,13 @@
 		</li>
 
 		<li class="menu-item {{ request()->is(ltrim("berita*", "/")) ? "active" : "" }}">
-			<a href="/berita" class="menu-link text-decoration-none">
+			<a href="{{ route("admin.berita.index") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bx bx-news"></i>
 				<div>Data Berita</div>
 			</a>
 		</li>
 		<li class="menu-item {{ request()->is(ltrim("gereja*", "/")) ? "active" : "" }}">
-			<a href="/gereja" class="menu-link text-decoration-none">
+			<a href="{{ route("admin.gereja.index") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bi bi-hospital"></i>
 				<div>Data Gereja</div>
 			</a>
@@ -62,21 +62,21 @@
 		<li class="menu-item">
 			<a href="" class="menu-link menu-toggle text-decoration-none">
 				<i class="menu-icon tf-icons bx bx-folder"></i>
-				<div data-i18n="Account Settings">Berkas TPG Guru</div>
+				<div data-i18n="Berkas TPG Guru">Berkas TPG Guru</div>
 			</a>
 			<ul class="menu-sub">
-				<li class="menu-item {{ request()->is(ltrim("per-bulan*", "/")) ? "active" : "" }}">
-					<a href="/per-bulan" class="menu-link text-decoration-none">
+				<li class="menu-item {{ request()->is("admin/per-bulan*") ? "active" : "" }}">
+					<a href="{{ route("admin.per-bulan.index") }}" class="menu-link text-decoration-none">
 						<div>Perbulan</div>
 					</a>
 				</li>
-				<li class="menu-item {{ request()->is(ltrim("per-semester*", "/")) ? "active" : "" }}">
-					<a href="/per-semester" class="menu-link text-decoration-none">
+				<li class="menu-item {{ request()->is("admin/per-semester*") ? "active" : "" }}">
+					<a href="{{ route("admin.per-semester.index") }}" class="menu-link text-decoration-none">
 						<div>Persemester</div>
 					</a>
 				</li>
-				<li class="menu-item {{ request()->is(ltrim("per-tahun*", "/")) ? "active" : "" }}">
-					<a href="/per-tahun" class="menu-link text-decoration-none">
+				<li class="menu-item {{ request()->is("admin/per-tahun*") ? "active" : "" }}">
+					<a href="{{ route("admin.per-tahun.index") }}" class="menu-link text-decoration-none">
 						<div>Pertahun</div>
 					</a>
 				</li>
