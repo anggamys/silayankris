@@ -100,7 +100,7 @@ class UserController extends Controller
     {
         Gate::authorize('update', $user);
         $this->service->update($user, $request->validated());
-        return redirect()->route('admin.users.show', $user)->with('success', ' Data Pengguna berhasil diperbarui.');
+        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil diperbarui.');
     }
 
     /**
