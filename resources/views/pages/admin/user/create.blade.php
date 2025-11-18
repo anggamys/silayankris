@@ -184,9 +184,9 @@
 							<label for="gereja_id" class="form-label">Gereja</label>
 							<select name="gereja_id" class="form-select" {{ $gerejas->isEmpty() ? "disabled" : "" }}>
 								@if ($gerejas->isEmpty())
-									<option value="">Tidak ada gereja tersedia</option>
+									<option value="" disabled selected>Tidak ada gereja tersedia</option>
 								@else
-									<option value="">Pilih Gereja</option>
+									<option value="" disabled selected>Pilih Gereja</option>
 									@foreach ($gerejas as $gereja)
 										<option value="{{ $gereja->id }}" {{ old("gereja_id") == $gereja->id ? "selected" : "" }}>
 											{{ $gereja->nama }}
@@ -230,7 +230,7 @@
 
 					newGroup.innerHTML = `
         <select name="sekolah_id[]" class="form-select">
-            <option value="">Pilih Sekolah</option>
+            <option value="" disabled selected>Pilih Sekolah</option>
             @foreach ($sekolahs as $sekolah)
                 <option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
             @endforeach

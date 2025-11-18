@@ -5,13 +5,13 @@
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Sekolah</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Detail Sekolah</li>
+    <li class="breadcrumb-item active" aria-current="page">Detail Data Sekolah</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Detail Sekolah</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Detail Data Sekolah</h5>
 
             <a href="{{ route('admin.sekolah.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali

@@ -4,13 +4,13 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Ubah Pengguna</li>
+    <li class="breadcrumb-item active" aria-current="page">Ubah Data Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Ubah Pengguna</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Ubah Data Pengguna</h5>
 
             <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
@@ -148,9 +148,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Tempat Mengajar (Sekolah)</label>
+                        <label class="form-label">Asal Sekolah Induk</label>
                         <select name="sekolah_id" class="form-select">
-                            <option value="">Pilih Sekolah</option>
+                            <option value="" disabled selected>Pilih Sekolah</option>
                             @foreach ($sekolahs as $sekolah)
                                 <option value="{{ $sekolah->id }}"
                                     {{ optional($user->guru)->sekolah_id == $sekolah->id ? 'selected' : '' }}>
@@ -175,7 +175,7 @@
                     <div class="mb-3">
                         <label class="form-label">Gereja</label>
                         <select name="gereja_id" class="form-select">
-                            <option value="">Pilih Gereja</option>
+                            <option value="" disabled selected>Pilih Gereja</option>
                             @foreach ($gerejas as $gereja)
                                 <option value="{{ $gereja->id }}"
                                     {{ optional($user->staffGereja)->gereja_id == $gereja->id ? 'selected' : '' }}>

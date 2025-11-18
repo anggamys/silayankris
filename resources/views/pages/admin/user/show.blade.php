@@ -4,13 +4,13 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Detail Pengguna</li>
+    <li class="breadcrumb-item active" aria-current="page">Detail Data Pengguna</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Detail Pengguna</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Detail Data Pengguna</h5>
 
             <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Tempat Mengajar (Sekolah)</label>
+                    <label class="form-label">Asal Sekolah Induk</label>
                     <select class="form-select" disabled>
                         <option value="">Pilih Sekolah</option>
                         @foreach ($sekolahs as $sekolah)
