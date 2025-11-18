@@ -10,8 +10,8 @@ private $data = [
     'Surabaya' => [
 
         // 1. Asemrowo
-        'Asemrowo' => [
-            'Asemrowo',
+        'Asem Rowo' => [
+            'Asem Rowo',
             'Genting Kalianak',
             'Tambak Sarioso'
         ],
@@ -21,7 +21,7 @@ private $data = [
             'Kandangan',
             'Romokalisari',
             'Sememi',
-            'Tambak Osowilangun'
+            'Tambak Oso Wilangun'
         ],
 
         // 3. Bubutan
@@ -66,21 +66,22 @@ private $data = [
             'Peneleh'
         ],
 
-                // 8. Gubeng
+        // 8. Gubeng
         'Gubeng' => [
             'Airlangga',
             'Baratajaya',
             'Gubeng',
             'Kertajaya',
             'Mojo',
-            'Pucangsewu'
+            'Pucang sewu'
         ],
 
         // 9. Gunung Anyar
         'Gunung Anyar' => [
             'Gunung Anyar',
             'Gunung Anyar Tambak',
-            'Rungkut Menanggal'
+            'Rungkut Menanggal',
+            'Rungkut Tengah'
         ],
 
         // 10. Jambangan
@@ -96,23 +97,24 @@ private $data = [
             'Karang Pilang',
             'Kebraon',
             'Kedurus',
-            'Warugunung'
+            'Waru Gunung'
         ],
 
         // 12. Kenjeran
         'Kenjeran' => [
             'Bulak Banteng',
             'Sidotopo Wetan',
+            'Tambak Wedi',
             'Tanah Kali Kedinding'
         ],
 
-                // 13. Krembangan
+        // 13. Krembangan
         'Krembangan' => [
+            'Dupak',
+            'Kemayoran',
             'Krembangan Selatan',
-            'Krembangan Utara',
             'Morokrembangan',
             'Perak Barat',
-            'Perak Timur'
         ],
 
         // 14. Lakarsantri
@@ -122,16 +124,17 @@ private $data = [
             'Lakarsantri',
             'Lidah Kulon',
             'Lidah Wetan',
-            'Sumur Welut'
+            'Sumurwelut'
         ],
 
         // 15. Mulyorejo
         'Mulyorejo' => [
+            'Dukuh Sutorejo',
             'Kalijudan',
             'Kalisari',
-            'Kedung Cowek',
-            'Mulyorejo',
-            'Manyar Sabrangan'
+            'Kejawan Putih Tambak',
+            'Manyar Sabrangan',
+            'Mulyorejo'
         ],
 
         // 16. Pabean Cantikan
@@ -139,40 +142,43 @@ private $data = [
             'Bongkaran',
             'Krembangan Selatan',
             'Nyamplungan',
-            'Perak Utara'
+            'Tanjung Perak'
         ],
 
         // 17. Pakal
         'Pakal' => [
             'Babat Jerawat',
-            'Karang Pilang (Pakal)',
+            'Benowo',
             'Pakal',
             'Sumber Rejo'
         ],
 
-                // 18. Rungkut
+        // 18. Rungkut
         'Rungkut' => [
+            'Kalirungkut',
             'Kedung Baruk',
             'Medokan Ayu',
-            'Pendem',
+            'Penjaringansari',
             'Rungkut Kidul',
-            'Rungkut Menanggal'
+            'Wonorejo Rungkut'
         ],
 
         // 19. Sambikerep
         'Sambikerep' => [
             'Bringin',
+            'Lontar',
             'Made',
             'Sambikerep'
         ],
 
         // 20. Sawahan
         'Sawahan' => [
+            'Banyu Urip',
             'Kupang Krajan',
             'Pakis',
             'Patemon',
+            'Putat Jaya',
             'Sawahan',
-            'Tanjungsari'
         ],
 
         // 21. Semampir
@@ -189,34 +195,38 @@ private $data = [
             'Kapasan',
             'Sidodadi',
             'Simokerto',
+            'Simolawang',
             'Tambakrejo'
         ],
 
-                // 23. Sukolilo
+        // 23. Sukolilo
         'Sukolilo' => [
             'Gebang Putih',
             'Keputih',
             'Klampis Ngasem',
             'Medokan Semampir',
+            'Menur Pumpungan',
             'Nginden Jangkungan',
             'Semolowaru'
         ],
 
         // 24. Sukomanunggal
         'Sukomanunggal' => [
-            'Putat Jaya',
-            'Sawunggaling',
+            'Putat Gede',
             'Simomulyo',
             'Simomulyo Baru',
-            'Sukomanunggal'
+            'Sonokwijenan',
+            'Sukomanunggal',
+            'Tanjungsari'
         ],
 
         // 25. Tambaksari
         'Tambaksari' => [
+            'Dukuh Setro',
             'Gading',
             'Kapasmadya Baru',
-            'Pacar Keling',
-            'Pacar Kembang',
+            'PacarKeling',
+            'PacarKembang',
             'Ploso',
             'Rangkah',
             'Tambaksari'
@@ -226,6 +236,7 @@ private $data = [
         'Tandes' => [
             'Balongsari',
             'Banjar Sugihan',
+            'Karang Poh',
             'Manukan Kulon',
             'Manukan Wetan',
             'Tandes'
@@ -237,17 +248,26 @@ private $data = [
             'Kedungdoro',
             'Keputran',
             'Tegalsari',
-            'Wonorejo'
+            'Wonorejo Tegalsari'
         ],
 
-                // 28. Wiyung
+        // 28. Tenggilis Mejoyo
+        'Tenggilis Mejoyo' => [
+            'Kendangsari',
+            'Kutisari',
+            'Panjang Jiwa',
+            'Tenggilis Mejoyo'
+        ],
+
+        // 29. Wiyung
         'Wiyung' => [
-            'Balasklumprik',
+            'Babatan',
+            'Balas Klumprik',
             'Jajar Tunggal',
             'Wiyung'
         ],
 
-        // 29. Wonocolo
+        // 30. Wonocolo
         'Wonocolo' => [
             'Bendul Merisi',
             'Jemur Wonosari',
@@ -256,12 +276,12 @@ private $data = [
             'Siwalankerto'
         ],
 
-        // 30. Wonokromo
+        // 31. Wonokromo
         'Wonokromo' => [
             'Darmo',
             'Jagir',
             'Ngagel',
-            'Ngagelrejo',
+            'Ngagel rejo',
             'Sawunggaling',
             'Wonokromo'
         ]
