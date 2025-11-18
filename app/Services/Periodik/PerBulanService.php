@@ -26,6 +26,41 @@ class PerBulanService
 
   public function store(array $data, User $user)
   {
+    // Pastikan kolom non-nullable memiliki default jika tidak dikirimkan
+    $defaults = [
+      'daftar_gaji_path' => '',
+      'daftar_hadir_path' => '',
+      'rekening_bank_path' => '',
+      'ceklist_berkas' => '',
+      'status' => 'menunggu',
+    ];
+
+    $data = array_merge($defaults, $data);
+
+    $paths = [
+      'daftar_gaji_path' => 'daftar_gaji',
+      'daftar_hadir_path' => 'daftar_hadir',
+      'rekening_bank_path' => 'rekening_bank',
+    ];
+
+    foreach ($paths as $key => $type) {
+      if (!empty($data[$key]) && $data[$key] instanceof \Illuminate\Http\UploadedFile) {
+        $data[$key] = FileUploads::upload(
+          $data[$key],
+          'periodik/perbulan',
+          $type,
+          $user->name
+        );
+      }
+    }
+
+    // Simpan data ke database
+    return PerBulan::create($data);
+    
+  }
+
+  public function update(array $data, PerBulan $perBulan, User $user)
+  {
     $paths = [
       'daftar_gaji_path' => 'daftar_gaji',
       'daftar_hadir_path' => 'daftar_hadir',
@@ -43,7 +78,9 @@ class PerBulanService
       }
     }
 
-    // Simpan data ke database
-    return PerBulan::create($data);
+    // Update data di database
+    $perBulan->update($data);
+
+    return $perBulan;
   }
 }
