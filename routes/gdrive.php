@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Uraymr\GoogleDrive\Gdrive;
 
 
-Route::prefix('gdrive')->group(function () {
+Route::middleware(['auth'])->prefix('gdrive')->group(function () {
   // Health check for Google Drive connection
   Route::get('/health', function () {
     Gdrive::healthCheck();
@@ -181,5 +181,5 @@ Route::prefix('gdrive')->group(function () {
       ], 404);
     }
     return $response;
-  });
+  })->name('gdrive.preview');
 });

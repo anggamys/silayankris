@@ -21,9 +21,16 @@
 
 			{{-- FOTO PROFIL --}}
 			<div class="text-center mb-3">
+				@php
+					// change ext to jpg
+					$profile_photo_path = str_replace(
+					    "." . pathinfo($user->profile_photo_path, PATHINFO_EXTENSION),
+					    ".jpg",
+					    $user->profile_photo_path,
+					);
+				@endphp
 				@if ($user->profile_photo_path)
-					<img src="/gdrive/preview-file?path={{ urlencode($user->profile_photo_path) }}" class="img-thumbnail rounded"
-						style="max-width: 180px;">
+					<img src="{{ asset("storage/" . $profile_photo_path) }}" class="img-thumbnail rounded" style="max-width: 180px;">
 				@else
 					<img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}" class="img-thumbnail rounded"
 						style="max-width: 180px;">

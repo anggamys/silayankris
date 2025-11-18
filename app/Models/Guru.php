@@ -40,4 +40,12 @@ class Guru extends Model
     {
         return $this->belongsToMany(Sekolah::class, 'guru_sekolahs')->withTimestamps();
     }
+
+    /**
+     * Relasi: setiap guru terhubung dengan satu user.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

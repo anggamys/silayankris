@@ -103,9 +103,18 @@
 					<label class="form-label">Foto Profil</label>
 
 					{{-- Preview Foto Lama --}}
+					@php
+						// change ext to jpg
+						$profile_photo_path = str_replace(
+						    "." . pathinfo($user->profile_photo_path, PATHINFO_EXTENSION),
+						    ".jpg",
+						    $user->profile_photo_path,
+						);
+					@endphp
+
 					@if ($user->profile_photo_path)
 						<div class="text-center mb-3">
-							<img src="/gdrive/preview-file?path={{ urlencode($user->profile_photo_path) }}" class="img-thumbnail rounded"
+							<img src="{{ asset("storage/" . $profile_photo_path) }}" class="img-thumbnail rounded"
 								style="max-width: 180px; border: 2px solid #dee2e6;">
 						</div>
 					@endif

@@ -5,6 +5,7 @@ namespace App\Services\Periodik;
 use App\Models\PerBulan;
 use App\Models\User;
 use App\Utils\FileUploads;
+use Illuminate\Http\UploadedFile;
 
 class PerBulanService
 {
@@ -26,17 +27,6 @@ class PerBulanService
 
   public function store(array $data, User $user)
   {
-    // Pastikan kolom non-nullable memiliki default jika tidak dikirimkan
-    $defaults = [
-      'daftar_gaji_path' => '',
-      'daftar_hadir_path' => '',
-      'rekening_bank_path' => '',
-      'ceklist_berkas' => '',
-      'status' => 'menunggu',
-    ];
-
-    $data = array_merge($defaults, $data);
-
     $paths = [
       'daftar_gaji_path' => 'daftar_gaji',
       'daftar_hadir_path' => 'daftar_hadir',
@@ -44,7 +34,7 @@ class PerBulanService
     ];
 
     foreach ($paths as $key => $type) {
-      if (!empty($data[$key]) && $data[$key] instanceof \Illuminate\Http\UploadedFile) {
+      if (!empty($data[$key]) && $data[$key] instanceof UploadedFile) {
         $data[$key] = FileUploads::upload(
           $data[$key],
           'periodik/perbulan',
@@ -56,7 +46,6 @@ class PerBulanService
 
     // Simpan data ke database
     return PerBulan::create($data);
-    
   }
 
   public function update(array $data, PerBulan $perBulan, User $user)
@@ -68,7 +57,9 @@ class PerBulanService
     ];
 
     foreach ($paths as $key => $type) {
-      if (!empty($data[$key])) {
+      if (!empty($data[$key]) && $data[$key] instanceof UploadedFile) {
+        FileUploads::delete($perBulan->$key);
+
         $data[$key] = FileUploads::upload(
           $data[$key],
           'periodik/perbulan',

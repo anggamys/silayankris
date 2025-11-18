@@ -92,6 +92,8 @@ class PerBulanController extends Controller
     {
         Gate::authorize('update', $perBulan);
 
+        $perBulan->load('guru.user');
+
         $gurus = Guru::all();
 
         return view('pages.admin.per-bulan.edit', compact('perBulan', 'gurus'));
@@ -100,7 +102,7 @@ class PerBulanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PerBulanRequest $request, PerBulan $perBulan)    
+    public function update(PerBulanRequest $request, PerBulan $perBulan)
     {
         Gate::authorize('update', $perBulan);
 

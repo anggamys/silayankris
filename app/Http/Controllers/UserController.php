@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         Gate::authorize('create', User::class);
         $user = $this->service->store($request->validated());
-        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil ditambahkan.');
+        return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
     }
 
     /**
