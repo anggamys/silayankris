@@ -16,7 +16,7 @@
 
 	<ul class="menu-inner py-1 flex-grow-1">
 		<!-- Dashboard -->
-		<li class="menu-item {{ request()->is(ltrim("dashboard", "/")) ? "active" : "" }}">
+		<li class="menu-item {{ request()->is("admin/dashboard*") ? "active" : "" }}">
 			<a href="{{ route("admin.dashboard") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bx bx-home-circle"></i>
 				<div>Dashboard</div>
@@ -28,15 +28,15 @@
 			<span class="menu-header-text">Master Data</span>
 		</li>
 
-		<li class="menu-item {{ request()->is(ltrim("users*", "/")) ? "active" : "" }}">
-			<a href="/users" class="menu-link text-decoration-none">
+		<li class="menu-item {{ request()->is("admin/users*") ? "active" : "" }}">
+			<a href="{{ route("admin.users.index") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bx bx-user"></i>
 				<div>Data Pengguna</div>
 			</a>
 		</li>
 
-		<li class="menu-item {{ request()->is(ltrim("sekolah*", "/")) ? "active" : "" }}">
-			<a href="/sekolah" class="menu-link text-decoration-none">
+		<li class="menu-item {{ request()->is("admin/sekolah*") ? "active" : "" }}">
+			<a href="{{ route("admin.sekolah.index") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bx bx-building"></i>
 				<div>Data Sekolah</div>
 			</a>
@@ -47,13 +47,13 @@
 			<span class="menu-header-text">Pendataan</span>
 		</li>
 
-		<li class="menu-item {{ request()->is(ltrim("berita*", "/")) ? "active" : "" }}">
+		<li class="menu-item {{ request()->is("admin/berita*") ? "active" : "" }}">
 			<a href="{{ route("admin.berita.index") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bx bx-news"></i>
 				<div>Data Berita</div>
 			</a>
 		</li>
-		<li class="menu-item {{ request()->is(ltrim("gereja*", "/")) ? "active" : "" }}">
+		<li class="menu-item {{ request()->is("admin/gereja*") ? "active" : "" }}">
 			<a href="{{ route("admin.gereja.index") }}" class="menu-link text-decoration-none">
 				<i class="menu-icon tf-icons bi bi-hospital"></i>
 				<div>Data Gereja</div>
