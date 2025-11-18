@@ -25,9 +25,9 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         $user = $this->route('user');
-        
+
         $rules = [
-            
+
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user?->id)],
             'nomor_telepon' => ['nullable', 'string', 'max:15'],
@@ -58,12 +58,20 @@ class UserRequest extends FormRequest
     {
         $user = $this->route('user');
         $guruRules = [
-            'nip' => ['required', 'string', 'max:50', Rule::unique('gurus', 'nip')->ignore($user->guru->id ?? null, 'id')->where(function ($query) use ($user) {
-                return $query->where('user_id', $user->id ?? null);
-            })],
+            'nip' => [
+                'required',
+                'string',
+                'max:50',
+                $this->isMethod('post')
+                    ? Rule::unique('gurus', 'nip')
+                    : Rule::unique('gurus', 'nip')
+                    ->ignore(optional($user->guru)->id)
+                    ->where(fn($q) => $q->where('user_id', $user->id))
+            ],
             'tempat_lahir' => ['required', 'string', 'max:100'],
             'tanggal_lahir' => ['required', 'date'],
-            'sekolah_id' => ['required', 'exists:sekolahs,id'],
+            'sekolah_id' => ['required', 'array'],
+            'sekolah_id.*' => ['exists:sekolahs,id']
         ];
 
         return $guruRules;
