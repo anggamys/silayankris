@@ -133,8 +133,6 @@
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
-
-
                 </div>
 
                 {{-- Jarak Gereja Lain --}}

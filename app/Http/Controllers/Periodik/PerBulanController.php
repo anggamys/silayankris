@@ -82,7 +82,11 @@ class PerBulanController extends Controller
      */
     public function show(PerBulan $perBulan)
     {
-        //
+        Gate::authorize('view', $perBulan);
+
+        $perBulan->load('guru.user');
+
+        return view('pages.admin.per-bulan.show', compact('perBulan'));
     }
 
     /**
