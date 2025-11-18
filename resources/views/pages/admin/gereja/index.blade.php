@@ -37,7 +37,7 @@
                 <!-- Button tambah -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.gereja.create') }}" class="btn btn-primary w-100 w-md-auto">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah Gereja
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
                     </a>
                 </div>
             </div>

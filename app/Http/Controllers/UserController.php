@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         Gate::authorize('create', User::class);
         $user = $this->service->store($request->validated());
-        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil ditambahkan.');
+        return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -71,7 +71,9 @@ class UserController extends Controller
     public function show(User $user)
     {
         Gate::authorize('view', $user);
-        // provide related lists used by the show view (selects)
+
+        $user->load(['guru.sekolah', 'staffGereja']);
+
         $sekolahs = Sekolah::all();
         $gerejas = Gereja::all();
 
@@ -85,7 +87,7 @@ class UserController extends Controller
     {
         Gate::authorize('update', $user);
 
-        $user->load(['guru', 'staffGereja']);
+        $user->load(['guru.sekolah', 'staffGereja']);
 
         $sekolahs = Sekolah::all();
         $gerejas = Gereja::all();

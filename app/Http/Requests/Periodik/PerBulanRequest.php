@@ -23,6 +23,7 @@ class PerBulanRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            'guru_id' => ['required', 'exists:gurus,id'],
             'daftar_gaji_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'daftar_hadir_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'rekening_bank_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],

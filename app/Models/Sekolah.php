@@ -24,10 +24,10 @@ class Sekolah extends Model
     ];
 
     /**
-     * Relasi: satu sekolah memiliki banyak guru.
+     * Relasi: satu sekolah bisa memiliki banyak guru (many-to-many).
      */
-    public function gurus()
+    public function guru()
     {
-        return $this->hasMany(Guru::class);
+        return $this->belongsToMany(Guru::class, 'guru_sekolahs')->withTimestamps();
     }
 }

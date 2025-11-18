@@ -67,9 +67,10 @@ class PerBulanController extends Controller
 
         $user = Auth::user();
 
-        // Jika pengguna admin, set pemilik berkas sebagai guru yang dipilih
+        // Jika pengguna admin, set pemilik berkas sebagai user milik guru yang dipilih
         if ($user->role === User::ROLE_ADMIN) {
-            $user = Guru::findOrFail($request['guru_id']);
+            $guru = Guru::findOrFail($request['guru_id']);
+            $user = $guru->user ?? $user; // pass the related User model to the service, fallback to current user
         }
 
         $this->service->store($request->all(), $user);
@@ -89,15 +90,34 @@ class PerBulanController extends Controller
      */
     public function edit(PerBulan $perBulan)
     {
-        //
+        Gate::authorize('update', $perBulan);
+
+        $perBulan->load('guru.user');
+
+        $gurus = Guru::all();
+
+        return view('pages.admin.per-bulan.edit', compact('perBulan', 'gurus'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PerBulan $perBulan)
+    public function update(PerBulanRequest $request, PerBulan $perBulan)
     {
-        //
+        Gate::authorize('update', $perBulan);
+
+        $user = Auth::user();
+
+        // Jika admin, data akan dimiliki oleh user milik guru yang dipilih
+        if ($user->role === User::ROLE_ADMIN) {
+            $guru = Guru::findOrFail($request['guru_id']);
+            $user = $guru->user ?? $user; // pass the related User model to the service, fallback to current user
+        }
+
+        $this->service->update($request->all(), $perBulan, $user);
+
+        return redirect()->route('admin.per-bulan.index')
+            ->with('success', 'Data per bulan berhasil diperbarui');
     }
 
     /**
