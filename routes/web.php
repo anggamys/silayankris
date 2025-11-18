@@ -12,9 +12,7 @@ Route::get('/', function () {
     return view('pages.guest.home');
 })->name('home');
 
-Route::get('/news', function () {
-    return view('pages.guest.news');
-})->name('news');
+Route::get('/news', [BeritaController::class, 'indexBerita'])->name('news');
 
 Route::middleware(['auth'])->as('admin.')->group(function () {
     Route::get('/dashboard', function () {

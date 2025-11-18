@@ -4,7 +4,8 @@
 
 {{-- Landing Page --}}
 @section('content')
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+
+    <nav class="navbar navbar-expand-lg border-bottom  bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
                 SILAYANKRIS
@@ -17,14 +18,17 @@
             @endauth
         </div>
     </nav>
+    <div class="container-fluid  py-4 bg-primary text-light">
+    <div class="container pb-3 ">
+        <h1 class="fw-bold mb-2">Berita</h1>
+        <p class="text-light fs-6 mb-0">Pusat pengumuman layanan kristen</p>
+    </div>
+</div>
+
 
     <div class="container-xxl flex-grow-1 container-p-y">
         {{-- Judul --}}
-         <div class="row">
-        <div class="col-12">
-            <h3 class="fw-bold mb-4">Berita SILAYANKRIS</h3>
-        </div>
-    </div>
+
         {{-- Search dan Reset --}}
         <div class="row  mb-3 ">
             <div class="col-12 col-md-6">
@@ -54,22 +58,24 @@
 
                         {{-- Gambar --}}
                         <div class="col-md-7">
-                            <img class="img-fluid rounded-start" src="{{ asset('assets/img/news/18.jpg') }}"
-                                alt="Card image" style="height: 100%; max-height: 400px; object-fit: cover; width: 100%;">
+                            <a href="/news/1">
+                                <div class="img-hover-slide">
+                                    <img class="img-fluid rounded news-image"
+                                        src="{{ asset('storage/' . $beritas->first()->gambar_path) }}" alt="Card image"
+                                        style="height: 100%; max-height: 400px; object-fit: cover; width: 100%;">
+                                </div>
+                            </a>
                         </div>
 
                         {{-- Isi Card --}}
                         <div class="col-md-5">
                             <div class="card-body p-0">
-                                <h5 class="card-title">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam rem voluptatem dolorum voluptate eligendi quas.</h5>
-
-                                <p class="card-text">
-                                    This is a wider card with supporting text below as a natural lead-in to additional
-                                    content. This content is a little bit longer.
-                                </p>
-
-                                <p class="card-text">
-                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                <a href="/news/1" class="text-decoration-none news-title card-title h2">
+                                    {{ Str::limit($beritas->first()->judul, 75, '...') }}
+                                </a>
+                                <p class="card-text fs-6 mt-2">{{ Str::limit($beritas->first()->isi, 250, '...') }}</p>
+                                <p class="card-text"><small
+                                        class="text-muted">{{ \Carbon\Carbon::parse($beritas->first()->created_at)->locale('id')->translatedFormat('d F Y') }}</small>
                                 </p>
                             </div>
                         </div>
@@ -83,55 +89,36 @@
         {{-- Card All Berita --}}
         <div class="row">
             <div class="col-md-9">
-                <div class="card border-0 shadow-none bg-transparent mb-3 border-bottom border-md rounded-0  pb-3"
-                    style="border-bottom-style: dashed !important; border-color: rgb(179, 174, 174) !important;">
-                    <div class="row g-4 border-bottom-2">
-                        <div class="col-md-3">
-                            <img class="img-fluid rounded" src="{{ asset('assets/img/news/18.jpg') }}" alt="Card image"
-                                style="height: 100%; max-height: 200px; object-fit: cover; width: 100%;">
-                        </div>
-                        <div class="col-md-9 ">
-                            <div class="card-body p-0">
-                                <h5 class="card-title">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum provident reiciendis natus dignissimos, doloribus adipisci.</h5>
-                                <p class="card-text">This is a wider card...</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                @foreach ($beritas->skip(1) as $berita)
+                    <div class="card border-0 shadow-none bg-transparent mb-3 border-bottom border-md rounded-0  pb-3"
+                        style="border-bottom-style: dashed !important; border-color: rgb(179, 174, 174) !important;">
+                        <div class="row g-4 border-bottom-2">
+                            <div class="col-md-3">
+                                <a href="/news/1">
+                                    <div class="img-hover-slide">
+                                        <img class="img-fluid rounded news-image"
+                                            src="{{ asset('storage/' . $berita->gambar_path) }}" alt="Card image"
+                                            style="height: 100%; max-height: 400px; object-fit: cover; width: 100%;">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-9 ">
+                                <div class="card-body p-0">
+                                    <a href="/news/1" class="text-decoration-none news-title card-title h5">
+                                        {{ Str::limit($berita->judul, 50, '...') }}
+                                    </a>
+                                    <p class="card-text mt-2">{{ Str::limit($berita->isi, 150, '...') }}</p>
+                                    <p class="card-text"><small
+                                            class="text-muted">{{ \Carbon\Carbon::parse($berita->created_at)->locale('id')->translatedFormat('d F Y') }}</small>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                @endforeach
+                <div class="mt-4">
+                    {{ $beritas->links('pagination::bootstrap-5') }}
                 </div>
-                <div class="card border-0 shadow-none bg-transparent mb-3 border-bottom border-md rounded-0  pb-3"
-                    style="border-bottom-style: dashed !important; border-color: rgb(179, 174, 174) !important;">
-                    <div class="row g-4 border-bottom-2">
-                        <div class="col-md-3">
-                            <img class="img-fluid rounded" src="{{ asset('assets/img/news/18.jpg') }}" alt="Card image"
-                                style="height: 100%; max-height: 200px; object-fit: cover; width: 100%;">
-                        </div>
-                        <div class="col-md-9 ">
-                            <div class="card-body p-0">
-                                <h5 class="card-title">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum provident reiciendis natus dignissimos, doloribus adipisci.</h5>
-                                <p class="card-text">This is a wider card...</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card border-0 shadow-none bg-transparent mb-3 border-bottom border-md rounded-0  pb-3"
-                    style="border-bottom-style: dashed !important; border-color: rgb(179, 174, 174) !important;">
-                    <div class="row g-4 border-bottom-2">
-                        <div class="col-md-3">
-                            <img class="img-fluid rounded" src="{{ asset('assets/img/news/18.jpg') }}" alt="Card image"
-                                style="height: 100%; max-height: 200px; object-fit: cover; width: 100%;">
-                        </div>
-                        <div class="col-md-9 ">
-                            <div class="card-body p-0">
-                                <h5 class="card-title">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum provident reiciendis natus dignissimos, doloribus adipisci.</h5>
-                                <p class="card-text">This is a wider card...</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
 
             </div>
 
