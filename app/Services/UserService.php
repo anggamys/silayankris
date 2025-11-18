@@ -104,7 +104,7 @@ class UserService
             ]);
 
             if (isset($data['sekolah_id'])) {
-                $guru->sekolah()->updateExistingPivot($data['sekolah_id'], ['updated_at' => now()]);
+                $guru->sekolah()->sync($data['sekolah_id']);
             }
         }
 

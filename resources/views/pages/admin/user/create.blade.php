@@ -229,23 +229,64 @@
 					newGroup.classList.add('input-group', 'mb-2', 'sekolah-group');
 
 					newGroup.innerHTML = `
-        <select name="sekolah_id[]" class="form-select">
-            <option value="" disabled selected>Pilih Sekolah</option>
-            @foreach ($sekolahs as $sekolah)
-                <option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
-            @endforeach
-        </select>
-        <button type="button" class="btn btn-danger remove-sekolah">&times;</button>
-    `;
+			<select name="sekolah_id[]" class="form-select">
+				<option value="" disabled selected>Pilih Sekolah</option>
+				@foreach ($sekolahs as $sekolah)
+					<option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
+				@endforeach
+			</select>
+			<button type="button" class="btn btn-danger remove-sekolah">&times;</button>
+		`;
 
 					wrapper.appendChild(newGroup);
+					setTimeout(updateSekolahOptions, 100); // update opsi setelah tambah
 				});
 
 				// Hapus input (kecuali input pertama)
 				document.addEventListener('click', function(e) {
 					if (e.target.classList.contains('remove-sekolah') && !e.target.disabled) {
 						e.target.closest('.sekolah-group').remove();
+						setTimeout(updateSekolahOptions, 100); // update opsi setelah hapus
 					}
+				});
+
+
+				// ======== Hilangkan opsi sekolah yang sudah dipilih di input lain ========
+				function updateSekolahOptions() {
+					const selects = document.querySelectorAll('select[name="sekolah_id[]"]');
+					const selectedValues = Array.from(selects)
+						.map(select => select.value)
+						.filter(val => val !== "");
+
+					selects.forEach(select => {
+						// Simpan value yang sedang dipilih agar tidak hilang
+						const currentValue = select.value;
+						// Ambil semua option dari template
+						const sekolahOptions = [
+							'<option value="" disabled' + (currentValue === '' ? ' selected' : '') +
+							'>Pilih Sekolah</option>',
+							@foreach ($sekolahs as $sekolah)
+								(selectedValues.includes('{{ $sekolah->id }}') && currentValue !==
+									'{{ $sekolah->id }}') ? '' : '<option value="{{ $sekolah->id }}"' + (
+									currentValue === '{{ $sekolah->id }}' ? ' selected' : '') +
+								'>{{ $sekolah->nama }}</option>',
+							@endforeach
+						].join('');
+						// Render ulang option
+						select.innerHTML = sekolahOptions.replace(/,\s*/g, '');
+						// Set value agar tidak hilang
+						select.value = currentValue;
+					});
+				}
+
+				document.addEventListener('change', function(e) {
+					if (e.target && e.target.name === "sekolah_id[]") {
+						updateSekolahOptions();
+					}
+				});
+
+				document.addEventListener("DOMContentLoaded", function() {
+					updateSekolahOptions();
 				});
 
 				const role = document.getElementById('role');
@@ -256,6 +297,7 @@
 				role.addEventListener('change', function() {
 					guruForm.style.display = (this.value === 'guru') ? 'block' : 'none';
 					gerejaForm.style.display = (this.value === 'staff-gereja') ? 'block' : 'none';
+					updateSekolahOptions();
 				});
 
 				// ======== Auto-show berdasarkan old('role') ==========
@@ -269,6 +311,7 @@
 					if (selectedRole === 'staff-gereja') {
 						gerejaForm.style.display = 'block';
 					}
+					updateSekolahOptions();
 				});
 
 				// ======== Preview Foto Profil ==========
