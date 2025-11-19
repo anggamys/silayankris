@@ -146,7 +146,7 @@
 
 						<div id="sekolah-wrapper">
 							<div class="input-group mb-2 sekolah-group">
-								<select name="sekolah_id[]" class="form-select">
+								<select name="sekolah_id[]" class="form-select" required>
 									<option value="" disabled selected>Pilih Sekolah</option>
 									@foreach ($sekolahs as $sekolah)
 										<option value="{{ $sekolah->id }}">
