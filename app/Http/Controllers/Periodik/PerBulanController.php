@@ -129,6 +129,11 @@ class PerBulanController extends Controller
      */
     public function destroy(PerBulan $perBulan)
     {
-        //
+        Gate::authorize('delete', $perBulan);
+
+        $this->service->destroy($perBulan);
+
+        return redirect()->route('admin.per-bulan.index')
+            ->with('success', 'Data per bulan berhasil dihapus');
     }
 }

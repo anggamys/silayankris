@@ -73,5 +73,25 @@ class PerBulanService
     $perBulan->update($data);
 
     return $perBulan;
+
+  }
+
+  public function destroy(PerBulan $perBulan)
+  {
+    // Hapus file terkait
+    $paths = [
+      'daftar_gaji_path',
+      'daftar_hadir_path',
+      'rekening_bank_path',
+    ];
+
+    foreach ($paths as $path) {
+      if ($perBulan->$path) {
+        FileUploads::delete($perBulan->$path);
+      }
+    }
+
+    // Hapus data dari database
+    $perBulan->delete();
   }
 }

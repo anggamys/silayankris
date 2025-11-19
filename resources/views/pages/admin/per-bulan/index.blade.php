@@ -71,6 +71,40 @@
                                             Hapus
                                         </button>
                                     </form>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalCenter{{ $item->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Apakah anda yakin ingin menghapus
+                                                        <strong>{{ Str::limit($item->nama, 15, '...') }}</strong> ?
+                                                    </p>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            Tidak
+                                                        </button>
+                                                        <form action="{{ route('admin.sekolah.destroy', $item) }}"
+                                                            method="POST" onsubmit=" ">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger">
+                                                                <i class="bx bx-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
