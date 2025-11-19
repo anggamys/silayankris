@@ -5,7 +5,7 @@
 {{-- Landing Page --}}
 @section('content')
 
-    <nav class="navbar navbar-expand-lg border-bottom  bg-light shadow-sm">
+    {{-- <nav class="navbar navbar-expand-lg border-bottom  bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
                 SILAYANKRIS
@@ -17,13 +17,13 @@
                 <a class="btn btn-outline-primary ms-auto" href="{{ route('admin.dashboard') }}">Dashboard</a>
             @endauth
         </div>
-    </nav>
+    </nav> --}}
     <div class="container-fluid  py-4 bg-primary text-light">
-    <div class="container pb-3 ">
-        <h1 class="fw-bold mb-2">Berita</h1>
-        <p class="text-light fs-6 mb-0">Pusat pengumuman layanan kristen</p>
+        <div class="container pb-3 ">
+            <h1 class="fw-bold mb-0">Berita</h1>
+            <p class="text-light fs-6 mb-0">Pusat pengumuman layanan kristen</p>
+        </div>
     </div>
-</div>
 
 
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -31,61 +31,69 @@
 
         {{-- Search dan Reset --}}
         <div class="row  mb-3 ">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 flex-grow-1">
                 <form method="GET" class="w-100 d-flex align-items-center gap-2">
                     {{-- Input pencarian --}}
                     <div class="input-group ">
                         <span class="input-group-text"><i class="bx bx-search"></i></span>
                         <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
-                            placeholder="Cari judul berita...">
+                            placeholder="Cari judul berita..." style="width: 50%; height: 50px;">
                         <button class="btn btn-outline-secondary border" type="submit">Cari</button>
                     </div>
 
                     <a href="{{ url()->current() }}"
-                        class="btn btn-outline-secondary border d-flex align-items-center gap-1">
+                        class="btn btn-lg  btn-outline-secondary border d-flex align-items-center gap-1">
                         <i class="bi bi-arrow-counterclockwise"></i>
-                        <span>Reset</span>
                     </a>
                 </form>
             </div>
         </div>
         {{-- Card Hero Berita --}}
-        <div class="row  mb-3">
-            <div class="col-md-12 ">
-                <div class="card border-0 shadow-none bg-transparent mb-3 border-bottom border-md rounded-0  pb-3"
-                    style="border-bottom-style: dashed !important; border-color: rgb(179, 174, 174) !important;">
-                    <div class="row g-4">
+        @if ($beritas->count() > 0)
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="card border-0 shadow-none bg-transparent mb-3 border-bottom border-md rounded-0 pb-3"
+                        style="border-bottom-style: dashed !important; border-color: rgb(179, 174, 174) !important;">
 
-                        {{-- Gambar --}}
-                        <div class="col-md-7">
-                            <a href="/news/1">
-                                <div class="img-hover-slide">
-                                    <img class="img-fluid rounded news-image"
-                                        src="{{ asset('storage/' . $beritas->first()->gambar_path) }}" alt="Card image"
-                                        style="height: 100%; max-height: 400px; object-fit: cover; width: 100%;">
-                                </div>
-                            </a>
-                        </div>
+                        <div class="row g-4">
 
-                        {{-- Isi Card --}}
-                        <div class="col-md-5">
-                            <div class="card-body p-0">
-                                <a href="/news/1" class="text-decoration-none news-title card-title h2">
-                                    {{ Str::limit($beritas->first()->judul, 75, '...') }}
+                            {{-- HERO GAMBAR --}}
+                            <div class="col-md-7">
+                                <a href="/news/{{ $beritas->first()->id }}">
+                                    <div class="img-hover-slide">
+                                        <img class="img-fluid rounded news-image"
+                                            src="{{ asset('storage/' . $beritas->first()->gambar_path) }}"
+                                            style="width: 100%; height: 350px; object-fit: cover;">
+                                    </div>
                                 </a>
-                                <p class="card-text fs-6 mt-2">{{ Str::limit($beritas->first()->isi, 250, '...') }}</p>
-                                <p class="card-text"><small
-                                        class="text-muted">{{ \Carbon\Carbon::parse($beritas->first()->created_at)->locale('id')->translatedFormat('d F Y') }}</small>
-                                </p>
                             </div>
-                        </div>
 
+                            {{-- HERO TEKS --}}
+                            <div class="col-md-5">
+                                <div class="card-body p-0">
+                                    <a href="/news/{{ $beritas->first()->id }}"
+                                        class="text-decoration-none news-title card-title h2">
+                                        {{ Str::limit($beritas->first()->judul, 75, '...') }}
+                                    </a>
+                                    <p class="card-text fs-6 mt-2">{{ Str::limit($beritas->first()->isi, 250, '...') }}</p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            {{ $beritas->first()->created_at->locale('id')->translatedFormat('d F Y') }}
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-
             </div>
+        @else
+            <div class="alert bg-primary text-light mt-4">
+                Belum ada berita yang tersedia.
+            </div>
+        @endif
 
-        </div>
         {{-- Card All Berita --}}
         <div class="row">
             <div class="col-md-9">
@@ -97,8 +105,9 @@
                                 <a href="/news/1">
                                     <div class="img-hover-slide">
                                         <img class="img-fluid rounded news-image"
-                                            src="{{ asset('storage/' . $berita->gambar_path) }}" alt="Card image"
-                                            style="height: 100%; max-height: 400px; object-fit: cover; width: 100%;">
+                                            src="{{ asset('storage/' . $berita->gambar_path) }}"
+                                            style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px;">
+
                                     </div>
                                 </a>
                             </div>

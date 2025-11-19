@@ -5,18 +5,6 @@
 {{-- Landing Page --}}
 @section('content')
 
-    {{-- Navbar --}}
-    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
-                SILAYANKRIS
-            </a>
-
-            @auth
-                <a class="btn btn-outline-primary ms-auto" href="{{ route('admin.dashboard') }}">Dashboard</a>
-            @endauth
-        </div>
-    </nav> --}}
 
     <main>
         {{-- Hero Section --}}
