@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    @include('components.guest.navbar')
+
     @yield('content')
 </body>
 
