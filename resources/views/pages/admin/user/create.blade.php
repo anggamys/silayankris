@@ -146,7 +146,7 @@
 
 						<div id="sekolah-wrapper">
 							<div class="input-group mb-2 sekolah-group">
-								<select name="sekolah_id[]" class="form-select">
+								<select name="sekolah_id[]" class="form-select" required>
 									<option value="" disabled selected>Pilih Sekolah</option>
 									@foreach ($sekolahs as $sekolah)
 										<option value="{{ $sekolah->id }}">
@@ -167,44 +167,45 @@
 							+ Tambah Sekolah
 						</button>
 					</div>
+				</div>
 
-					{{-- Bagian untuk STAFF GEREJA --}}
-					<div id="form-gereja" style="display:none;">
-						<hr>
-						<h5>Data Pengurus Gereja</h5>
-						<div class="mb-3">
-							<label for="gembala_sidang" class="form-label">Gembala Sidang</label>
-							<input type="text" name="gembala_sidang" class="form-control" placeholder="Masukkan Gembala Sidang"
-								value="{{ old("gembala_sidang") }}">
-							@error("gembala_sidang")
-								<div class="invalid-feedback">{{ $message }}</div>
-							@enderror
-						</div>
-						<div class="mb-3">
-							<label for="gereja_id" class="form-label">Gereja</label>
-							<select name="gereja_id" class="form-select" {{ $gerejas->isEmpty() ? "disabled" : "" }}>
-								@if ($gerejas->isEmpty())
-									<option value="" disabled selected>Tidak ada gereja tersedia</option>
-								@else
-									<option value="" disabled selected>Pilih Gereja</option>
-									@foreach ($gerejas as $gereja)
-										<option value="{{ $gereja->id }}" {{ old("gereja_id") == $gereja->id ? "selected" : "" }}>
-											{{ $gereja->nama }}
-										</option>
-									@endforeach
-								@endif
-							</select>
-							@error("gereja_id")
-								<div class="invalid-feedback">{{ $message }}</div>
-							@enderror
-						</div>
+				{{-- Bagian untuk STAFF GEREJA --}}
+				<div id="form-gereja" style="display:none;">
+					<hr>
+					<h5>Data Pengurus Gereja</h5>
+					<div class="mb-3">
+						<label for="gembala_sidang" class="form-label">Gembala Sidang</label>
+						<input type="text" name="gembala_sidang" class="form-control" placeholder="Masukkan Gembala Sidang"
+							value="{{ old("gembala_sidang") }}">
+						@error("gembala_sidang")
+							<div class="invalid-feedback">{{ $message }}</div>
+						@enderror
 					</div>
+					<div class="mb-3">
+						<label for="gereja_id" class="form-label">Gereja</label>
+						<select name="gereja_id" class="form-select" {{ $gerejas->isEmpty() ? "disabled" : "" }}>
+							@if ($gerejas->isEmpty())
+								<option value="" disabled selected>Tidak ada gereja tersedia</option>
+							@else
+								<option value="" disabled selected>Pilih Gereja</option>
+								@foreach ($gerejas as $gereja)
+									<option value="{{ $gereja->id }}" {{ old("gereja_id") == $gereja->id ? "selected" : "" }}>
+										{{ $gereja->nama }}
+									</option>
+								@endforeach
+							@endif
+						</select>
+						@error("gereja_id")
+							<div class="invalid-feedback">{{ $message }}</div>
+						@enderror
+					</div>
+				</div>
 
-					<div class="d-flex justify-content-end mt-4">
-						<button type="submit" class="btn btn-primary">
-							<i class="bi bi-save me-1"></i> Simpan
-						</button>
-					</div>
+				<div class="d-flex justify-content-end mt-4">
+					<button type="submit" class="btn btn-primary">
+						<i class="bi bi-save me-1"></i> Simpan
+					</button>
+				</div>
 			</form>
 
 			<style>
