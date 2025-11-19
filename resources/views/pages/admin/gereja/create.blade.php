@@ -78,7 +78,7 @@
 
                         <div class="dropdown">
                             <button id="btn-kota" class="btn btn-light form-control text-start dropdown-toggle w-full"
-                                data-bs-toggle="dropdown" aria-expanded="false" >
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Pilih Kota
                             </button>
 
@@ -388,7 +388,7 @@
                             `<li><span class="dropdown-item-text">Pilih kecamatan terlebih dahulu</span></li>`;
 
                         // Fetch Kecamatan
-                        fetch(`/get-kecamatan?kota=${value}`)
+                        fetch(`/admin/get-kecamatan?kota=${value}`)
                             .then(res => res.json())
                             .then(data => {
                                 let list = "";
@@ -420,7 +420,7 @@
 
                             let kota = document.getElementById("kab_kota").value;
 
-                            fetch(`/get-kelurahan?kota=${kota}&kecamatan=${value}`)
+                            fetch(`/admin/get-kelurahan?kota=${kota}&kecamatan=${value}`)
                                 .then(res => res.json())
                                 .then(data => {
                                     let list = "";
@@ -433,8 +433,7 @@
                                     attachDropdownEventKelurahan();
                                 });
                         });
-                    });
-                }
+                    }); }
 
                 // Handle Dropdown Kelurahan
                 function attachDropdownEventKelurahan() {
