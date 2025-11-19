@@ -13,8 +13,8 @@
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periodik Perbulan</h5>
 
-												<a href="{{ route('admin.per-bulan.index') }}" class="btn btn-secondary">
-																<i class="bi bi-arrow-left"></i> Batal</a>
+            <a href="{{ route('admin.per-bulan.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Batal</a>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.per-bulan.store') }}" method="POST" enctype="multipart/form-data">
@@ -38,28 +38,34 @@
                     @enderror
                 </div>
 
+                {{-- Daftar Gaji --}}
                 <div class="mb-3">
                     <label for="daftar_gaji_path" class="form-label">Daftar Gaji (File)</label>
                     <input type="file" name="daftar_gaji_path" id="daftar_gaji_path" class="form-control" required
                         accept=".pdf">
+                    <hint class="form-text">Format file harus .pdf</hint>
                     @error('daftar_gaji_path')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                {{-- Daftar Hadir --}}
                 <div class="mb-3">
                     <label for="daftar_hadir_path" class="form-label">Daftar Hadir (File)</label>
                     <input type="file" name="daftar_hadir_path" id="daftar_hadir_path" class="form-control" required
                         accept=".pdf">
+                    <hint class="form-text">Format file harus .pdf</hint>
                     @error('daftar_hadir_path')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                {{-- Rekening Bank --}}
                 <div class="mb-3">
                     <label for="rekening_bank_path" class="form-label">Rekening Bank (File)</label>
                     <input type="file" name="rekening_bank_path" id="rekening_bank_path" class="form-control" required
                         accept=".pdf">
+                    <hint class="form-text">Format file harus .pdf</hint>
                     @error('rekening_bank_path')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -86,8 +92,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="catatan" class="form-label">Catatan</label>
-                    <input type="text" name="catatan" id="catatan" class="form-control">
+                    <label for="catatan" class="form-label">Catatan (Opsional)</label>
+                    <input type="text" name="catatan" id="catatan" class="form-control"
+                        placeholder="Masukkan catatan jika ada">
                     @error('catatan')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
