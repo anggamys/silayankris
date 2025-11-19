@@ -20,11 +20,10 @@ class Guru extends Model
      * Kolom yang boleh diisi secara massal.
      */
     protected $fillable = [
-        'sekolah_id',
         'user_id',
         'nip',
         'tempat_lahir',
-        'tanggal_lahir',        
+        'tanggal_lahir',
     ];
 
     /**
@@ -35,18 +34,18 @@ class Guru extends Model
     ];
 
     /**
-     * Relasi: satu guru dimiliki oleh satu user.
+     * Relasi: satu guru bisa memiliki banyak sekolah.
+     */
+    public function sekolah()
+    {
+        return $this->belongsToMany(Sekolah::class, 'guru_sekolahs')->withTimestamps();
+    }
+
+    /**
+     * Relasi: setiap guru terhubung dengan satu user.
      */
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Relasi: satu guru bekerja di satu sekolah.
-     */
-    public function sekolah()
-    {
-        return $this->belongsTo(Sekolah::class);
     }
 }
