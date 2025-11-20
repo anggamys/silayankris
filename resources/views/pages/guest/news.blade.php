@@ -5,19 +5,7 @@
 {{-- Landing Page --}}
 @section('content')
 
-    {{-- <nav class="navbar navbar-expand-lg border-bottom  bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
-                SILAYANKRIS
-            </a>
-
-            <a class="ms-auto" href="{{ route('admin.dashboard') }}">Page</a>
-
-            @auth
-                <a class="btn btn-outline-primary ms-auto" href="{{ route('admin.dashboard') }}">Dashboard</a>
-            @endauth
-        </div>
-    </nav> --}}
+  
     <div class="container-fluid  py-4 bg-primary text-light">
         <div class="container pb-3 ">
             <h1 class="fw-bold mb-0">Berita</h1>
