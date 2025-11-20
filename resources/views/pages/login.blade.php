@@ -3,57 +3,74 @@
 @section('title', 'Login - SILAYANKRIS')
 
 @section('content')
-    <div class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
-        <div class="card shadow-lg border-0 rounded-4" style="max-width: 450px; width: 100%;">
-            <div class="card-body p-5 text-center">
-                {{-- Logo & Title --}}
-                <div class="mb-4">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Kemenag" width="80" class="mb-3">
-                    <h3 class="fw-bold text-primary">SILAYANKRIS</h3>
-                    <p class="text-muted mb-0">Kementerian Agama Kota Surabaya</p>
-                </div>
+	<div class="card">
+		<div class="card-header bg-primary">
+			<div class="app-brand justify-content-center p-2" style="margin-bottom: 0px !important">
+				<a href="{{ route('home') }}" class="app-brand-link gap-2 text-decoration-none">
+					<span class="app-brand-logo demo">
+						<img src="{{ asset('assets/img/logo.png') }}" alt="Logo" width="40">
+					</span>
+					<span class="app-brand-text demo text-white fw-bolder"
+						style="text-transform: uppercase; letter-spacing: 2px">SILAYANKRIS</span>
+				</a>
+			</div>
+		</div>
+		<div class="card-body pt-3">
+			<div class="text-center">
+				<h4 class="mb-2">Selamat Datang Kembali 👋</h4>
+				<p>Silakan masukkan email dan password untuk mengakses layanan kami.</p>
+			</div>
 
-                {{-- Dynamic Title --}}
-                @if (request('type') === 'gereja')
-                    <h5 class="fw-semibold mt-4 mb-2 text-dark">Login Layanan Gereja</h5>
-                    <p class="text-muted mb-4">Silakan login untuk mengakses data dan layanan gereja Anda.</p>
-                @elseif (request('type') === 'tpg')
-                    <h5 class="fw-semibold mt-4 mb-2 text-dark">Login Pelayanan TPG Guru</h5>
-                    <p class="text-muted mb-4">Masukkan akun Anda untuk mengelola berkas TPG guru secara online.</p>
-                @else
-                    <h5 class="fw-semibold mt-4 mb-2 text-dark">Login SILAYANKRIS</h5>
-                    <p class="text-muted mb-4">Silakan login untuk melanjutkan ke layanan Anda.</p>
-                @endif
+			<form id="formAuthentication" method="POST" action="{{ route('login', ['type' => request('type')]) }}">
+				@csrf
+				<div class="mb-3">
+					<label for="email" class="form-label">Email</label>
+					<div class="input-group input-group-merge">
+						<input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
+							placeholder="Masukkan email anda" value="{{ old('email') }}" required autofocus />
+					</div>
+					@error('email')
+						<div class="text-danger mt-1 small">{{ $message }}</div>
+					@enderror
 
-                {{-- Login Form --}}
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="mb-3 text-start">
-                        <label for="email" class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control rounded-3 @error('email') is-invalid @enderror"
-                            name="email" id="email" placeholder="Masukkan email" required autofocus>
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+				</div>
 
-                    <div class="mb-4 text-start">
-                        <label for="password" class="form-label fw-semibold">Password</label>
-                        <input type="password" class="form-control rounded-3 @error('password') is-invalid @enderror"
-                            name="password" id="password" placeholder="Masukkan password" required>
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+				<div class="mb-3 form-password-toggle">
+					<div class="d-flex justify-content-between">
+						<label class="form-label" for="password">Password</label>
+					</div>
+					<div class="input-group input-group-merge">
+						<input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password"
+							placeholder="Masukkan password anda" required />
+						<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+					</div>
+					@error('password')
+						<div class="text-danger mt-1 small">{{ $message }}</div>
+					@enderror
+				</div>
 
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold rounded-3">
-                        <i class="bi bi-box-arrow-in-right me-2"></i> Login
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+				<div class="mb-2">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" />
+						<label class="form-check-label" for="remember-me">
+							Ingat Saya
+						</label>
+					</div>
+				</div>
 
+				<div class="mb-3">
+					<button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
+				</div>
+			</form>
 
-
+			@guest
+				<p class="text-center">
+					<span>Tidak dapat masuk? </span>
+					<a href="/#contact" class="text-primary ">
+						<span>Hubungi Kami</span>
+					</a>
+				</p>
+			@endguest
+		</div>
+	</div>
 @endsection

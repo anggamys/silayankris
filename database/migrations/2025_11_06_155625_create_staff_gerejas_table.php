@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->string('gembala_sidang');
-            $table->string('nomor_telepon');
             $table->foreignId('gereja_id')->constrained('gerejas')->onDelete('cascade');
             $table->timestamps();
         });

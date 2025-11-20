@@ -6,7 +6,7 @@
 @section('content')
 
     {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
                 SILAYANKRIS
@@ -16,7 +16,7 @@
                 <a class="btn btn-outline-primary ms-auto" href="{{ route('admin.dashboard') }}">Dashboard</a>
             @endauth
         </div>
-    </nav>
+    </nav> --}}
 
     <main>
         {{-- Hero Section --}}
@@ -75,14 +75,7 @@
         </section>
     </main>
 
-    {{-- Footer --}}
-    <footer class="bg-dark text-light py-4">
-        <div class="container text-center">
-            <p class="mb-0">
-                &copy; 2025 <strong>SILAYANKRIS</strong> — Kementerian Agama Kota Surabaya.  
-                <br>Seluruh hak cipta dilindungi.
-            </p>
-        </div>
-    </footer>
+ 
+
 
 @endsection

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class InstituteRequest extends FormRequest
+class BeritaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,9 @@ class InstituteRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:500'],
-            'status' => ['required', 'in:active,inactive'],
+            'judul' => ['required', 'string', 'max:255'],
+            'isi' => ['required', 'string', 'max:5000'],
+            'gambar_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
 
         return $rules;

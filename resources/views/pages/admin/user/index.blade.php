@@ -1,83 +1,128 @@
-@extends('layouts.admin')
+@extends('layouts.appadmin')
 
 @section('title', 'Manajemen User')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Data Pengguna</li>
+@endsection
+
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
-        {{-- Card Header --}}
-        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold" style="color: #1b3a2f;">Manajemen User</h5>
-        </div>
+        <div class="card-header bg-white border-0 mb-2">
+            {{-- Row responsive: di mobile col-12 (full), di md col-6 untuk search dan auto untuk button --}}
+            <h5 class="card-title fw-semibold">Daftar Data Pengguna</h5>
 
-        <div class="card-body">
-            {{-- Search & Add Button --}}
-            <div class="d-flex justify-content-between mb-3 align-items-center gap-2 flex-wrap">
-                <form method="get" class="row g-2 flex-grow-1">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0">
-                                <i class="bi bi-search text-success"></i>
-                            </span>
-                            <input type="text" name="search" value="{{ $search }}"
-                                class="form-control border-start-0" placeholder="Cari nama atau email...">
+            <div class="row g-2 align-items-center">
+
+                <!-- Search -->
+                <div class="col-12 col-md-6">
+                    <form method="GET" class="w-100 d-flex align-items-center gap-2">
+                        {{-- Input pencarian --}}
+                        <div class="input-group ">
+                            <span class="input-group-text"><i class="bx bx-search"></i></span>
+                            <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
+                                placeholder="Cari nama atau email...">
+                            <button class="btn btn-outline-secondary border" type="submit">Cari</button>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" type="submit">
-                            <i class="bi bi-search me-1"></i> Cari
-                        </button>
-                    </div>
-                </form>
 
-                <a href="{{ route('admin.users.create') }}" class="btn btn-success">
-                    <i class="bi bi-plus-lg me-1"></i> Tambah User
-                </a>
+                        <a href="{{ url()->current() }}"
+                            class="btn btn-outline-secondary border d-flex align-items-center gap-1">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span>Reset</span>
+                        </a>
+                    </form>
+                </div>
+
+                <!-- Button: full width on mobile, auto-width on md+ and aligned to right -->
+                <div class="col-12 col-md-auto ms-md-auto text-md-end">
+                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary w-100 w-md-auto">
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Baru
+                    </a>
+                </div>
             </div>
-
+        </div>
+        <div class="card-body ">
             {{-- Tabel User --}}
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered align-middle text-nowrap rounded-3 overflow-hidden">
-                    <thead class="table-success text-success">
-                        <tr class="text-center">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                    <thead class="">
+                        <tr class="text-start">
                             <th>#</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th>Dibuat</th>
-                            <th>Aksi</th>
+                            <th>Peran</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($users as $user)
                             <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-start">{{ $users->firstItem() + $loop->index }}</td>
                                 <td class="fw-semibold">{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td class="text-center">
-                                    <span
-                                        class="badge {{ $user->role === 'admin' ? 'bg-danger' : ($user->role === 'user' ? 'bg-success' : 'bg-secondary') }}">
-                                        {{ ucfirst($user->role) }}
+                                <td>
+                                    <span>
+                                        {{ $user->role == 'staff-gereja' ? 'Pengurus Gereja' : ucfirst($user->role) }}
                                     </span>
                                 </td>
-                                <td class="text-center">{{ $user->created_at->format('d-m-Y H:i') }}</td>
+                                <td>
+                                    <span
+                                        class="badge w-100 {{ $user->status === 'aktif' ? 'badge bg-label-success' : ($user->status === 'nonaktif' ? 'badge bg-label-danger' : 'badge bg-label-warning') }}">
+                                        {{ ucfirst($user->status) }}
+                                    </span>
+                                </td>
+
+
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-outline-success"
-                                        data-bs-toggle="tooltip" title="Detail">
-                                        <i class="bi bi-eye"></i>
+                                    <a href="{{ route('admin.users.show', $user) }}"
+                                        class="btn btn-sm btn-info text-light">
+                                        <i class="bx bx-info-circle"></i> Lihat
                                     </a>
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-warning"
-                                        data-bs-toggle="tooltip" title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
+                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                        class="btn btn-sm btn-warning text-light">
+                                        <i class="bx bx-pencil"></i> Ubah
                                     </a>
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin hapus user ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip"
-                                            title="Hapus">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modalCenter{{ $user->id }}">
+                                        <i class="bx bx-trash"></i> Hapus
+                                    </button>
+                                    
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalCenter{{ $user->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Apakah anda yakin ingin menghapus
+                                                        <strong>{{ Str::limit($user->name, 15, '...') }}</strong> ?
+                                                    </p>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            Tidak
+                                                        </button>
+                                                        <form action="{{ route('admin.users.destroy', $user) }}"
+                                                            method="POST" onsubmit=" ">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger">
+                                                                <i class="bx bx-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

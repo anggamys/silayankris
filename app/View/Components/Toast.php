@@ -6,15 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class MainContent extends Component
+class Toast extends Component
 {
-    public $title;
     /**
      * Create a new component instance.
      */
-    public function __construct($title = null)
+    public function __construct()
     {
-        $this->title = $title;
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class MainContent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.main-content');
+        return view('components.toast');
     }
 }

@@ -13,7 +13,7 @@ class UserPolicy
     public function viewAny(User $user): bool
     {
         // Only admin can view all users
-        return $user->role === 'admin';
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -22,7 +22,7 @@ class UserPolicy
     public function view(User $user, User $model): bool
     {
         // Admin or the user themselves can view
-        return $user->role === 'admin' || $user->id === $model->id;
+        return $user->role === User::ROLE_ADMIN || $user->id === $model->id;
     }
 
     /**
@@ -31,7 +31,7 @@ class UserPolicy
     public function create(User $user): bool
     {
         // Only admin can create users
-        return $user->role === 'admin';
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
     public function update(User $user, User $model): bool
     {
         // Admin or the user themselves can update
-        return $user->role === 'admin' || $user->id === $model->id;
+        return $user->role === User::ROLE_ADMIN || $user->id === $model->id;
     }
 
     /**
@@ -49,7 +49,7 @@ class UserPolicy
     public function delete(User $user, User $model): bool
     {
         // Only admin can delete users, and not themselves
-        return $user->role === 'admin' && $user->id !== $model->id;
+        return $user->role === User::ROLE_ADMIN && $user->id !== $model->id;
     }
 
     /**
