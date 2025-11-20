@@ -19,8 +19,14 @@
         <!-- Dashboard -->
         <li class="menu-item {{ request()->is(ltrim('admin/dashboard', '/')) ? 'active' : '' }}">
             <a href="{{ route('admin.dashboard') }}" class="menu-link text-decoration-none">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bi bi-speedometer2"></i>
                 <div>Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is(ltrim('home', '/')) ? 'active' : '' }}">
+            <a href="{{ route('home') }}" class="menu-link text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Halaman Utama</div>
             </a>
         </li>
 

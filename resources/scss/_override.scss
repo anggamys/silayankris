@@ -7,6 +7,30 @@ $primary: #008080;
     --bs-primary-rgb: #{red($primary)}, #{green($primary)}, #{blue($primary)};
 }
 
+// NEWS
+.news-title {
+        color: #003232;
+    }
+ .news-title:hover {
+        color: #008080;
+    }
+    .img-hover-slide {
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .img-hover-slide img {
+        transition: transform 1.2s ease;
+        transform: translateY(0);
+    }
+
+    .img-hover-slide:hover img {
+        transform: translateY(-5%);
+    }
+
+
+
+
 /* ===============================
    BUTTON PRIMARY (sesuai warna Sneat)
    =============================== */

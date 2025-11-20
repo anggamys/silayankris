@@ -102,4 +102,11 @@ class BeritaController extends Controller
         $this->service->delete($berita);
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
     }
+
+
+    public function indexBerita()
+    {
+        $beritas = Berita::orderBy('created_at', 'desc')->paginate(5);
+        return view('pages.guest.news', compact('beritas'));
+    }
 }

@@ -10,32 +10,43 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.guest.home');
-})->name('home');
+})->name('landingpage');
+Route::get('/layanan', function () {
+    return view('pages.guest.layanan');
+})->name('layanan');
+Route::get('/home', function () {
+    return view('pages.guest.home');
+})->name('home');;
 
-Route::middleware(['auth'])->prefix('admin')->as('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.admin.dashboard');
-    })->name('dashboard');
 
-    Route::resource('users', UserController::class)->names('users');
+Route::get('/berita', [BeritaController::class, 'indexBerita'])->name('berita.index');
 
+Route::middleware(['auth'])
+    ->prefix('admin')
+    ->as('admin.')
+    ->group(function () {
 
-    Route::resource('berita', BeritaController::class)->parameters([
-        'berita' => 'berita'
-    ])->names('berita');
+        Route::get('/dashboard', function () {
+            return view('pages.admin.dashboard');
+        })->name('dashboard');
 
-    Route::resource('sekolah', SekolahController::class)->names('sekolah');
+        Route::resource('users', UserController::class)->names('users');
 
-    Route::resource('per-bulan', PerBulanController::class)->names('per-bulan');
-    Route::resource('per-semester', PerBulanController::class)->names('per-semester');
-    Route::resource('per-tahun', PerBulanController::class)->names('per-tahun');
+        Route::resource('berita', BeritaController::class)->parameters([
+            'berita' => 'berita'
+        ])->names('berita');
 
-    Route::resource('gereja', GerejaController::class)->names('gereja');
+        Route::resource('sekolah', SekolahController::class)->names('sekolah');
 
-    Route::get('/get-kecamatan', [LokasiController::class, 'getKecamatan'])->name('lokasi.kecamatan');
-    Route::get('/get-kelurahan', [LokasiController::class, 'getKelurahan'])->name('lokasi.kelurahan');
-});
+        Route::resource('per-bulan', PerBulanController::class)->names('per-bulan');
+        Route::resource('per-semester', PerBulanController::class)->names('per-semester');
+        Route::resource('per-tahun', PerBulanController::class)->names('per-tahun');
+
+        Route::resource('gereja', GerejaController::class)->names('gereja');
+
+        Route::get('/get-kecamatan', [LokasiController::class, 'getKecamatan'])->name('lokasi.kecamatan');
+        Route::get('/get-kelurahan', [LokasiController::class, 'getKelurahan'])->name('lokasi.kelurahan');
+    });
 
 require __DIR__ . '/auth.php';
-
 require __DIR__ . '/gdrive.php';
