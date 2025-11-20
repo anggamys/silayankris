@@ -1,39 +1,39 @@
-@extends("layouts.appadmin")
+@extends('layouts.appadmin')
 
-@section("title", "Tambah Pengguna")
+@section('title', 'Tambah Pengguna')
 
-@section("breadcrumb")
-	<li class="breadcrumb-item"><a href="{{ route("admin.users.index") }}" class="text-decoration-none">Data Pengguna</a></li>
+@section('breadcrumb')
+	<li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}" class="text-decoration-none">Data Pengguna</a></li>
 	<li class="breadcrumb-item active" aria-current="page">Tambah Pengguna</li>
 @endsection
 
-@section("content")
+@section('content')
 	<div class="card shadow-sm border-0 mb-4 p-3">
 		<div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
 			<h5 class="mb-0 fw-semibold fs-4">Tambah Pengguna</h5>
 
-			<a href="{{ route("admin.users.index") }}" class="btn btn-secondary">
+			<a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
 				<i class="bi bi-arrow-left"></i> Batal
 			</a>
 		</div>
 		<div class="card-body">
-			<form action="{{ route("admin.users.store") }}" method="POST" enctype="multipart/form-data">
+			<form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				<div class="mb-3">
 					<label for="role" class="form-label">Peran</label>
-					<select id="role" name="role" class="form-select">
-						<option value="" disabled selected>Pilih Peran</option>
-						<option value="guru" {{ old("role") == "guru" ? "selected" : "" }}>Guru</option>
-						<option value="staff-gereja" {{ old("role") == "staff-gereja" ? "selected" : "" }}>Pengurus Gereja</option>
-						<option value="admin" {{ old("role") == "admin" ? "selected" : "" }}>Admin</option>
-					</select>
+					<x-select-input id="role" name="role" label="Peran" :options="[
+					    'guru' => 'Guru',
+					    'staff-gereja' => 'Pengurus Gereja',
+					    'admin' => 'Admin',
+					]" :selected="old('role')"
+						:searchable="false" />
 				</div>
 
 				<div class="mb-3">
 					<label for="name" class="form-label">Nama</label>
 					<input type="text" name="name" class="form-control" required placeholder="Masukkan nama lengkap"
-						value="{{ old("name") }}">
-					@error("name")
+						value="{{ old('name') }}">
+					@error('name')
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror
 				</div>
@@ -41,8 +41,8 @@
 				<div class="mb-3">
 					<label for="email" class="form-label">Email</label>
 					<input type="email" name="email" class="form-control" required placeholder="Masukkan email"
-						value="{{ old("email") }}">
-					@error("email")
+						value="{{ old('email') }}">
+					@error('email')
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror
 				</div>
@@ -50,8 +50,8 @@
 				<div class="mb-3">
 					<label for="nomor_telepon" class="form-label">Nomor Telepon</label>
 					<input type="text" name="nomor_telepon" class="form-control" required placeholder="Masukkan nomor telepon"
-						value="{{ old("nomor_telepon") }}">
-					@error("nomor_telepon")
+						value="{{ old('nomor_telepon') }}">
+					@error('nomor_telepon')
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror
 				</div>
@@ -60,7 +60,7 @@
 				<div class="mb-3">
 					<label for="password" class="form-label">Password</label>
 					<div class="input-group">
-						<input type="password" class="form-control @error("password") is-invalid @enderror" id="password" name="password"
+						<input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password"
 							required placeholder="Masukkan password minimal 8 karakter">
 
 						<button type="button" class="btn password-toggle-btn" id="togglePassword">
@@ -69,7 +69,7 @@
 
 					</div>
 
-					@error("password")
+					@error('password')
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror
 				</div>
@@ -79,7 +79,7 @@
 					<label for="password_confirmation" class="form-label">Konfirmasi Password</label>
 
 					<div class="input-group">
-						<input type="password" class="form-control @error("password_confirmation") is-invalid @enderror"
+						<input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
 							id="password_confirmation" name="password_confirmation" required placeholder="Masukkan ulang password">
 
 						<button type="button" class="btn password-toggle-btn" id="togglePasswordConfirm">
@@ -88,7 +88,7 @@
 
 					</div>
 
-					@error("password_confirmation")
+					@error('password_confirmation')
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror
 				</div>
@@ -103,10 +103,10 @@
 							style="max-width: 180px; border: 2px solid #dee2e6;">
 					</div>
 
-					<input type="file" class="form-control @error("profile_photo_path") is-invalid @enderror" id="profile_photo_path"
+					<input type="file" class="form-control @error('profile_photo_path') is-invalid @enderror" id="profile_photo_path"
 						name="profile_photo_path" accept="image/*">
 					<small class="text-muted">Format gambar: jpg, png, jpeg. Maksimal ukuran: 2MB.</small>
-					@error("profile_photo_path")
+					@error('profile_photo_path')
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror
 				</div>
@@ -118,25 +118,25 @@
 					<div class="mb-3">
 						<label for="nip" class="form-label">NIP</label>
 						<input type="text" name="nip" class="form-control" placeholder="Masukkan NIP"
-							value="{{ old("nip") }}">
-						@error("nip")
+							value="{{ old('nip') }}">
+						@error('nip')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 					</div>
 					<div class="mb-3">
 						<label for="tempat_lahir" class="form-label">Tempat Lahir</label>
 						<input type="text" name="tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir"
-							value="{{ old("tempat_lahir") }}">
-						@error("tempat_lahir")
+							value="{{ old('tempat_lahir') }}">
+						@error('tempat_lahir')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 					</div>
 
 					<div class="mb-3">
 						<label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-						<input type="date" name="tanggal_lahir" class="form-control" value="{{ old("tanggal_lahir") }}"
+						<input type="date" name="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir') }}"
 							placeholder="Masukkan Tanggal Lahir">
-						@error("tanggal_lahir")
+						@error('tanggal_lahir')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 					</div>
@@ -145,16 +145,10 @@
 						<label class="form-label">Tempat Mengajar (Sekolah)</label>
 
 						<div id="sekolah-wrapper">
-							<div class="input-group mb-2 sekolah-group">
-								<select name="sekolah_id[]" class="form-select">
-									<option value="" disabled selected>Pilih Sekolah</option>
-									@foreach ($sekolahs as $sekolah)
-										<option value="{{ $sekolah->id }}">
-											{{ $sekolah->nama }}
-										</option>
-									@endforeach
-								</select>
-								@error("sekolah_id")
+							<div class="mb-2 sekolah-group" style="display: flex; flex-direction: row; justify-content: space-between;">
+								<x-select-input id="sekolah" name="sekolah_id[]" label="Sekolah" :options="$sekolahs" :selected="old('sekolah_id.0')"
+									dropdownClass="flex-fill" />
+								@error('sekolah_id')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 								<button type="button" class="btn btn-danger remove-sekolah" disabled>
@@ -176,26 +170,15 @@
 					<div class="mb-3">
 						<label for="gembala_sidang" class="form-label">Gembala Sidang</label>
 						<input type="text" name="gembala_sidang" class="form-control" placeholder="Masukkan Gembala Sidang"
-							value="{{ old("gembala_sidang") }}">
-						@error("gembala_sidang")
+							value="{{ old('gembala_sidang') }}">
+						@error('gembala_sidang')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 					</div>
 					<div class="mb-3">
 						<label for="gereja_id" class="form-label">Gereja</label>
-						<select name="gereja_id" class="form-select" {{ $gerejas->isEmpty() ? "disabled" : "" }}>
-							@if ($gerejas->isEmpty())
-								<option value="" disabled selected>Tidak ada gereja tersedia</option>
-							@else
-								<option value="" disabled selected>Pilih Gereja</option>
-								@foreach ($gerejas as $gereja)
-									<option value="{{ $gereja->id }}" {{ old("gereja_id") == $gereja->id ? "selected" : "" }}>
-										{{ $gereja->nama }}
-									</option>
-								@endforeach
-							@endif
-						</select>
-						@error("gereja_id")
+						<x-select-input id="gereja" name="gereja_id" label="Gereja" :options="$gerejas" :selected="old('gereja_id')" />
+						@error('gereja_id')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 					</div>
@@ -222,71 +205,171 @@
 
 			{{-- SCRIPT --}}
 			<script>
-				// ======== Tambah/Hapus Sekolah ========
-				document.getElementById('add-sekolah').addEventListener('click', function() {
-					const wrapper = document.getElementById('sekolah-wrapper');
+				/**
+				 * UTAMA: ganti seluruh script select/cloning yang lama dengan skrip ini.
+				 * -> Pastikan tidak ada duplikat fungsi yang tersisa.
+				 */
 
-					const newGroup = document.createElement('div');
-					newGroup.classList.add('input-group', 'mb-2', 'sekolah-group');
+				/* ---------------- helper: inisialisasi satu select berdasarkan id (hidden input id) ---------------- */
+				function initSelectInput(id) {
+					const hidden = document.getElementById(id);
+					const btn = document.getElementById('btn-' + id);
+					const listRoot = document.getElementById('list-' + id);
+					const search = document.getElementById('search-' + id);
 
-					newGroup.innerHTML = `
-			<select name="sekolah_id[]" class="form-select">
-				<option value="" disabled selected>Pilih Sekolah</option>
-				@foreach ($sekolahs as $sekolah)
-					<option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
-				@endforeach
-			</select>
-			<button type="button" class="btn btn-danger remove-sekolah">&times;</button>
-		`;
+					if (!hidden || !btn || !listRoot) return;
 
-					wrapper.appendChild(newGroup);
-					setTimeout(updateSekolahOptions, 100); // update opsi setelah tambah
-				});
+					// 1) Pasang klik pada tiap item (overwrite yg lama)
+					listRoot.querySelectorAll('.dropdown-item').forEach(item => {
+						item.onclick = function(e) {
+							const val = String(this.dataset.value ?? '');
+							hidden.value = val;
+							btn.textContent = this.textContent.trim();
 
-				// Hapus input (kecuali input pertama)
-				document.addEventListener('click', function(e) {
-					if (e.target.classList.contains('remove-sekolah') && !e.target.disabled) {
-						e.target.closest('.sekolah-group').remove();
-						setTimeout(updateSekolahOptions, 100); // update opsi setelah hapus
+							// triggere event agar semua listener lain tanggap (change & input)
+							hidden.dispatchEvent(new Event('input', {
+								bubbles: true
+							}));
+							hidden.dispatchEvent(new Event('change', {
+								bubbles: true
+							}));
+						};
+
+						// pastikan setiap item tampil (reset hasil filter)
+						item.style.display = '';
+					});
+
+					// 2) Pasang search handler (tidak menggandakan karena assignment)
+					if (search) {
+						search.oninput = function() {
+							const keyword = this.value.toLowerCase();
+
+							const allSelected = Array.from(document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]'))
+								.map(i => i.value)
+								.filter(v => v !== '');
+
+							const currentValue = hidden.value;
+
+							listRoot.querySelectorAll('.dropdown-item').forEach(item => {
+								const val = item.dataset.value;
+
+								// Pertama filter berdasarkan teks
+								const match = item.textContent.toLowerCase().includes(keyword);
+
+								// Jika opsi sudah dipakai di input lain (bukan current), tetap sembunyikan
+								if (allSelected.includes(val) && val !== currentValue) {
+									item.style.display = 'none';
+								} else {
+									item.style.display = match ? '' : 'none';
+								}
+							});
+						};
 					}
-				});
 
+					// 3) Pasang onchange/oninput pada hidden input untuk update global
+					//    gunakan property assignment supaya tidak ada duplicate listener
+					hidden.oninput = updateSekolahOptions;
+					hidden.onchange = updateSekolahOptions;
+				}
 
-				// ======== Hilangkan opsi sekolah yang sudah dipilih di input lain ========
+				/* ---------------- update global: sembunyikan opsi yang telah dipilih di tempat lain ---------------- */
 				function updateSekolahOptions() {
-					const selects = document.querySelectorAll('select[name="sekolah_id[]"]');
-					const selectedValues = Array.from(selects)
-						.map(select => select.value)
-						.filter(val => val !== "");
+					// kumpulkan semua selected (non-empty)
+					const selected = Array.from(document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]'))
+						.map(i => String(i.value || ''))
+						.filter(v => v !== '');
 
-					selects.forEach(select => {
-						// Simpan value yang sedang dipilih agar tidak hilang
-						const currentValue = select.value;
-						// Ambil semua option dari template
-						const sekolahOptions = [
-							'<option value="" disabled' + (currentValue === '' ? ' selected' : '') +
-							'>Pilih Sekolah</option>',
-							@foreach ($sekolahs as $sekolah)
-								(selectedValues.includes('{{ $sekolah->id }}') && currentValue !==
-									'{{ $sekolah->id }}') ? '' : '<option value="{{ $sekolah->id }}"' + (
-									currentValue === '{{ $sekolah->id }}' ? ' selected' : '') +
-								'>{{ $sekolah->nama }}</option>',
-							@endforeach
-						].join('');
-						// Render ulang option
-						select.innerHTML = sekolahOptions.replace(/,\s*/g, '');
-						// Set value agar tidak hilang
-						select.value = currentValue;
+					// untuk setiap group, sembunyikan opsi yang digunakan di group lain
+					document.querySelectorAll('.sekolah-group').forEach(group => {
+						const hidden = group.querySelector('input[type="hidden"][name="sekolah_id[]"]');
+						const current = hidden ? String(hidden.value || '') : '';
+
+						group.querySelectorAll('.dropdown-item').forEach(item => {
+							const val = String(item.dataset.value ?? '');
+							if (val !== '' && selected.includes(val) && val !== current) {
+								item.style.display = 'none';
+							} else {
+								item.style.display = '';
+							}
+						});
 					});
 				}
 
-				document.addEventListener('change', function(e) {
-					if (e.target && e.target.name === "sekolah_id[]") {
-						updateSekolahOptions();
-					}
-				});
+				/* ---------------- clone function: regenerate id, reset state, init events ---------------- */
+				function cloneSekolahGroup() {
+					const wrapper = document.getElementById('sekolah-wrapper');
+					const groups = wrapper.querySelectorAll('.sekolah-group');
+					const base = groups[0];
+					const idx = groups.length; // new index
 
-				document.addEventListener("DOMContentLoaded", function() {
+					const clone = base.cloneNode(true);
+
+					// cari old hidden id dari base
+					const oldHidden = base.querySelector('input[type="hidden"][name="sekolah_id[]"]');
+					if (!oldHidden) return;
+					const oldId = oldHidden.id;
+					const newId = oldId + '_' + idx;
+
+					// ganti semua kemunculan id lama di innerHTML clone jadi id baru
+					clone.innerHTML = clone.innerHTML
+						.replaceAll(`btn-${oldId}`, `btn-${newId}`)
+						.replaceAll(`dropdown-${oldId}`, `dropdown-${newId}`)
+						.replaceAll(`search-${oldId}`, `search-${newId}`)
+						.replaceAll(`list-${oldId}`, `list-${newId}`)
+						.replaceAll(`id="${oldId}"`, `id="${newId}"`);
+
+					// append ke DOM
+					wrapper.appendChild(clone);
+
+					// reset any filter state (tampilkan semua item)
+					clone.querySelectorAll('.dropdown-item').forEach(i => i.style.display = '');
+
+					// reset hidden value and button text
+					const hiddenNew = clone.querySelector(`#${newId}`);
+					if (hiddenNew) hiddenNew.value = '';
+
+					const btnNew = clone.querySelector(`#btn-${newId}`);
+					if (btnNew) {
+						const placeholder = btnNew.getAttribute('data-placeholder') || 'Pilih Sekolah';
+						btnNew.textContent = placeholder;
+					}
+
+					// aktifkan tombol remove pada clone
+					const removeBtn = clone.querySelector('.remove-sekolah');
+					if (removeBtn) removeBtn.disabled = false;
+
+					// init events for the new select
+					initSelectInput(newId);
+
+					// after clone, ensure global sync
+					updateSekolahOptions();
+				}
+
+				/* ---------------- initialize all existing selects on DOMContentLoaded ---------------- */
+				document.addEventListener('DOMContentLoaded', function() {
+					// init existing selects
+					document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]').forEach(h => {
+						if (h.id) initSelectInput(h.id);
+					});
+
+					// bind add button
+					const addBtn = document.getElementById('add-sekolah');
+					if (addBtn) addBtn.addEventListener('click', cloneSekolahGroup);
+
+					// delegated remove button (works for clones too)
+					document.addEventListener('click', function(e) {
+						if (e.target.classList.contains('remove-sekolah')) {
+							const groups = document.querySelectorAll('.sekolah-group');
+							if (groups.length > 1) {
+								e.target.closest('.sekolah-group').remove();
+
+								// after removal, re-sync global options
+								updateSekolahOptions();
+							}
+						}
+					});
+
+					// initial sync once
 					updateSekolahOptions();
 				});
 
@@ -311,13 +394,11 @@
 							s.setAttribute('disabled', 'disabled');
 						}
 					});
-
-					updateSekolahOptions();
 				});
 
 				// ======== Auto-show berdasarkan old('role') ==========
 				document.addEventListener("DOMContentLoaded", function() {
-					const selectedRole = "{{ old("role") }}"; // Blade inject
+					const selectedRole = "{{ old('role') }}"; // Blade inject
 
 					if (selectedRole === 'guru') {
 						guruForm.style.display = 'block';
