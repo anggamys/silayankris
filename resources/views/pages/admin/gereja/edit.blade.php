@@ -251,7 +251,7 @@
 
                 // 3. LOAD KECAMATAN (AJAX)
                 function loadKecamatan(kota, callback = null) {
-                    fetch(`/get-kecamatan?kota=${kota}`)
+                    fetch(`/admin/get-kecamatan?kota=${kota}`)
                         .then(res => res.json())
                         .then(data => {
                             let html = "";
@@ -287,7 +287,7 @@
 
                 // 5. LOAD KELURAHAN (AJAX)
                 function loadKelurahan(kota, kecamatan, callback = null) {
-                    fetch(`/get-kelurahan?kota=${kota}&kecamatan=${kecamatan}`)
+                    fetch(`/admin/get-kelurahan?kota=${kota}&kecamatan=${kecamatan}`)
                         .then(res => res.json())
                         .then(data => {
                             let html = "";
@@ -331,8 +331,6 @@
                     });
                 }
             </script>
-
-
         </div>
     </div>
 @endsection

@@ -146,7 +146,7 @@
 
 						<div id="sekolah-wrapper">
 							<div class="input-group mb-2 sekolah-group">
-								<select name="sekolah_id[]" class="form-select" required>
+								<select name="sekolah_id[]" class="form-select">
 									<option value="" disabled selected>Pilih Sekolah</option>
 									@foreach ($sekolahs as $sekolah)
 										<option value="{{ $sekolah->id }}">
@@ -296,8 +296,22 @@
 
 				// Saat user mengubah pilihan
 				role.addEventListener('change', function() {
-					guruForm.style.display = (this.value === 'guru') ? 'block' : 'none';
+					const isGuru = this.value === 'guru';
+					guruForm.style.display = isGuru ? 'block' : 'none';
 					gerejaForm.style.display = (this.value === 'staff-gereja') ? 'block' : 'none';
+
+					// toggle required/disabled on sekolah selects to avoid browser validation errors
+					const selects = document.querySelectorAll('select[name="sekolah_id[]"]');
+					selects.forEach(s => {
+						if (isGuru) {
+							s.removeAttribute('disabled');
+							s.setAttribute('required', 'required');
+						} else {
+							s.removeAttribute('required');
+							s.setAttribute('disabled', 'disabled');
+						}
+					});
+
 					updateSekolahOptions();
 				});
 

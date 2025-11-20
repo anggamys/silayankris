@@ -9,7 +9,11 @@
 </head>
 
 <body>
+    @include('components.guest.navbar')
+
     @yield('content')
+
+    @include('components.guest.footer')
 </body>
 
 </html>
