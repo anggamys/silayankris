@@ -105,7 +105,7 @@
 
 					<input type="file" class="form-control @error("profile_photo_path") is-invalid @enderror" id="profile_photo_path"
 						name="profile_photo_path" accept="image/*">
-					<small class="text-muted">Format gambar: jpg, png, jpeg. Maksimal ukuran: 2MB.</small>
+					<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
 					@error("profile_photo_path")
 						<div class="invalid-feedback">{{ $message }}</div>
 					@enderror

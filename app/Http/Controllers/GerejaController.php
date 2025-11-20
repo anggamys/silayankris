@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GerejaRequest;
 use App\Models\Gereja;
 use App\Services\GerejaService;
+use App\Services\LokasiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -16,7 +17,7 @@ class GerejaController extends Controller
     {
         $this->service = $service;
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -32,14 +33,15 @@ class GerejaController extends Controller
         $lastPage = $gereja->lastPage();
         $perPage = $gereja->perPage();
         $total = $gereja->total();
-       
+
         return view('pages.admin.gereja.index', compact(
             'gereja',
             'search',
             'currentPage',
             'lastPage',
             'perPage',
-            'total'));
+            'total'
+        ));
     }
 
     /**
@@ -48,7 +50,7 @@ class GerejaController extends Controller
     public function create()
     {
         Gate::authorize('create', Gereja::class);
-        return view('pages.admin.gereja.create');   
+        return view('pages.admin.gereja.create');
     }
 
     /**
@@ -57,10 +59,9 @@ class GerejaController extends Controller
     public function store(GerejaRequest $request)
     {
         Gate::authorize('create', Gereja::class);
-        $data = $request->validated();   
+        $data = $request->validated();
         $this->service->store($data);
         return redirect()->route('admin.gereja.index')->with('success', 'Gereja berhasil ditambahkan.');
-
     }
 
     /**
@@ -75,57 +76,57 @@ class GerejaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-public function edit(Gereja $gereja)
-{
-    Gate::authorize('update', $gereja);
+    public function edit(Gereja $gereja)
+    {
+        Gate::authorize('update', $gereja);
 
-    return view('pages.admin.gereja.edit', compact('gereja'));
-}
+        return view('pages.admin.gereja.edit', compact('gereja'));
+    }
 
-/**
- * Update the specified resource in storage.
- */
-public function update(Request $request, Gereja $gereja): RedirectResponse
-{
-    Gate::authorize('update', $gereja);
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Gereja $gereja): RedirectResponse
+    {
+        Gate::authorize('update', $gereja);
 
-    $data = $request->validate([
-        'nama' => 'required|string|max:255',
-        'tanggal_berdiri' => 'nullable|date',
-        'tanggal_bergabung_sinode' => 'nullable|date',
-        'alamat' => 'required|string',
-        'kab_kota' => 'required|string',
-        'kecamatan' => 'required|string',
-        'kel_desa' => 'required|string',
-        'jarak_gereja_lain' => 'nullable|string',
-        'email' => 'nullable|email',
-        'nomor_telepon' => 'nullable|string|max:20',
-        'nama_pendeta' => 'nullable|string|max:255',
-        'status_gereja' => 'required|string',
+        $data = $request->validate([
+            'nama' => 'required|string|max:255',
+            'tanggal_berdiri' => 'nullable|date',
+            'tanggal_bergabung_sinode' => 'nullable|date',
+            'alamat' => 'required|string',
+            'kab_kota' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kel_desa' => 'required|string',
+            'jarak_gereja_lain' => 'nullable|string',
+            'email' => 'nullable|email',
+            'nomor_telepon' => 'nullable|string|max:20',
+            'nama_pendeta' => 'nullable|string|max:255',
+            'status_gereja' => 'required|string',
 
-        // JSON
-        'jumlah_umat.laki_laki' => 'nullable|integer|min:0',
-        'jumlah_umat.perempuan' => 'nullable|integer|min:0',
+            // JSON
+            'jumlah_umat.laki_laki' => 'nullable|integer|min:0',
+            'jumlah_umat.perempuan' => 'nullable|integer|min:0',
 
-        'jumlah_majelis.laki_laki' => 'nullable|integer|min:0',
-        'jumlah_majelis.perempuan' => 'nullable|integer|min:0',
+            'jumlah_majelis.laki_laki' => 'nullable|integer|min:0',
+            'jumlah_majelis.perempuan' => 'nullable|integer|min:0',
 
-        'jumlah_pemuda.laki_laki' => 'nullable|integer|min:0',
-        'jumlah_pemuda.perempuan' => 'nullable|integer|min:0',
+            'jumlah_pemuda.laki_laki' => 'nullable|integer|min:0',
+            'jumlah_pemuda.perempuan' => 'nullable|integer|min:0',
 
-        'jumlah_guru_sekolah_minggu.laki_laki' => 'nullable|integer|min:0',
-        'jumlah_guru_sekolah_minggu.perempuan' => 'nullable|integer|min:0',
+            'jumlah_guru_sekolah_minggu.laki_laki' => 'nullable|integer|min:0',
+            'jumlah_guru_sekolah_minggu.perempuan' => 'nullable|integer|min:0',
 
-        'jumlah_murid_sekolah_minggu.laki_laki' => 'nullable|integer|min:0',
-        'jumlah_murid_sekolah_minggu.perempuan' => 'nullable|integer|min:0',
-    ]);
+            'jumlah_murid_sekolah_minggu.laki_laki' => 'nullable|integer|min:0',
+            'jumlah_murid_sekolah_minggu.perempuan' => 'nullable|integer|min:0',
+        ]);
 
-    $this->service->update($gereja, $data);
+        $this->service->update($gereja, $data);
 
-    return redirect()
-        ->route('admin.gereja.index')
-        ->with('success', 'Gereja berhasil diperbarui!');
-}
+        return redirect()
+            ->route('admin.gereja.index')
+            ->with('success', 'Gereja berhasil diperbarui!');
+    }
 
 
     /**
