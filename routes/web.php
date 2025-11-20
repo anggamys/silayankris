@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.guest.home');
-})->name('home');
+})->name('landingpage');
 Route::get('/layanan', function () {
     return view('pages.guest.layanan');
 })->name('layanan');
 Route::get('/home', function () {
     return view('pages.guest.home');
-});
+})->name('home');;
 
 
 Route::get('/berita', [BeritaController::class, 'indexBerita'])->name('berita.index');
