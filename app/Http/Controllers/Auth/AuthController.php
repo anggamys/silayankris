@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function loginForm()
+    public function index()
     {
         return view('pages.login');
     }
 
-    public function login(LoginRequest $request)
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
         return redirect()->intended(route('admin.dashboard', absolute: false));
     }
 
-    public function logout(Request $request)
+    public function destroy(Request $request)
     {
         Auth::guard('web')->logout();
 

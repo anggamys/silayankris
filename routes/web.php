@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\BeritaController;
-use App\Http\Controllers\Periodik\PerBulanController;
-use App\Http\Controllers\GerejaController;
-use App\Http\Controllers\LokasiController;
-use App\Http\Controllers\SekolahController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\BeritaController;
+use App\Http\Controllers\Admin\Periodik\PerBulanController;
+use App\Http\Controllers\Admin\GerejaController;
+use App\Http\Controllers\Admin\LokasiController;
+use App\Http\Controllers\Admin\SekolahController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

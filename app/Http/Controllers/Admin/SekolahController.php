@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\SekolahRequest;
 use App\Models\Sekolah;
 use App\Services\SekolahService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
+
 
 class SekolahController extends Controller
 {

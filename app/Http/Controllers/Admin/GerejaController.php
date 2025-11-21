@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\GerejaRequest;
 use App\Models\Gereja;
 use App\Services\GerejaService;
-use App\Services\LokasiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 
 class GerejaController extends Controller
 {

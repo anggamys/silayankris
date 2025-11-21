@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\BeritaRequest;
 use App\Models\Berita;
@@ -8,6 +8,8 @@ use App\Services\BeritaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
+
 
 class BeritaController extends Controller
 {

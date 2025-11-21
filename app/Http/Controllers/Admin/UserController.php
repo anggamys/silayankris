@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +9,8 @@ use App\Models\Gereja;
 use App\Models\Sekolah;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
+
 
 class UserController extends Controller
 {

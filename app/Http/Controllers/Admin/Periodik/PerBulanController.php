@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Periodik;
+namespace App\Http\Controllers\Admin\Periodik;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Periodik\PerBulanRequest;
