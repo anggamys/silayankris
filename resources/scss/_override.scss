@@ -9,27 +9,24 @@ $primary: #008080;
 
 // NEWS
 .news-title {
-        color: #003232;
-    }
- .news-title:hover {
-        color: #008080;
-    }
-    .img-hover-slide {
-        overflow: hidden;
-        border-radius: 8px;
-    }
+    color: #003232;
+}
+.news-title:hover {
+    color: #008080;
+}
+.img-hover-slide {
+    overflow: hidden;
+    border-radius: 8px;
+}
 
-    .img-hover-slide img {
-        transition: transform 1.2s ease;
-        transform: translateY(0);
-    }
+.img-hover-slide img {
+    transition: transform 1.2s ease;
+    transform: translateY(0);
+}
 
-    .img-hover-slide:hover img {
-        transform: translateY(-5%);
-    }
-
-
-
+.img-hover-slide:hover img {
+    transform: translateY(-5%);
+}
 
 /* ===============================
    BUTTON PRIMARY (sesuai warna Sneat)
@@ -233,4 +230,11 @@ a.layout-menu-toggle.sidebar-toggle:hover {
 
 a.layout-menu-toggle.sidebar-toggle:hover .bx {
     color: #fff !important;
+}
+
+.bg-menu-theme
+    .menu-sub
+    > .menu-item.active
+    > .menu-link:not(.menu-toggle):before {
+    background-color: $primary !important;
 }
