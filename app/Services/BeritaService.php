@@ -18,11 +18,10 @@ class BeritaService
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%$search%")
-                    ->orWhere('isi', 'like', "%$search%")
-                    ->orWhere('id', $search);
+                    ->orWhere('isi', 'like', "%$search%");
             });
         }
-        return $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        return $query;
     }
 
     /**
