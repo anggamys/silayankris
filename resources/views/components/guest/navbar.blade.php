@@ -116,7 +116,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('berita') ? 'active' : '' }}" href="/berita">Berita</a>
+                    <a class="nav-link {{ request()->is(ltrim('berita*', '/')) ? 'active' : '' }}" href="/berita">Berita</a>
                 </li>
                 @guest
                     <li class="nav-item">
