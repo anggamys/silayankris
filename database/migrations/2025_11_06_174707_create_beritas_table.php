@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->string('judul');
+            $table->string('slug')->unique();
             $table->text('isi');
             $table->string('gambar_path')->nullable();
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');

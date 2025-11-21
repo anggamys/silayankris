@@ -19,7 +19,8 @@ Route::get('/home', function () {
 })->name('home');;
 
 
-Route::get('/berita', [BeritaController::class, 'indexBerita'])->name('berita.index');
+Route::get('/berita', [BeritaController::class, 'publicIndex'])->name('berita.index');
+Route::get('/berita/{berita:slug}', [BeritaController::class, 'publicShow'])->name('berita.show');
 
 Route::middleware(['auth'])
     ->prefix('admin')
