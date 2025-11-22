@@ -24,9 +24,9 @@ class SelectInput extends Component
      * Create a new component instance.
      */
     public function __construct(
-        $id,
-        $label,
-        $name,
+        $id = null,
+        $label = null,
+        $name = null,
         $options = [],
         $placeholder = null,
         $disabled = false,
@@ -36,10 +36,25 @@ class SelectInput extends Component
         $selected = null,
         $searchable = true,
     ) {
+        // If id not provided, generate one from name (replace [] for arrays) or uniqid
+        if (empty($id)) {
+            if (!empty($name)) {
+                $sanitized = str_replace(['[', ']'], ['_', ''], $name);
+                $id = $sanitized . '_' . uniqid();
+            } else {
+                $id = 'select_' . uniqid();
+            }
+        }
+
+        // If label not provided, derive from name
+        if (empty($label) && !empty($name)) {
+            $label = ucwords(str_replace(['_', '-'], ' ', str_replace(['[', ']'], '', $name)));
+        }
+
         $this->id = $id;
         $this->label = $label;
         $this->name = $name;
-        $this->options = $options;
+        $this->options = is_array($options) ? $options : (method_exists($options, 'toArray') ? $options->toArray() : $options);
         $this->placeholder = $placeholder;
         $this->disabled = $disabled;
         $this->dropdownClass = $dropdownClass;
