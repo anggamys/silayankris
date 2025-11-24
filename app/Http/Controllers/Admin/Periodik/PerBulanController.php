@@ -53,7 +53,11 @@ class PerBulanController extends Controller
     {
         Gate::authorize('create', PerBulan::class);
 
-        $gurus = Guru::all();
+        // Only include gurus whose related user is active. Eager load user to avoid N+1.
+        $gurus = Guru::with('user')
+            ->whereHas('user', function ($q) {
+                $q->where('status', User::STATUS_AKTIF);
+            })->get();
 
         return view('pages.admin.per-bulan.create', compact('gurus'));
     }
@@ -98,7 +102,11 @@ class PerBulanController extends Controller
 
         $perBulan->load('guru.user');
 
-        $gurus = Guru::all();
+        // Only include gurus whose related user is active. Eager load user to avoid N+1.
+        $gurus = Guru::with('user')
+            ->whereHas('user', function ($q) {
+                $q->where('status', User::STATUS_AKTIF);
+            })->get();
 
         return view('pages.admin.per-bulan.edit', compact('perBulan', 'gurus'));
     }
