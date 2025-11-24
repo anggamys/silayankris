@@ -26,24 +26,25 @@
                 <div class="row">
                     {{-- PERAN (kiri) --}}
                     <div class="col-md-6 mb-3">
-                        <label class="form-label text-start d-block">Peran</label>
+                        <label for="role" class="form-label">Peran</label>
                         <x-select-input id="role" name="role" label="Peran" :options="[
                             'guru' => 'Guru',
                             'staff-gereja' => 'Pengurus Gereja',
                             'admin' => 'Admin',
-                        ]" :selected="old('role', $user->role)" />
+                        ]" :selected="old('role', $user->role)"
+                            :searchable="false" />
                     </div>
 
                     {{-- STATUS (kanan) --}}
                     <div class="col-md-6 mb-3">
-                        <label class="form-label text-start d-block">Status</label>
+                        <label for="status" class="form-label">Status</label>
                         <x-select-input id="status" name="status" label="Status" :options="[
                             'aktif' => 'Aktif',
                             'nonaktif' => 'Nonaktif',
-                        ]" :selected="old('status', $user->status)" />
+                        ]" :selected="old('status', $user->status)"
+                            :searchable="false" />
                     </div>
                 </div>
-
 
                 {{-- NAMA --}}
                 <div class="mb-3">
@@ -78,13 +79,10 @@
                     <div class="input-group">
                         <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
                             name="password" placeholder="Biarkan kosong jika password tidak ingin mengubah">
-
                         <button type="button" class="btn password-toggle-btn" id="togglePassword">
                             <i class="bi bi-eye-slash"></i>
                         </button>
-
                     </div>
-
                     @error('password')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -93,18 +91,14 @@
                 {{-- KONFIRMASI PASSWORD --}}
                 <div class="mb-3">
                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-
                     <div class="input-group">
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                             id="password_confirmation" name="password_confirmation"
                             placeholder="Ulangi password baru jika mengubah">
-
                         <button type="button" class="btn password-toggle-btn" id="togglePasswordConfirm">
                             <i class="bi bi-eye-slash"></i>
                         </button>
-
                     </div>
-
                     @error('password_confirmation')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -112,8 +106,7 @@
 
                 {{-- FOTO --}}
                 <div class="mb-3">
-                    <label class="form-label">Foto Profil</label>
-
+                    <label for="profile_photo_path" class="form-label">Foto Profil</label>
                     {{-- Avatar atau Foto Lama --}}
                     @php
                         $name = old('name', $user->name ?? 'User');
@@ -122,7 +115,6 @@
                             urlencode($name) .
                             '&background=random&color=000&size=300';
                     @endphp
-
                     <div class="text-center mb-3" id="old-photo-container">
                         <img src="{{ !empty($user->profile_photo_path) ? asset('storage/' . $user->profile_photo_path) : $defaultAvatar }}"
                             class="img-thumbnail rounded"
@@ -135,7 +127,6 @@
                             style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
                     </div>
 
-
                     <input type="file" id="profile_photo_path" name="profile_photo_path" class="form-control"
                         accept="image/*">
                     <small class="text-muted">Kosongkan jika tidak ingin mengubah foto. Format: jpg, png, jpeg. Maksimal:
@@ -146,9 +137,9 @@
                 <div id="form-guru" style="display:none;">
                     <hr>
                     <h5>Data Guru</h5>
-
+                    {{-- NIP --}}
                     <div class="mb-3">
-                        <label class="form-label">NIP</label>
+                        <label for="nip" class="form-label">NIP</label>
                         <input type="text" name="nip" class="form-control"
                             value="{{ old('nip', $user->guru->nip ?? '') }}">
                         @error('nip')
@@ -156,22 +147,23 @@
                         @enderror
                     </div>
 
+                    {{-- TEMPAT LAHIR --}}
                     <div class="mb-3">
-                        <label class="form-label">Tempat Lahir</label>
+                        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                         <input type="text" name="tempat_lahir" class="form-control"
                             value="{{ old('tempat_lahir', $user->guru->tempat_lahir ?? '') }}">
                     </div>
 
+                    {{-- TANGGAL LAHIR --}}
                     <div class="mb-3">
-                        <label class="form-label">Tanggal Lahir</label>
+                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                         <input type="date" name="tanggal_lahir" class="form-control"
                             value="{{ old('tanggal_lahir', isset($user->guru->tanggal_lahir) && $user->guru->tanggal_lahir ? \Carbon\Carbon::parse($user->guru->tanggal_lahir)->format('Y-m-d') : '') }}">
-
                     </div>
 
+                    {{-- ASAL SEKOLAH INDUK --}}
                     <div class="mb-3">
                         <label class="form-label">Asal Sekolah Induk</label>
-
                         <div id="sekolah-wrapper">
                             @php
                                 $oldSekolahs = old('sekolah_id');
@@ -182,8 +174,7 @@
 
                             @if (is_array($sekolahList) && count($sekolahList) > 0)
                                 @foreach ($sekolahList as $idx => $sel)
-                                    <div class="mb-2 sekolah-group"
-                                        style="display: flex; flex-direction: row; justify-content: space-between;">
+                                    <div class="mb-2 sekolah-group d-flex gap-1 align-items-center">
                                         <x-select-input id="sekolah{{ $idx }}" name="sekolah_id[]"
                                             label="Sekolah" :options="$sekolahs" :selected="$sel"
                                             dropdownClass="flex-fill" />
@@ -197,14 +188,13 @@
                                     </div>
                                 @endforeach
                             @else
-                                <div class="mb-2 sekolah-group"
-                                    style="display: flex; flex-direction: row; justify-content: space-between;">
+                                <div class="mb-2 sekolah-group d-flex gap-1 align-items-center">
                                     <x-select-input id="sekolah" name="sekolah_id[]" label="Sekolah" :options="$sekolahs"
                                         :selected="old('sekolah_id.0')" dropdownClass="flex-fill" />
                                     @error('sekolah_id')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
-                                    <button type="button" class="btn btn-danger remove-sekolah ms-1" disabled>
+                                    <button type="button" class="btn btn-danger remove-sekolah" disabled>
                                         &times;
                                     </button>
                                 </div>
@@ -222,9 +212,9 @@
                 <div id="form-gereja" style="display:none;">
                     <hr>
                     <h5>Data Pengurus Gereja</h5>
-
+                    {{-- GEMBALA SIDANG --}}
                     <div class="mb-3">
-                        <label class="form-label">Gembala Sidang</label>
+                        <label for="gembala_sidang" class="form-label">Gembala Sidang</label>
                         <input type="text" name="gembala_sidang" class="form-control"
                             value="{{ old('gembala_sidang', $user->staffGereja->gembala_sidang ?? '') }}">
                         @error('gembala_sidang')
@@ -232,8 +222,9 @@
                         @enderror
                     </div>
 
+                    {{-- GEREJA --}}
                     <div class="mb-3">
-                        <label class="form-label">Gereja</label>
+                        <label for="gereja_id" class="form-label">Gereja</label>
                         <x-select-input name="gereja_id" :options="$gerejas" :selected="old('gereja_id', optional($user->staffGereja)->gereja_id)" />
                         @error('gereja_id')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -248,6 +239,7 @@
                 </div>
             </form>
 
+            {{-- Custom CSS dan JS untuk toggle password dan select sekolah --}}
             <style>
                 .password-toggle-btn {
                     border-color: #ced4da !important;
@@ -261,6 +253,7 @@
             </style>
 
             <script>
+                // ---------------- helper: inisialisasi satu select berdasarkan id (hidden input id) ----------------
                 function initSelectInput(id) {
                     const hidden = document.getElementById(id);
                     const btn = document.getElementById('btn-' + id);
@@ -309,6 +302,7 @@
                     hidden.onchange = updateSekolahOptions;
                 }
 
+                // ---------------- update global: sembunyikan opsi yang telah dipilih di tempat lain ----------------
                 function updateSekolahOptions() {
                     const selected = Array.from(document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]'))
                         .map(i => String(i.value || ''))
@@ -327,6 +321,7 @@
                     });
                 }
 
+                // ---------------- cloning sekolah group ----------------
                 function cloneSekolahGroup() {
                     const wrapper = document.getElementById('sekolah-wrapper');
                     const groups = wrapper.querySelectorAll('.sekolah-group');
@@ -358,6 +353,7 @@
                     updateSekolahOptions();
                 }
 
+                // ---------------- initialize all existing selects on DOMContentLoaded ----------------
                 document.addEventListener('DOMContentLoaded', function() {
                     document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]').forEach(h => {
                         if (h.id) initSelectInput(h.id);
@@ -376,6 +372,7 @@
                     updateSekolahOptions();
                 });
 
+                // ======== TAMPILKAN / SEMBUNYIKAN FORM BERDASARKAN ROLE ========
                 const role = document.getElementById('role');
                 const guruForm = document.getElementById('form-guru');
                 const gerejaForm = document.getElementById('form-gereja');
@@ -456,7 +453,6 @@
                     this.querySelector("i").classList.toggle("bi-eye-slash");
                 });
             </script>
-
         </div>
     </div>
 @endsection

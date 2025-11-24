@@ -20,22 +20,22 @@
             <form action="{{ route('admin.per-bulan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                {{-- select option guru --}}
-                <div class="mb-3">
+                {{-- Guru --}}
+                <div id="guru_id">
                     <label for="guru_id" class="form-label">Guru</label>
-                    <select name="guru_id" id="guru_id" class="form-select" required>
-                        @if ($gurus->isEmpty())
-                            <option value="" disabled>Tidak ada data guru tersedia</option>
-                        @else
-                            <option value="" disabled selected>Pilih Guru</option>
-                            @foreach ($gurus as $guru)
-                                <option value="{{ $guru->id }}">{{ $guru->user->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('guru_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-2 guru-group"
+                        style="display: flex; flex-direction: row; justify-content: space-between;">
+                        @php
+                            $guruOptions = $gurus
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
+                                ->toArray();
+                        @endphp
+                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"
+                            dropdownClass="flex-fill" />
+                        @error('guru_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 {{-- Daftar Gaji --}}
@@ -71,6 +71,7 @@
                     @enderror
                 </div>
 
+                {{-- Ceklist Berkas --}}
                 <div class="mb-3">
                     <label for="ceklist_berkas" class="form-label">Ceklist Berkas</label>
                     <input type="text" name="ceklist_berkas" id="ceklist_berkas" class="form-control" required>
@@ -79,18 +80,21 @@
                     @enderror
                 </div>
 
+                {{-- Status --}}
                 <div class="mb-3">
                     <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select" required>
-                        <option value="menunggu">Menunggu</option>
-                        <option value="diterima">Diterima</option>
-                        <option value="ditolak">Ditolak</option>
-                    </select>
+                    <x-select-input id="status" label="Status" name="status" :options="[
+                        'menunggu' => 'Menunggu',
+                        'diterima' => 'Diterima',
+                        'ditolak' => 'Ditolak',
+                    ]"
+                        placeholder="Pilih Status" :selected="old('status')" :searchable="false" />
                     @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                {{-- Catatan --}}
                 <div class="mb-3">
                     <label for="catatan" class="form-label">Catatan (Opsional)</label>
                     <input type="text" name="catatan" id="catatan" class="form-control"
