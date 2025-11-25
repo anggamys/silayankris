@@ -8,7 +8,6 @@
         .hero-image {
             width: 100%;
             height: 260px;
-            /* tinggi untuk mobile */
             background-image: url('{{ asset('assets/img/kemenag2.jpg') }}');
             background-size: contain;
             background-position: center;
@@ -16,22 +15,170 @@
         }
 
         @media (min-width: 992px) {
-
-            /* breakpoint lg Bootstrap */
             .hero-image {
                 height: 85vh;
-                /* full tinggi di desktop */
+            }
+        }
+
+        /* ===== Logo / Partner Section ===== */
+        .partner-section {
+            background: #f8f9fb;
+        }
+
+        .partner-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.25s ease;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .partner-logo {
+            max-height: 90px;
+            object-fit: contain;
+            filter: grayscale(20%);
+            opacity: 0.9;
+            transition: all 0.25s ease;
+        }
+
+        .partner-card:hover .partner-logo {
+            filter: none;
+            opacity: 1;
+        }
+
+        .partner-divider {
+            width: 80px;
+            height: 3px;
+            background: #008080;
+            border-radius: 999px;
+        }
+
+        /* Team image */
+        .team-img {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== PROFIL SECTION CUSTOM ===== */
+        .profil-section {
+            background-color: #008080;
+            /* teal seperti contoh */
+            color: #ffffff;
+        }
+
+        .profil-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .profil-section .partner-divider {
+            background: #ffc107;
+            /* garis kuning biar kontras */
+        }
+
+        .profil-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        @media (min-width: 992px) {
+            .profil-card {
+                padding: 3rem;
+            }
+        }
+
+        .profil-photo-wrapper {
+            background: #ff4b3a;
+            /* merah-oranye di belakang foto, opsional */
+            border-radius: 1.25rem;
+            padding: 1rem;
+        }
+
+        .profil-photo-wrapper img {
+            border-radius: 1rem;
+        }
+
+        /* Animasi Card Pegawai */
+        .pegawai-card {
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+            cursor: pointer
+        }
+
+        .pegawai-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Efek gambar zoom */
+        .team-img img {
+            transition: all 0.3s ease;
+        }
+
+
+
+        /* Efek warna nama berubah */
+        .pegawai-card:hover h5 {
+            color: #008080;
+            /* warna teal mengikuti tema */
+        }
+
+        /* ----- ANIMASI CARD PELAYANAN ----- */
+        .pelayanan-card {
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+        }
+
+        .pelayanan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Icon animasi berputar halus */
+        .pelayanan-card i {
+            transition: 0.3s ease;
+        }
+
+        .pelayanan-card:hover i {
+            transform: scale(1.12) rotate(4deg);
+        }
+
+        /* Animasi fade-in dari bawah */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 
+
     <main>
-        {{-- Hero Section --}}
-        <section class="hero bg-light">
-            <div class="container border-bottom">
+        {{-- HERO SECTION --}}
+        <section class="hero-section " data-aos="fade-up">
+            <div class="container pb-5">
                 <div class="row align-items-center">
-                    <div class="col-md-6  ">
-                        <div class=" py-4">
+                    <div class="col-md-6">
+                        <div class="py-4">
                             <h1 class="fw-bold text-primary mb-3 display-5">
                                 Selamat Datang di SILAYANKRIS
                             </h1>
@@ -49,77 +196,84 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="hero-image "></div>
+                        <div class="hero-image"></div>
                     </div>
                 </div>
             </div>
+        </section>
+        {{-- PROFIL SECTION --}}
+        <section class="profil-section" data-aos="fade-up">
+            <div class="container py-5">
 
-            <!-- PROFIL SECTION -->
-            <div class="container border-bottom py-5 ">
-                <div class="row align-items-start">
+                {{-- Header konsisten --}}
+                <div class="text-center mb-5">
+                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL SEKSI</h6>
+                    <h2 class="fw-bold mb-2">Penyelenggara Kristen</h2>
+                    <div class="partner-divider mx-auto mb-3"></div>
+                    <p class="section-subtitle fs-6 mb-0">
+                        Profil singkat Penyelenggara Kristen Kementerian Agama Kota Surabaya.
+                    </p>
+                </div>
 
-                    <!-- Foto -->
-                    <div class="col-md-5 mb-4 mb-md-0 text-center">
-                        <img src="{{ asset('assets/img/6 (1).jpg') }}" class="img-fluid rounded shadow-sm"
-                            style="max-width: 100%; height: auto;">
-                    </div>
-
-                    <!-- Konten -->
-                    <div class="col-md-7 ps-md-4">
-
-                        <!-- Subheading -->
-                        <p class="text-uppercase text-secondary fw-semibold mb-1" style="letter-spacing: .5px;">
-                            Penyelenggara Kristen
-                        </p>
-
-                        <!-- Judul -->
-                        <h1 class="fw-bold mb-4" style="font-size: 2.4rem; line-height: 1.3;">
-                            Kantor Kementerian <br>
-                            Agama Kota <br>
-                            Surabaya.
-                        </h1>
-
-                        <!-- Box deskripsi -->
-                        <div class="p-4 mb-4 rounded" style="background: #f7f9fb; border-left: 4px solid #dfb484;">
-                            <p class="text-muted lh-lg mb-0" style="font-size: 0.97rem;">
-                                Selamat Datang di Website Resmi Seksi Pendidikan Agama Islam (PAIS)
-                                Kantor Kementerian Agama Kota Surabaya. Kami hadir disini untuk menjadi pusat
-                                informasi dan layanan terpadu dalam bidang pendidikan agama Islam di Kota Surabaya.
-                                Melalui platform ini, kami berkomitmen untuk menyediakan akses yang mudah bagi
-                                para guru, siswa, dan masyarakat umum terhadap program, kebijakan, serta berita terbaru.
-                                Mari bersama-sama kita wujudkan pendidikan agama Islam yang berkualitas, modern, dan
-                                berkarakter untuk generasi penerus bangsa. Terima kasih atas kunjungan Anda.
-                            </p>
+                <div class="profil-card mx-auto">
+                    <div class="row align-items-center gy-4">
+                        {{-- Foto --}}
+                        <div class="col-md-5 text-center">
+                            <div class="profil-photo-wrapper mx-auto">
+                                <img src="{{ asset('assets/img/6 (1).jpg') }}" class="img-fluid shadow-sm"
+                                    alt="Penyelenggara Kristen">
+                            </div>
                         </div>
 
+                        {{-- Konten --}}
+                        <div class="col-md-7">
+                            <p class="text-uppercase text-secondary fw-semibold mb-1" style="letter-spacing: .5px;">
+                                Penyelenggara Kristen
+                            </p>
 
+                            <h1 class="fw-bold mb-4 text-dark" style="font-size: 2.4rem; line-height: 1.3;">
+                                Kantor Kementerian <br>
+                                Agama Kota <br>
+                                Surabaya.
+                            </h1>
 
-
-
+                            <div class="p-4 mb-2 rounded" style="background: #f7f9fb; border-left: 4px solid #dfb484;">
+                                <p class="text-muted lh-lg mb-0" style="font-size: 0.97rem;">
+                                    Selamat Datang di Website Resmi Seksi Pendidikan Agama Islam (PAIS)
+                                    Kantor Kementerian Agama Kota Surabaya. Kami hadir disini untuk menjadi pusat
+                                    informasi dan layanan terpadu dalam bidang pendidikan agama Islam di Kota Surabaya.
+                                    Melalui platform ini, kami berkomitmen untuk menyediakan akses yang mudah bagi
+                                    para guru, siswa, dan masyarakat umum terhadap program, kebijakan, serta berita terbaru.
+                                    Mari bersama-sama kita wujudkan pendidikan agama Islam yang berkualitas, modern, dan
+                                    berkarakter untuk generasi penerus bangsa. Terima kasih atas kunjungan Anda.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- PELAYANAN SECTION -->
+            </div>
+        </section>
+
+
+        {{-- PELAYANAN SECTION --}}
+        <section class="pelayanan-section" data-aos="fade-up"data-aos-delay="400">
             <div class="container py-5 border-bottom">
 
+                {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-dark">
-                        PELAYANAN SEKSI
-                    </h6>
-                    <h2 class="fw-bold fs-1 text-dark">
-                        Penyelenggara Kristen
-                    </h2>
-                    {{-- <div class="mx-auto mt-2 bg-primary" style="width: 400px; height: 3px; "></div> --}}
-                    <p class="text-muted mt-3 fs-6">
+                    <h6 class="fw-bold text-secondary mb-1">PELAYANAN SEKSI</h6>
+                    <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
+                    <div class="partner-divider mx-auto mb-3"></div>
+                    <p class="text-muted fs-6 mb-0">
                         Pilih jenis layanan yang ingin Anda akses melalui sistem SILAYANKRIS.
                     </p>
                 </div>
 
                 <div class="row">
                     {{-- Card 1 --}}
-                    <div class="col-md-6 mb-4">
-                        <div class="card border-0 shadow-lg h-100">
+                    <div class="col-md-6 mb-4 fade-up">
+                        <div class="card border-0 shadow-lg h-100 pelayanan-card">
                             <div class="card-body text-center py-5">
                                 <div class="mb-3">
                                     <i class="bi bi-building fs-1 text-primary"></i>
@@ -134,47 +288,48 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- Card 2 --}}
-                    <div class="col-md-6 mb-4">
-                        <div class="card border-0 shadow-lg h-100">
+
+                    <div class="col-md-6 mb-4 fade-up">
+                        <div class="card border-0 shadow-lg h-100 pelayanan-card">
                             <div class="card-body text-center py-5">
                                 <div class="mb-3">
-                                    <i class="bi bi-person-badge fs-1 text-success"></i>
+                                    <i class="bi bi-person-badge fs-1 text-primary"></i>
                                 </div>
                                 <h5 class="card-title fw-bold mb-3">Pelayanan TPG Guru</h5>
                                 <p class="card-text text-muted">
                                     Unggah dan kelola berkas Tunjangan Profesi Guru secara online.
                                 </p>
-                                <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-success mt-3">
+                                <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-primary mt-3">
                                     Masuk ke Pelayanan TPG Guru
                                 </a>
                             </div>
                         </div>
                     </div>
+
                 </div>
-
             </div>
+        </section>
 
-            <!-- PEGAWAI SECTION -->
-            <div class="container py-5">
+        {{-- PEGAWAI SECTION --}}
+        <section class="pegawai-section bg-light" data-aos="fade-up" data-aos-delay="0">
 
-                <!-- Header -->
+            <div class="container py-5 border-bottom">
+
+                {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-dark">
-                        PEGAWAI SEKSI
-                    </h6>
-                    <h2 class="fw-bold fs-1 text-dark">
-                        Penyelenggara Kristen
-                    </h2>
-
+                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI SEKSI</h6>
+                    <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
+                    <div class="partner-divider mx-auto mb-3"></div>
+                    <p class="text-muted fs-6 mb-0">
+                        Daftar pegawai yang bertugas pada Seksi Penyelenggara Kristen.
+                    </p>
                 </div>
 
                 <div class="row g-4">
-
-                    <!-- CARD 1 -->
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card shadow border-0 text-center p-4">
+                    {{-- CARD 1 --}}
+                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
                             </div>
@@ -182,9 +337,9 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
-                    <!-- CARD 2 -->
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card shadow border-0 text-center p-4">
+                    {{-- CARD 2 --}}
+                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
                             </div>
@@ -192,9 +347,9 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
-                    <!-- CARD 3 -->
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card shadow border-0 text-center p-4">
+                    {{-- CARD 3 --}}
+                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
                             </div>
@@ -202,9 +357,9 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
-                    <!-- CARD 4 -->
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card shadow border-0 text-center p-4">
+                    {{-- CARD 4 --}}
+                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
                             </div>
@@ -216,58 +371,39 @@
 
 
                 </div>
-
             </div>
-            
-            <!-- LOGO SECTION -->
+        </section>
 
-            <div class="container py-5  bg-light">
-                <div class="row justify-content-center align-items-center text-center g-5">
+        {{-- LOGO SECTION --}}
+        <section class="logo-section bg-white py-5" data-aos="fade-up">
+
+            <div class="container text-center">
+                <div class="mb-4">
+                    <h6 class="fw-bold text-secondary mb-1">DIDUKUNG OLEH</h6>
+                    <h2 class="fw-bold text-dark mb-2">Mitra Kerja Sama</h2>
+                    <div class="partner-divider mx-auto mb-3"></div>
+                    <p class="text-muted fs-6">
+                        SILAYANKRIS dikembangkan dengan dukungan berbagai lembaga dan institusi terkait.
+                    </p>
+                </div>
+
+                <div class="row justify-content-center align-items-center g-5">
 
                     <!-- Logo 1 -->
-                    <div class="col-6 col-md-3">
-                        <img src="{{ asset('assets/img/logo.png') }}" class="img-fluid"
-                            style="max-height: 120px; object-fit: contain;" alt="Logo 1">
+                    <div class="col-6 col-md-3 logo-wrapper">
+                        <img src="{{ asset('assets/img/logo.png') }}" class="brand-logo img-fluid" alt="Logo 1">
                     </div>
 
                     <!-- Logo 2 -->
-                    <div class="col-6 col-md-3">
-                        <img src="{{ asset('assets/img/Logo UPN JATIM.png') }}" class="img-fluid"
-                            style="max-height: 120px; object-fit: contain;" alt="Logo 2">
+                    <div class="col-6 col-md-3 logo-wrapper">
+                        <img src="{{ asset('assets/img/Logo UPN JATIM.png') }}" class="brand-logo img-fluid"
+                            alt="Logo 2">
                     </div>
 
                 </div>
             </div>
-
-
         </section>
-
-        {{-- <div class="col-12 col-lg-6 order-2 order-lg-1 d-flex align-items-center border">
-                <div class="px-4 px-md-5 py-5 py-lg-0 text-start">
-                    <h1 class="fw-bold text-primary mb-3 display-5">
-                        Selamat Datang di SILAYANKRIS
-                    </h1>
-                    <p class="fs-5 mb-3">
-                        Sistem Informasi Layanan Penyelenggara Kristen
-                        Kementerian Agama Kota Surabaya
-                    </p>
-                    <p class="text-muted mb-4">
-                        Akses berbagai layanan dan informasi penyelenggaraan Kristen
-                        secara cepat, mudah, dan terintegrasi dalam satu sistem.
-                    </p>
-                    <button class="btn btn-primary btn-lg">
-                        Mulai
-                    </button>
-                </div>
-            </div> --}}
-
-
-
 
 
     </main>
-
-
-
-
 @endsection
