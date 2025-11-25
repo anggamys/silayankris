@@ -24,11 +24,11 @@ class PerBulanRequest extends FormRequest
     {
         $rules = [
             'guru_id' => ['required', 'exists:gurus,id'],
-            'daftar_gaji_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'daftar_hadir_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'rekening_bank_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'daftar_gaji_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'daftar_hadir_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'rekening_bank_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'ceklist_berkas' => ['nullable', 'string', 'max:255'],
-            'status' => ['nullable', 'in:menunggu,diterima,ditolak'],
+            'status' => ['required', 'in:menunggu,diterima,ditolak'],
             'catatan' => ['nullable', 'string', 'max:1000'],
         ];
 

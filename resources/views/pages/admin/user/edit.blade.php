@@ -32,7 +32,7 @@
                             'staff-gereja' => 'Pengurus Gereja',
                             'admin' => 'Admin',
                         ]" :selected="old('role', $user->role)"
-                            :searchable="false" />
+                            :searchable="false" required/>
                     </div>
 
                     {{-- STATUS (kanan) --}}
