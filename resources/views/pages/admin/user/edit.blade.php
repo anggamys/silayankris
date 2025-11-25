@@ -22,7 +22,7 @@
                 @csrf
                 @method('PUT')
 
-                {{-- PERAN --}}
+                {{-- PERAN & STATUS--}}
                 <div class="row">
                     {{-- PERAN (kiri) --}}
                     <div class="col-md-6 mb-3">
