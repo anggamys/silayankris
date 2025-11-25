@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Sekolah;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class SekolahService
@@ -55,5 +54,4 @@ class SekolahService
     {
         $sekolah->delete();
     }
-
 }

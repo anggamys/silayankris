@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\Berita;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class BeritaService
@@ -41,22 +39,22 @@ class BeritaService
      * Update an existing user.
      */
     public function update(Berita $berita, array $data)
-{
-    if (isset($data['gambar_path'])) {
-        // Hapus gambar lama jika ada
-        if ($berita->gambar_path && Storage::disk('public')->exists($berita->gambar_path)) {
-            Storage::disk('public')->delete($berita->gambar_path);
+    {
+        if (isset($data['gambar_path'])) {
+            // Hapus gambar lama jika ada
+            if ($berita->gambar_path && Storage::disk('public')->exists($berita->gambar_path)) {
+                Storage::disk('public')->delete($berita->gambar_path);
+            }
+
+            // Simpan gambar baru
+            $data['gambar_path'] = $data['gambar_path']->store('beritas', 'public');
+        } else {
+            unset($data['gambar_path']);
         }
 
-        // Simpan gambar baru
-        $data['gambar_path'] = $data['gambar_path']->store('beritas', 'public');
-    } else {
-        unset($data['gambar_path']);
+        $berita->update($data);
+        return $berita;
     }
-
-    $berita->update($data);
-    return $berita;
-}
 
     /**
      * Delete a user.
