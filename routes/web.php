@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\Periodik\PerBulanController;
 use App\Http\Controllers\Admin\Periodik\PerSemesterController;
+use App\Http\Controllers\Admin\Periodik\PerTahunController;
 use App\Http\Controllers\Admin\GerejaController;
 use App\Http\Controllers\Admin\LokasiController;
 use App\Http\Controllers\Admin\SekolahController;
@@ -43,7 +44,7 @@ Route::middleware(['auth'])
 
         Route::resource('per-bulan', PerBulanController::class)->names('per-bulan');
         Route::resource('per-semester', PerSemesterController::class)->names('per-semester');
-        Route::resource('per-tahun', PerBulanController::class)->names('per-tahun');
+        Route::resource('per-tahun', PerTahunController::class)->names('per-tahun');
 
         Route::resource('gereja', GerejaController::class)->names('gereja');
 
