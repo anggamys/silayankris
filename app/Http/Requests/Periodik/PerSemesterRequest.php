@@ -28,7 +28,7 @@ class PerSemesterRequest extends FormRequest
             'sk_pbm_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'sk_terakhir_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'sk_berkala_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sp_bersedia_mengembalikan_path ' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'sp_bersedia_mengembalikan_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'sp_perangkat_pembelajaran_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'keaktifan_simpatika_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'berkas_s28a_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
