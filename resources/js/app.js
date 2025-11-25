@@ -15,6 +15,19 @@ import '../sneat/js/menu.js';
 import '../sneat/js/ui-toasts.js';
 import '../sneat/js/main.js';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+// Inisialisasi AOS
+document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+        duration: 800,      // durasi animasi (ms)
+        once: true,         // animasi hanya sekali
+        offset: 120,        // jarak trigger dari bawah viewport
+    });
+});
+
+
 /* Log untuk debug */
 // console.log("Sneat Loaded:", {
 //     helpers: typeof window.Helpers !== "undefined",

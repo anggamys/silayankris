@@ -14,6 +14,9 @@
     @yield('content')
 
     @include('components.guest.footer')
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>
