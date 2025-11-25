@@ -23,35 +23,50 @@
                 <div class="col-md-3 text-center mb-3">
 
                     @php
-                        $profile_photo_path = str_replace(
-                            '.' . pathinfo($user->profile_photo_path, PATHINFO_EXTENSION),
-                            '.jpg',
-                            $user->profile_photo_path,
-                        );
+                        $photoFile = null;
+                        if ($user->profile_photo_path) {
+                            $dir = pathinfo($user->profile_photo_path, PATHINFO_DIRNAME);
+                            $filename = pathinfo($user->profile_photo_path, PATHINFO_FILENAME);
+                            $photoFile = $dir !== '.' ? $dir . '/' . $filename . '.jpg' : $filename . '.jpg';
+                        }
+                        $photoPath = $photoFile ? public_path('storage/' . $photoFile) : null;
                     @endphp
 
                     @if ($user->profile_photo_path)
-                        <img src="{{ asset('storage/' . $profile_photo_path) }}" class="img-thumbnail rounded shadow-sm"
+                        <img src="{{ asset('storage/' . $photoPath) }}" class="img-thumbnail rounded shadow-sm"
                             style="width: 305px; height: 305px; object-fit: cover;">
                     @else
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}"
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) . '&background=random&color=000&size=300' }}"
                             class="img-thumbnail rounded shadow-sm" style="width: 305px; height: 305px; object-fit: cover;">
                     @endif
                 </div>
 
                 {{-- FORM KANAN (LABEL TETAP RATA KIRI) --}}
                 <div class="col-md-9">
+                    {{-- PERAN & STATUS --}}
+                    <div class="row">
+                        {{-- PERAN (kiri) --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-start d-block">Peran</label>
+                            <select class="form-select" disabled>
+                                <option value="guru" {{ $user->role == 'guru' ? 'selected' : '' }}>Guru</option>
+                                <option value="staff-gereja" {{ $user->role == 'staff-gereja' ? 'selected' : '' }}>Pengurus
+                                    Gereja</option>
+                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+                        </div>
 
-                    {{-- PERAN --}}
-                    <div class="mb-3">
-                        <label class="form-label text-start d-block">Peran</label>
-                        <select class="form-select" disabled>
-                            <option value="guru" {{ $user->role == 'guru' ? 'selected' : '' }}>Guru</option>
-                            <option value="staff-gereja" {{ $user->role == 'staff-gereja' ? 'selected' : '' }}>Pengurus
-                                Gereja</option>
-                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                        </select>
+                        {{-- STATUS (kanan) --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-start d-block">Status</label>
+                            <select class="form-select" disabled>
+                                <option value="aktif" {{ $user->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="nonaktif" {{ $user->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif
+                                </option>
+                            </select>
+                        </div>
                     </div>
+
 
                     {{-- NAMA --}}
                     <div class="mb-3">
@@ -96,7 +111,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Tempat Mengajar (Sekolah)</label>
+                    <label class="form-label">Asal Sekolah Induk</label>
                     @if ($user->guru && $user->guru->sekolah && $user->guru->sekolah->count())
                         @foreach ($user->guru->sekolah as $sekolah)
                             <input type="text" class="form-control mb-1" value="{{ $sekolah->nama }}" readonly>
@@ -110,7 +125,7 @@
             {{-- FORM STAFF GEREJA --}}
             @if ($user->role === 'staff-gereja' && $user->staffGereja)
                 <hr>
-                <h5>Data Staff Gereja</h5>
+                <h5>Data Pengurus Gereja</h5>
 
                 <div class="mb-3">
                     <label class="form-label">Gembala Sidang</label>
@@ -120,12 +135,21 @@
                 <div class="mb-3">
                     <label class="form-label">Gereja</label>
                     <select class="form-select" disabled>
-                        @foreach ($gerejas as $gereja)
-                            <option value="{{ $gereja->id }}"
-                                {{ $user->staffGereja->gereja_id == $gereja->id ? 'selected' : '' }}>
-                                {{ $gereja->nama }}
-                            </option>
-                        @endforeach
+                        @if (is_array($gerejas))
+                            @foreach ($gerejas as $id => $nama)
+                                <option value="{{ $id }}"
+                                    {{ $user->staffGereja->gereja_id == $id ? 'selected' : '' }}>
+                                    {{ $nama }}
+                                </option>
+                            @endforeach
+                        @else
+                            @foreach ($gerejas as $gereja)
+                                <option value="{{ $gereja->id }}"
+                                    {{ $user->staffGereja->gereja_id == $gereja->id ? 'selected' : '' }}>
+                                    {{ $gereja->nama }}
+                                </option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             @endif

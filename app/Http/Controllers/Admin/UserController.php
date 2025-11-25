@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +9,8 @@ use App\Models\Gereja;
 use App\Models\Sekolah;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
+
 
 class UserController extends Controller
 {
@@ -49,8 +51,11 @@ class UserController extends Controller
     public function create(User $user)
     {
         Gate::authorize('create', User::class);
-        $sekolahs = Sekolah::all();
-        $gerejas = Gereja::all();
+
+        $sekolahs = Sekolah::pluck('nama', 'id')
+            ->toArray();
+        $gerejas = Gereja::pluck('nama', 'id')
+            ->toArray();
 
         return view('pages.admin.user.create', compact('sekolahs', 'gerejas'));
     }
@@ -74,8 +79,10 @@ class UserController extends Controller
 
         $user->load(['guru.sekolah', 'staffGereja']);
 
-        $sekolahs = Sekolah::all();
-        $gerejas = Gereja::all();
+        $sekolahs = Sekolah::pluck('nama', 'id')
+            ->toArray();
+        $gerejas = Gereja::pluck('nama', 'id')
+            ->toArray();
 
         return view('pages.admin.user.show', compact('user', 'sekolahs', 'gerejas'));
     }
@@ -89,8 +96,10 @@ class UserController extends Controller
 
         $user->load(['guru.sekolah', 'staffGereja']);
 
-        $sekolahs = Sekolah::all();
-        $gerejas = Gereja::all();
+        $sekolahs = Sekolah::pluck('nama', 'id')
+            ->toArray();
+        $gerejas = Gereja::pluck('nama', 'id')
+            ->toArray();
 
         return view('pages.admin.user.edit', compact('user', 'sekolahs', 'gerejas'));
     }

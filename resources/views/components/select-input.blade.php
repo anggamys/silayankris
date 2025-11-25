@@ -15,7 +15,7 @@
 	<button id="btn-{{ $id }}"
 		class="btn btn-outline-secondary form-control text-start dropdown-toggle {{ $buttonClass }}" data-bs-toggle="dropdown"
 		@if ($disabled) disabled @endif>
-		{{ $selected ? $selected : $placeholder ?? 'Pilih ' . $label }}
+		{{ $selected && isset($options[$selected]) ? $options[$selected] : $placeholder ?? 'Pilih ' . $label }}
 	</button>
 	<ul class="dropdown-menu w-100 {{ $ulClass }}" id="dropdown-{{ $id }}">
 		@if ($searchable)
@@ -47,14 +47,19 @@
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 
-		// Handle klik item
 		function attachEventItems() {
 			document.querySelectorAll("#list-{{ $id }} .dropdown-item").forEach(item => {
 				item.addEventListener("click", function() {
 					const value = this.getAttribute("data-value");
-					document.getElementById("{{ $id }}").value = value;
-					document.getElementById("btn-{{ $id }}").textContent = this
-						.textContent;
+
+					const hiddenInput = document.getElementById("{{ $id }}");
+					const button = document.getElementById("btn-{{ $id }}");
+
+					hiddenInput.value = value;
+
+					button.textContent = this.textContent;
+
+					hiddenInput.dispatchEvent(new Event('change'));
 				});
 			});
 		}

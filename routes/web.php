@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\BeritaController;
-use App\Http\Controllers\Periodik\PerBulanController;
-use App\Http\Controllers\GerejaController;
-use App\Http\Controllers\LokasiController;
-use App\Http\Controllers\SekolahController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\BeritaController;
+use App\Http\Controllers\Admin\Periodik\PerBulanController;
+use App\Http\Controllers\Admin\Periodik\PerSemesterController;
+use App\Http\Controllers\Admin\Periodik\PerTahunController;
+use App\Http\Controllers\Admin\GerejaController;
+use App\Http\Controllers\Admin\LokasiController;
+use App\Http\Controllers\Admin\SekolahController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,10 +18,12 @@ Route::get('/layanan', function () {
 })->name('layanan');
 Route::get('/home', function () {
     return view('pages.guest.home');
-})->name('home');;
+})->name('home');
+;
 
 
-Route::get('/berita', [BeritaController::class, 'indexBerita'])->name('berita.index');
+Route::get('/berita', [BeritaController::class, 'publicIndex'])->name('berita.index');
+Route::get('/berita/{berita:slug}', [BeritaController::class, 'publicShow'])->name('berita.show');
 
 Route::middleware(['auth'])
     ->prefix('admin')
@@ -39,8 +43,8 @@ Route::middleware(['auth'])
         Route::resource('sekolah', SekolahController::class)->names('sekolah');
 
         Route::resource('per-bulan', PerBulanController::class)->names('per-bulan');
-        Route::resource('per-semester', PerBulanController::class)->names('per-semester');
-        Route::resource('per-tahun', PerBulanController::class)->names('per-tahun');
+        Route::resource('per-semester', PerSemesterController::class)->names('per-semester');
+        Route::resource('per-tahun', PerTahunController::class)->names('per-tahun');
 
         Route::resource('gereja', GerejaController::class)->names('gereja');
 

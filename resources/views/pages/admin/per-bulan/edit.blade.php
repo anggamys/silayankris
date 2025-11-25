@@ -24,22 +24,22 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Guru --}}
-                <div class="mb-3">
+                {{-- Guru--}}
+                <div id="guru_id">
                     <label for="guru_id" class="form-label">Guru</label>
-                    <select name="guru_id" id="guru_id" class="form-select" required>
-                        <option value="" disabled>Pilih Guru</option>
-
-                        @foreach ($gurus as $guru)
-                            <option value="{{ $guru->id }}"
-                                {{ $guru->id == old('guru_id', $perBulan->guru_id) ? 'selected' : '' }}>
-                                {{ $guru->user->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('guru_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-2 guru-group"
+                        style="display: flex; flex-direction: row; justify-content: space-between;">
+                        @php
+                            $guruOptions = $gurus
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
+                                ->toArray();
+                        @endphp
+                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id', $perBulan->guru_id)"
+                            dropdownClass="flex-fill" />
+                        @error('guru_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 {{-- Daftar Gaji --}}

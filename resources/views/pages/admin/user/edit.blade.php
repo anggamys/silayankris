@@ -23,24 +23,27 @@
                 @method('PUT')
 
                 {{-- PERAN --}}
-                <div class="mb-3">
-                    <label class="form-label">Peran</label>
-                    <select id="role" name="role" class="form-select">
-                        <option value="" disabled selected>Pilih Peran</option>
-                        <option value="guru" {{ $user->role == 'guru' ? 'selected' : '' }}>Guru</option>
-                        <option value="staff-gereja" {{ $user->role == 'staff-gereja' ? 'selected' : '' }}>Pengurus Gereja
-                        </option>
-                        <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                    </select>
-                </div>
+                <div class="row">
+                    {{-- PERAN (kiri) --}}
+                    <div class="col-md-6 mb-3">
+                        <label for="role" class="form-label">Peran</label>
+                        <x-select-input id="role" name="role" label="Peran" :options="[
+                            'guru' => 'Guru',
+                            'staff-gereja' => 'Pengurus Gereja',
+                            'admin' => 'Admin',
+                        ]" :selected="old('role', $user->role)"
+                            :searchable="false" />
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Status</label>
-                    <select id="status" name="status" class="form-select">
-                        <option value="" disabled selected>Pilih Status</option>
-                        <option value="aktif" {{ $user->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                        <option value="nonaktif" {{ $user->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
-                    </select>
+                    {{-- STATUS (kanan) --}}
+                    <div class="col-md-6 mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <x-select-input id="status" name="status" label="Status" :options="[
+                            'aktif' => 'Aktif',
+                            'nonaktif' => 'Nonaktif',
+                        ]" :selected="old('status', $user->status)"
+                            :searchable="false" />
+                    </div>
                 </div>
 
                 {{-- NAMA --}}
@@ -55,6 +58,9 @@
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}"
                         required>
+                    @error('email')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 {{-- NOMOR TELEPON --}}
@@ -62,61 +68,63 @@
                     <label class="form-label">Nomor Telepon</label>
                     <input type="text" name="nomor_telepon" class="form-control"
                         value="{{ old('nomor_telepon', $user->nomor_telepon) }}" required>
+                    @error('nomor_telepon')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 {{-- PASSWORD --}}
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                            name="password" placeholder="Kosongkan jika tidak ingin mengubah">
-
+                            name="password" placeholder="Biarkan kosong jika password tidak ingin mengubah">
                         <button type="button" class="btn password-toggle-btn" id="togglePassword">
                             <i class="bi bi-eye-slash"></i>
                         </button>
-
                     </div>
-
                     @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 {{-- KONFIRMASI PASSWORD --}}
                 <div class="mb-3">
                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-
                     <div class="input-group">
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                             id="password_confirmation" name="password_confirmation"
                             placeholder="Ulangi password baru jika mengubah">
-
                         <button type="button" class="btn password-toggle-btn" id="togglePasswordConfirm">
                             <i class="bi bi-eye-slash"></i>
                         </button>
-
                     </div>
-
                     @error('password_confirmation')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 {{-- FOTO --}}
                 <div class="mb-3">
-                    <label class="form-label">Foto Profil</label>
-
-                    {{-- Preview Foto Lama --}}
-                    @if (!empty($user->profile_photo_path))
-                        <div class="text-center mb-3" id="old-photo-container">
-                            <img src="{{ asset('storage/' . $user->profile_photo_path) }}" class="img-thumbnail rounded"
-                                style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
-                        </div>
-                    @endif
+                    <label for="profile_photo_path" class="form-label">Foto Profil</label>
+                    {{-- Avatar atau Foto Lama --}}
+                    @php
+                        $name = old('name', $user->name ?? 'User');
+                        $defaultAvatar =
+                            'https://ui-avatars.com/api/?name=' .
+                            urlencode($name) .
+                            '&background=random&color=000&size=300';
+                    @endphp
+                    <div class="text-center mb-3" id="old-photo-container">
+                        <img src="{{ !empty($user->profile_photo_path) ? asset('storage/' . $user->profile_photo_path) : $defaultAvatar }}"
+                            class="img-thumbnail rounded"
+                            style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
+                    </div>
 
                     {{-- Preview foto baru --}}
                     <div class="text-center mb-3" id="photo-preview-container" style="display:none;">
                         <img id="photo-preview" src="#" class="img-thumbnail rounded"
-                            style="width: 180px; height: 240px; object-fit: cover;">
+                            style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
                     </div>
 
                     <input type="file" id="profile_photo_path" name="profile_photo_path" class="form-control"
@@ -129,29 +137,33 @@
                 <div id="form-guru" style="display:none;">
                     <hr>
                     <h5>Data Guru</h5>
-
+                    {{-- NIP --}}
                     <div class="mb-3">
-                        <label class="form-label">NIP</label>
+                        <label for="nip" class="form-label">NIP</label>
                         <input type="text" name="nip" class="form-control"
                             value="{{ old('nip', $user->guru->nip ?? '') }}">
+                        @error('nip')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    {{-- TEMPAT LAHIR --}}
                     <div class="mb-3">
-                        <label class="form-label">Tempat Lahir</label>
+                        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                         <input type="text" name="tempat_lahir" class="form-control"
                             value="{{ old('tempat_lahir', $user->guru->tempat_lahir ?? '') }}">
                     </div>
 
+                    {{-- TANGGAL LAHIR --}}
                     <div class="mb-3">
-                        <label class="form-label">Tanggal Lahir</label>
+                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                         <input type="date" name="tanggal_lahir" class="form-control"
                             value="{{ old('tanggal_lahir', isset($user->guru->tanggal_lahir) && $user->guru->tanggal_lahir ? \Carbon\Carbon::parse($user->guru->tanggal_lahir)->format('Y-m-d') : '') }}">
-
                     </div>
 
+                    {{-- ASAL SEKOLAH INDUK --}}
                     <div class="mb-3">
-                        <label class="form-label">Tempat Mengajar (Sekolah)</label>
-
+                        <label class="form-label">Asal Sekolah Induk</label>
                         <div id="sekolah-wrapper">
                             @php
                                 $oldSekolahs = old('sekolah_id');
@@ -162,42 +174,36 @@
 
                             @if (is_array($sekolahList) && count($sekolahList) > 0)
                                 @foreach ($sekolahList as $idx => $sel)
-                                    <div class="input-group mb-2 sekolah-group">
-                                        <select name="sekolah_id[]" class="form-select">
-                                            <option value="" disabled {{ $sel == '' ? 'selected' : '' }}>Pilih
-                                                Sekolah</option>
-                                            @foreach ($sekolahs as $sekolah)
-                                                <option value="{{ $sekolah->id }}"
-                                                    {{ $sel == $sekolah->id ? 'selected' : '' }}>
-                                                    {{ $sekolah->nama }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="mb-2 sekolah-group d-flex gap-1 align-items-center">
+                                        <x-select-input id="sekolah{{ $idx }}" name="sekolah_id[]"
+                                            label="Sekolah" :options="$sekolahs" :selected="$sel"
+                                            dropdownClass="flex-fill" />
                                         @error('sekolah_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <button type="button" class="btn btn-danger remove-sekolah"
-                                            {{ $idx == 0 ? 'disabled' : '' }}>&times;</button>
+                                            {{ $idx == 0 ? 'disabled' : '' }}>
+                                            &times;
+                                        </button>
                                     </div>
                                 @endforeach
                             @else
-                                <div class="input-group mb-2 sekolah-group">
-                                    <select name="sekolah_id[]" class="form-select">
-                                        <option value="" disabled selected>Pilih Sekolah</option>
-                                        @foreach ($sekolahs as $sekolah)
-                                            <option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="mb-2 sekolah-group d-flex gap-1 align-items-center">
+                                    <x-select-input id="sekolah" name="sekolah_id[]" label="Sekolah" :options="$sekolahs"
+                                        :selected="old('sekolah_id.0')" dropdownClass="flex-fill" />
                                     @error('sekolah_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
-                                    <button type="button" class="btn btn-danger remove-sekolah" disabled>&times;</button>
+                                    <button type="button" class="btn btn-danger remove-sekolah" disabled>
+                                        &times;
+                                    </button>
                                 </div>
                             @endif
                         </div>
 
-                        <button type="button" id="add-sekolah" class="btn btn-primary btn-sm">
-                            + Tambah Sekolah
+                        <button type="button" id="add-sekolah"
+                            class="btn btn-outline-secondary mt-2 rounded-box px-3 py-1.5">
+                            <i class="bi bi-plus-lg"></i> Tambah Sekolah
                         </button>
                     </div>
                 </div>
@@ -205,25 +211,24 @@
                 {{-- FORM STAFF GEREJA --}}
                 <div id="form-gereja" style="display:none;">
                     <hr>
-                    <h5>Data Staff Gereja</h5>
-
+                    <h5>Data Pengurus Gereja</h5>
+                    {{-- GEMBALA SIDANG --}}
                     <div class="mb-3">
-                        <label class="form-label">Gembala Sidang</label>
+                        <label for="gembala_sidang" class="form-label">Gembala Sidang</label>
                         <input type="text" name="gembala_sidang" class="form-control"
                             value="{{ old('gembala_sidang', $user->staffGereja->gembala_sidang ?? '') }}">
+                        @error('gembala_sidang')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    {{-- GEREJA --}}
                     <div class="mb-3">
-                        <label class="form-label">Gereja</label>
-                        <select name="gereja_id" class="form-select">
-                            <option value="" disabled selected>Pilih Gereja</option>
-                            @foreach ($gerejas as $gereja)
-                                <option value="{{ $gereja->id }}"
-                                    {{ optional($user->staffGereja)->gereja_id == $gereja->id ? 'selected' : '' }}>
-                                    {{ $gereja->nama }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <label for="gereja_id" class="form-label">Gereja</label>
+                        <x-select-input name="gereja_id" :options="$gerejas" :selected="old('gereja_id', optional($user->staffGereja)->gereja_id)" />
+                        @error('gereja_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -234,6 +239,7 @@
                 </div>
             </form>
 
+            {{-- Custom CSS dan JS untuk toggle password dan select sekolah --}}
             <style>
                 .password-toggle-btn {
                     border-color: #ced4da !important;
@@ -247,83 +253,154 @@
             </style>
 
             <script>
+                // ---------------- helper: inisialisasi satu select berdasarkan id (hidden input id) ----------------
+                function initSelectInput(id) {
+                    const hidden = document.getElementById(id);
+                    const btn = document.getElementById('btn-' + id);
+                    const listRoot = document.getElementById('list-' + id);
+                    const search = document.getElementById('search-' + id);
+
+                    if (!hidden || !btn || !listRoot) return;
+
+                    listRoot.querySelectorAll('.dropdown-item').forEach(item => {
+                        item.onclick = function(e) {
+                            const val = String(this.dataset.value ?? '');
+                            hidden.value = val;
+                            btn.textContent = this.textContent.trim();
+
+                            hidden.dispatchEvent(new Event('input', {
+                                bubbles: true
+                            }));
+                            hidden.dispatchEvent(new Event('change', {
+                                bubbles: true
+                            }));
+                        };
+                        item.style.display = '';
+                    });
+
+                    if (search) {
+                        search.oninput = function() {
+                            const keyword = this.value.toLowerCase();
+                            const allSelected = Array.from(document.querySelectorAll(
+                                    'input[type="hidden"][name="sekolah_id[]"]'))
+                                .map(i => i.value)
+                                .filter(v => v !== '');
+                            const currentValue = hidden.value;
+                            listRoot.querySelectorAll('.dropdown-item').forEach(item => {
+                                const val = item.dataset.value;
+                                const match = item.textContent.toLowerCase().includes(keyword);
+                                if (allSelected.includes(val) && val !== currentValue) {
+                                    item.style.display = 'none';
+                                } else {
+                                    item.style.display = match ? '' : 'none';
+                                }
+                            });
+                        };
+                    }
+
+                    hidden.oninput = updateSekolahOptions;
+                    hidden.onchange = updateSekolahOptions;
+                }
+
+                // ---------------- update global: sembunyikan opsi yang telah dipilih di tempat lain ----------------
+                function updateSekolahOptions() {
+                    const selected = Array.from(document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]'))
+                        .map(i => String(i.value || ''))
+                        .filter(v => v !== '');
+                    document.querySelectorAll('.sekolah-group').forEach(group => {
+                        const hidden = group.querySelector('input[type="hidden"][name="sekolah_id[]"]');
+                        const current = hidden ? String(hidden.value || '') : '';
+                        group.querySelectorAll('.dropdown-item').forEach(item => {
+                            const val = String(item.dataset.value ?? '');
+                            if (val !== '' && selected.includes(val) && val !== current) {
+                                item.style.display = 'none';
+                            } else {
+                                item.style.display = '';
+                            }
+                        });
+                    });
+                }
+
+                // ---------------- cloning sekolah group ----------------
+                function cloneSekolahGroup() {
+                    const wrapper = document.getElementById('sekolah-wrapper');
+                    const groups = wrapper.querySelectorAll('.sekolah-group');
+                    const base = groups[0];
+                    const idx = groups.length;
+                    const clone = base.cloneNode(true);
+                    const oldHidden = base.querySelector('input[type="hidden"][name="sekolah_id[]"]');
+                    if (!oldHidden) return;
+                    const oldId = oldHidden.id;
+                    const newId = oldId + '_' + idx;
+                    clone.innerHTML = clone.innerHTML
+                        .replaceAll(`btn-${oldId}`, `btn-${newId}`)
+                        .replaceAll(`dropdown-${oldId}`, `dropdown-${newId}`)
+                        .replaceAll(`search-${oldId}`, `search-${newId}`)
+                        .replaceAll(`list-${oldId}`, `list-${newId}`)
+                        .replaceAll(`id="${oldId}"`, `id="${newId}"`);
+                    wrapper.appendChild(clone);
+                    clone.querySelectorAll('.dropdown-item').forEach(i => i.style.display = '');
+                    const hiddenNew = clone.querySelector(`#${newId}`);
+                    if (hiddenNew) hiddenNew.value = '';
+                    const btnNew = clone.querySelector(`#btn-${newId}`);
+                    if (btnNew) {
+                        const placeholder = btnNew.getAttribute('data-placeholder') || 'Pilih Sekolah';
+                        btnNew.textContent = placeholder;
+                    }
+                    const removeBtn = clone.querySelector('.remove-sekolah');
+                    if (removeBtn) removeBtn.disabled = false;
+                    initSelectInput(newId);
+                    updateSekolahOptions();
+                }
+
+                // ---------------- initialize all existing selects on DOMContentLoaded ----------------
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.querySelectorAll('input[type="hidden"][name="sekolah_id[]"]').forEach(h => {
+                        if (h.id) initSelectInput(h.id);
+                    });
+                    const addBtn = document.getElementById('add-sekolah');
+                    if (addBtn) addBtn.addEventListener('click', cloneSekolahGroup);
+                    document.addEventListener('click', function(e) {
+                        if (e.target.classList.contains('remove-sekolah')) {
+                            const groups = document.querySelectorAll('.sekolah-group');
+                            if (groups.length > 1) {
+                                e.target.closest('.sekolah-group').remove();
+                                updateSekolahOptions();
+                            }
+                        }
+                    });
+                    updateSekolahOptions();
+                });
+
+                // ======== TAMPILKAN / SEMBUNYIKAN FORM BERDASARKAN ROLE ========
                 const role = document.getElementById('role');
                 const guruForm = document.getElementById('form-guru');
                 const gerejaForm = document.getElementById('form-gereja');
 
-                // Tampilkan form sesuai role user saat halaman dibuka
-                function toggleForms() {
-                    guruForm.style.display = (role.value === 'guru') ? 'block' : 'none';
-                    gerejaForm.style.display = (role.value === 'staff-gereja') ? 'block' : 'none';
-                }
-
-                toggleForms();
-                role.addEventListener('change', toggleForms);
-
-                // ======== Tambah/Hapus Sekolah (mirip create view) ========
-                document.getElementById('add-sekolah').addEventListener('click', function() {
-                    const wrapper = document.getElementById('sekolah-wrapper');
-
-                    const newGroup = document.createElement('div');
-                    newGroup.classList.add('input-group', 'mb-2', 'sekolah-group');
-
-                    newGroup.innerHTML = `
-            <select name="sekolah_id[]" class="form-select">
-                <option value="" disabled selected>Pilih Sekolah</option>
-                @foreach ($sekolahs as $sekolah)
-                    <option value="{{ $sekolah->id }}">{{ $sekolah->nama }}</option>
-                @endforeach
-            </select>
-            <button type="button" class="btn btn-danger remove-sekolah">&times;</button>
-        `;
-
-                    wrapper.appendChild(newGroup);
-                    setTimeout(updateSekolahOptions, 100); // update opsi setelah tambah
-                });
-
-                // Hapus input (kecuali input pertama)
-                document.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('remove-sekolah') && !e.target.disabled) {
-                        e.target.closest('.sekolah-group').remove();
-                        setTimeout(updateSekolahOptions, 100); // update opsi setelah hapus
-                    }
-                });
-
-                // ======== Hilangkan opsi sekolah yang sudah dipilih di input lain ========
-                function updateSekolahOptions() {
+                role.addEventListener('change', function() {
+                    const isGuru = this.value === 'guru';
+                    guruForm.style.display = isGuru ? 'block' : 'none';
+                    gerejaForm.style.display = (this.value === 'staff-gereja') ? 'block' : 'none';
                     const selects = document.querySelectorAll('select[name="sekolah_id[]"]');
-                    const selectedValues = Array.from(selects)
-                        .map(select => select.value)
-                        .filter(val => val !== "");
-
-                    selects.forEach(select => {
-                        // Simpan value yang sedang dipilih agar tidak hilang
-                        const currentValue = select.value;
-                        // Ambil semua option dari template
-                        const sekolahOptions = [
-                            '<option value="" disabled' + (currentValue === '' ? ' selected' : '') +
-                            '>Pilih Sekolah</option>',
-                            @foreach ($sekolahs as $sekolah)
-                                (selectedValues.includes('{{ $sekolah->id }}') && currentValue !==
-                                    '{{ $sekolah->id }}') ? '' : '<option value="{{ $sekolah->id }}"' + (
-                                    currentValue === '{{ $sekolah->id }}' ? ' selected' : '') +
-                                '>{{ $sekolah->nama }}</option>',
-                            @endforeach
-                        ].join('');
-                        // Render ulang option
-                        select.innerHTML = sekolahOptions.replace(/,\s*/g, '');
-                        // Set value agar tidak hilang
-                        select.value = currentValue;
+                    selects.forEach(s => {
+                        if (isGuru) {
+                            s.removeAttribute('disabled');
+                            s.setAttribute('required', 'required');
+                        } else {
+                            s.removeAttribute('required');
+                            s.setAttribute('disabled', 'disabled');
+                        }
                     });
-                }
-
-                document.addEventListener('change', function(e) {
-                    if (e.target && e.target.name === "sekolah_id[]") {
-                        updateSekolahOptions();
-                    }
                 });
 
                 document.addEventListener("DOMContentLoaded", function() {
+                    const selectedRole = "{{ old('role', $user->role) }}";
+                    if (selectedRole === 'guru') {
+                        guruForm.style.display = 'block';
+                    }
+                    if (selectedRole === 'staff-gereja') {
+                        gerejaForm.style.display = 'block';
+                    }
                     updateSekolahOptions();
                 });
 
@@ -376,7 +453,6 @@
                     this.querySelector("i").classList.toggle("bi-eye-slash");
                 });
             </script>
-
         </div>
     </div>
 @endsection
