@@ -30,15 +30,15 @@
             {{-- Tanggal Berdiri --}}
             <div class="mb-3">
                 <label class="form-label">Tanggal Berdiri</label>
-                <input type="date" class="form-control"
-                    value="{{ optional($gereja->tanggal_berdiri)->format('Y-m-d') }}" readonly>
+                <input type="text" class="form-control"
+                    value="{{ optional($gereja->tanggal_berdiri)->translatedFormat('d F Y') }}" readonly>
             </div>
 
             {{-- Tanggal Bergabung --}}
             <div class="mb-3">
                 <label class="form-label">Tanggal Bergabung Sinode</label>
-                <input type="date" class="form-control"
-                    value="{{ optional($gereja->tanggal_bergabung_sinode)->format('Y-m-d') }}" readonly>
+                <input type="text" class="form-control"
+                    value="{{ optional($gereja->tanggal_bergabung_sinode)->translatedFormat('d F Y') }}" readonly>
             </div>
 
             {{-- Alamat --}}

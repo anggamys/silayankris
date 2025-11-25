@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\BeritaRequest;
 use App\Models\Berita;
@@ -8,6 +8,8 @@ use App\Services\BeritaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
+
 
 class BeritaController extends Controller
 {
@@ -25,7 +27,7 @@ class BeritaController extends Controller
         Gate::authorize('viewAny', Berita::class);
         $search = $request->query('search');
         $berita = $this->service->getAll($search);
-
+        $berita = $berita->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
         $currentPage = $berita->currentPage();
         $lastPage = $berita->lastPage();
         $perPage = $berita->perPage();
@@ -104,9 +106,33 @@ class BeritaController extends Controller
     }
 
 
-    public function indexBerita()
+
+    public function publicIndex(Request $request)
     {
-        $beritas = Berita::orderBy('created_at', 'desc')->paginate(5);
-        return view('pages.guest.news', compact('beritas'));
+        $search = $request->query('search');
+        $berita = $this->service->getAll($search);
+        $randomBerita = Berita::inRandomOrder()->take(5)->get();
+        $berita = $berita->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+        $currentPage = $berita->currentPage();
+        $lastPage = $berita->lastPage();
+        $perPage = $berita->perPage();
+        $total = $berita->total();
+         return view('pages.guest.berita.index', compact(
+            'berita',
+            'randomBerita',
+            'search',
+            'currentPage',
+            'lastPage',
+            'perPage',
+            'total'
+        ));
+    }
+
+    public function publicShow(Berita $berita)
+    {   
+        $beritaPopuler = $this->service->getAll();
+        $beritaPopuler = $berita->orderBy('created_at', 'desc')->take(6)->get();
+        $randomBerita = Berita::inRandomOrder()->take(5)->get();
+        return view('pages.guest.berita.show', compact('berita', 'randomBerita', 'beritaPopuler'));
     }
 }

@@ -71,19 +71,8 @@
                     {{-- Kota --}}
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Kabupaten/Kota</label>
-                        <input type="hidden" name="kab_kota" id="kab_kota"
-                            value="{{ old('kab_kota', $gereja->kab_kota) }}">
-
-                        <div class="dropdown">
-                            <button id="btn-kota" class="btn btn-light form-control text-start dropdown-toggle w-full"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Pilih Kota
-                            </button>
-                            <ul class="dropdown-menu w-100" id="dropdown-kota" style="max-height:150px; overflow-y:auto;">
-                                <li><a class="dropdown-item py-1" data-value="Surabaya">Surabaya</a></li>
-                            </ul>
-                        </div>
-
+                        <x-select-input id="kab_kota" label="Kabupaten/Kota" name="kab_kota" :options="['Surabaya' => 'Surabaya']"
+                            placeholder="Pilih Kota" :selected="old('kab_kota', $gereja->kab_kota)" />
                         @error('kab_kota')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
@@ -92,39 +81,18 @@
                     {{-- Kecamatan --}}
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Kecamatan</label>
-                        <input type="hidden" name="kecamatan" id="kecamatan"
-                            value="{{ old('kecamatan', $gereja->kecamatan) }}">
-
-                        <button id="btn-kecamatan" class="btn btn-light form-control text-start dropdown-toggle"
-                            data-bs-toggle="dropdown">
-                            Pilih Kecamatan
-                        </button>
-                        <ul class="dropdown-menu w-full" id="dropdown-kecamatan" style="max-height:150px; overflow-y:auto;">
-                            <li><span class="dropdown-item-text text-muted">Pilih kota dulu</span></li>
-                        </ul>
-
+                        <x-select-input id="kecamatan" label="Kecamatan" name="kecamatan" :options="[]"
+                            placeholder="Pilih Kecamatan" :selected="old('kecamatan', $gereja->kecamatan)" />
                         @error('kecamatan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
 
-
                     {{-- Kelurahan --}}
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Kelurahan / Desa</label>
-
-                        <input type="hidden" name="kel_desa" id="kel_desa"
-                            value="{{ old('kel_desa', $gereja->kel_desa) }}">
-
-                        <button id="btn-kelurahan" class="btn btn-light form-control text-start dropdown-toggle"
-                            data-bs-toggle="dropdown">
-                            Pilih Kelurahan
-                        </button>
-
-                        <ul class="dropdown-menu w-full" id="dropdown-kelurahan" style="max-height:150px; overflow-y:auto;">
-                            <li><span class="dropdown-item-text text-muted">Pilih kecamatan dulu</span></li>
-                        </ul>
-
+                        <x-select-input id="kel_desa" label="Kelurahan / Desa" name="kel_desa" :options="[]"
+                            placeholder="Pilih Kelurahan" :selected="old('kel_desa', $gereja->kel_desa)" />
                         @error('kel_desa')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
@@ -158,8 +126,8 @@
                         <label class="form-label">Nomor Telepon</label>
                         <input type="text" name="nomor_telepon"
                             class="form-control @error('nomor_telepon') is-invalid @enderror"
-                            value="{{ old('nomor_telepon', $gereja->nomor_telepon) }}"
-                            placeholder="Masukkan nomor telepon" maxlength="20">
+                            value="{{ old('nomor_telepon', $gereja->nomor_telepon) }}" placeholder="Masukkan nomor telepon"
+                            maxlength="20">
                         @error('nomor_telepon')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -180,18 +148,12 @@
                 {{-- Status Gereja --}}
                 <div class="mb-3">
                     <label class="form-label">Status Gereja</label>
-                    <select name="status_gereja" class="form-select @error('status_gereja') is-invalid @enderror">
-                        <option value="">Pilih Status</option>
-                        <option value="permanen"
-                            {{ old('status_gereja', $gereja->status_gereja) == 'permanen' ? 'selected' : '' }}>Permanen
-                        </option>
-                        <option value="semi-permanen"
-                            {{ old('status_gereja', $gereja->status_gereja) == 'semi-permanen' ? 'selected' : '' }}>
-                            Semi-permanen</option>
-                        <option value="tidak-permanen"
-                            {{ old('status_gereja', $gereja->status_gereja) == 'tidak-permanen' ? 'selected' : '' }}>Tidak
-                            permanen</option>
-                    </select>
+                    <x-select-input id="status_gereja" label="Status Gereja" name="status_gereja" :options="[
+                        'permanen' => 'Permanen',
+                        'semi-permanen' => 'Semi Permanen',
+                        'tidak-permanen' => 'Tidak Permanen',
+                    ]"
+                        placeholder="Pilih Status" :selected="old('status_gereja', $gereja->status_gereja)" :searchable="false" />
                     @error('status_gereja')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -206,131 +168,136 @@
             </form>
 
             <script>
-                const hiddenKota = document.getElementById("kab_kota");
-                const hiddenKecamatan = document.getElementById("kecamatan");
-                const hiddenKelurahan = document.getElementById("kel_desa");
+                // Handle Dropdown Kota
+                document.addEventListener("DOMContentLoaded", function() {
 
-                const btnKota = document.getElementById("btn-kota");
-                const btnKecamatan = document.getElementById("btn-kecamatan");
-                const btnKelurahan = document.getElementById("btn-kelurahan");
-
-                const dropdownKota = document.getElementById("dropdown-kota");
-                const dropdownKecamatan = document.getElementById("dropdown-kecamatan");
-                const dropdownKelurahan = document.getElementById("dropdown-kelurahan");
-
-                const oldKota = "{{ old('kab_kota', $gereja->kab_kota ?? '') }}";
-                const oldKecamatan = "{{ old('kecamatan', $gereja->kecamatan ?? '') }}";
-                const oldKelurahan = "{{ old('kel_desa', $gereja->kel_desa ?? '') }}";
-
-                // 1. SET TEXT TOMBOL SAAT EDIT
-                if (oldKota) btnKota.textContent = oldKota;
-                if (oldKecamatan) btnKecamatan.textContent = oldKecamatan;
-                if (oldKelurahan) btnKelurahan.textContent = oldKelurahan;
-
-                // 2. EVENT PILIH KOTA
-                dropdownKota.querySelectorAll(".dropdown-item").forEach(item => {
-                    item.addEventListener("click", function() {
-                        const value = this.dataset.value;
-
-                        hiddenKota.value = value;
-                        btnKota.textContent = value;
-
-                        // Reset kecamatan & kelurahan
-                        btnKecamatan.textContent = "Pilih Kecamatan";
-                        hiddenKecamatan.value = "";
-                        dropdownKecamatan.innerHTML = `<li><span class="dropdown-item-text">Loading...</span></li>`;
-
-                        btnKelurahan.textContent = "Pilih Kelurahan";
-                        hiddenKelurahan.value = "";
-                        dropdownKelurahan.innerHTML =
-                            `<li><span class="dropdown-item-text">Pilih kecamatan dulu</span></li>`;
-
-                        loadKecamatan(value);
-                    });
-                });
-
-                // 3. LOAD KECAMATAN (AJAX)
-                function loadKecamatan(kota, callback = null) {
-                    fetch(`/admin/get-kecamatan?kota=${kota}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            let html = "";
-                            data.forEach(kec => {
-                                html += `<li><a class="dropdown-item py-1" data-value="${kec}">${kec}</a></li>`;
-                            });
-                            dropdownKecamatan.innerHTML = html;
-
-                            attachEventKecamatan();
-
-                            if (callback) callback();
-                        });
-                }
-
-                // 4. EVENT PILIH KECAMATAN
-                function attachEventKecamatan() {
-                    dropdownKecamatan.querySelectorAll(".dropdown-item").forEach(item => {
+                    document.querySelectorAll("#dropdown-kab_kota .dropdown-item").forEach(item => {
                         item.addEventListener("click", function() {
-                            const value = this.dataset.value;
-                            hiddenKecamatan.value = value;
-                            btnKecamatan.textContent = value;
+                            const value = this.getAttribute("data-value");
+                            document.getElementById("kab_kota").value = value;
+                            document.getElementById("btn-kab_kota").textContent = value;
 
-                            // Reset kelurahan
-                            btnKelurahan.textContent = "Pilih Kelurahan";
-                            hiddenKelurahan.value = "";
-                            dropdownKelurahan.innerHTML =
+                            // Reset kecamatan & kelurahan
+                            document.getElementById("btn-kecamatan").textContent = "Pilih Kecamatan";
+                            document.getElementById("kecamatan").value = "";
+                            document.getElementById("list-kecamatan").innerHTML =
                                 `<li><span class="dropdown-item-text">Loading...</span></li>`;
 
-                            loadKelurahan(hiddenKota.value, value);
+                            document.getElementById("btn-kel_desa").textContent = "Pilih Kelurahan";
+                            document.getElementById("kel_desa").value = "";
+                            document.getElementById("list-kel_desa").innerHTML =
+                                `<li><span class="dropdown-item-text">Pilih kecamatan terlebih dahulu</span></li>`;
+
+                            // Fetch Kecamatan
+                            fetch(`/admin/get-kecamatan?kota=${value}`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    let list = "";
+                                    data.forEach(kec => {
+                                        list +=
+                                            `<li><a class="dropdown-item py-1" data-value="${kec}">${kec}</a></li>`;
+                                    });
+                                    document.getElementById("list-kecamatan").innerHTML = list;
+                                    attachDropdownEventKecamatan();
+                                });
                         });
                     });
-                }
 
-                // 5. LOAD KELURAHAN (AJAX)
-                function loadKelurahan(kota, kecamatan, callback = null) {
-                    fetch(`/admin/get-kelurahan?kota=${kota}&kecamatan=${kecamatan}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            let html = "";
-                            data.forEach(kel => {
-                                html += `<li><a class="dropdown-item py-1" data-value="${kel}">${kel}</a></li>`;
-                            });
-                            dropdownKelurahan.innerHTML = html;
+                    const selectedKota = "{{ old('kab_kota', $gereja->kab_kota) }}";
+                    const selectedKecamatan = "{{ old('kecamatan', $gereja->kecamatan) }}";
+                    const selectedKel = "{{ old('kel_desa', $gereja->kel_desa) }}";
 
-                            attachEventKelurahan();
+                    if (selectedKota) {
+                        // Tampilkan kota pada button
+                        document.getElementById("btn-kab_kota").textContent = selectedKota;
+                        document.getElementById("kab_kota").value = selectedKota;
 
-                            if (callback) callback();
-                        });
-                }
+                        // Load kecamatan dulu
+                        fetch(`/admin/get-kecamatan?kota=${selectedKota}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                let list = "";
+                                data.forEach(kec => {
+                                    list +=
+                                        `<li><a class="dropdown-item py-1" data-value="${kec}">${kec}</a></li>`;
+                                });
+                                document.getElementById("list-kecamatan").innerHTML = list;
+                                attachDropdownEventKecamatan();
 
-                // 6. EVENT PILIH KELURAHAN
-                function attachEventKelurahan() {
-                    dropdownKelurahan.querySelectorAll(".dropdown-item").forEach(item => {
-                        item.addEventListener("click", function() {
-                            const value = this.dataset.value;
-                            hiddenKelurahan.value = value;
-                            btnKelurahan.textContent = value;
-                        });
-                    });
-                }
+                                // Set kecamatan lama
+                                if (selectedKecamatan) {
+                                    document.getElementById("btn-kecamatan").textContent = selectedKecamatan;
+                                    document.getElementById("kecamatan").value = selectedKecamatan;
+                                }
 
-                // 7. LOAD DATA SAAT EDIT FORM
-                if (oldKota) {
-                    loadKecamatan(oldKota, function() {
-                        if (oldKecamatan) {
-                            // Set tombol kecamatan
-                            btnKecamatan.textContent = oldKecamatan;
-                            hiddenKecamatan.value = oldKecamatan;
+                                // Setelah kecamatan update → load kelurahan
+                                if (selectedKecamatan) {
+                                    fetch(`/admin/get-kelurahan?kota=${selectedKota}&kecamatan=${selectedKecamatan}`)
+                                        .then(res => res.json())
+                                        .then(kels => {
+                                            let kelList = "";
+                                            kels.forEach(k => {
+                                                kelList +=
+                                                    `<li><a class="dropdown-item py-1" data-value="${k}">${k}</a></li>`;
+                                            });
+                                            document.getElementById("list-kel_desa").innerHTML = kelList;
+                                            attachDropdownEventKelurahan();
 
-                            loadKelurahan(oldKota, oldKecamatan, function() {
-                                if (oldKelurahan) {
-                                    btnKelurahan.textContent = oldKelurahan;
-                                    hiddenKelurahan.value = oldKelurahan;
+                                            // Set kelurahan lama
+                                            if (selectedKel) {
+                                                document.getElementById("btn-kel_desa").textContent = selectedKel;
+                                                document.getElementById("kel_desa").value = selectedKel;
+                                            }
+                                        });
                                 }
                             });
-                        }
+                    }
+                });
+
+
+                // Handle Dropdown Kecamatan
+                function attachDropdownEventKecamatan() {
+                    document.querySelectorAll("#dropdown-kecamatan .dropdown-item").forEach(item => {
+                        item.addEventListener("click", function() {
+                            const value = this.getAttribute("data-value");
+                            document.getElementById("kecamatan").value = value;
+                            document.getElementById("btn-kecamatan").textContent = value;
+
+                            // Reset kelurahan
+                            document.getElementById("btn-kel_desa").textContent = "Pilih Kelurahan";
+                            document.getElementById("kel_desa").value = "";
+                            document.getElementById("list-kel_desa").innerHTML =
+                                `<li><span class="dropdown-item-text">Loading...</span></li>`;
+
+                            let kota = document.getElementById("kab_kota").value;
+
+                            fetch(`/admin/get-kelurahan?kota=${kota}&kecamatan=${value}`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    let list = "";
+                                    data.forEach(kel => {
+                                        list +=
+                                            `<li><a class="dropdown-item py-1" data-value="${kel}">${kel}</a></li>`;
+                                    });
+                                    document.getElementById("list-kel_desa").innerHTML = list;
+                                    attachDropdownEventKelurahan();
+                                });
+                        });
+                    });
+                }
+
+                // Handle Dropdown Kelurahan
+                function attachDropdownEventKelurahan() {
+                    document.querySelectorAll("#dropdown-kel_desa .dropdown-item").forEach(item => {
+                        item.addEventListener("click", function() {
+                            const value = this.getAttribute("data-value");
+                            document.getElementById("kel_desa").value = value;
+                            document.getElementById("btn-kel_desa").textContent = value;
+                        });
                     });
                 }
             </script>
+
         </div>
     </div>
 @endsection

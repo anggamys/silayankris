@@ -67,8 +67,14 @@ class FileUploads
       }
     }
 
-    if ($path && Gdrive::exists($path)) {
-      Gdrive::delete($path);
+    try {
+      if ($path && class_exists(Gdrive::class) && Gdrive::exists($path)) {
+        Gdrive::delete($path);
+      }
+    } catch (\Exception $e) {
+      // Don't break application flow if Google Drive token is invalid/expired.
+      // Log the error for later inspection and continue.
+      logger()->warning('Google Drive operation failed: ' . $e->getMessage(), ['path' => $path]);
     }
   }
 }

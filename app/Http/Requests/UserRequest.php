@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
     {
         $user = $this->route('user');
 
+        // RULE DASAR (BERLAKU UNTUK CREATE & UPDATE)
         $rules = [
-
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user?->id)],
             'nomor_telepon' => ['nullable', 'string', 'max:15'],
@@ -35,24 +35,47 @@ class UserRequest extends FormRequest
             'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_STAFF_GEREJA])],
         ];
 
-        // Only require password on create
+        // PASSWORD
         if ($this->isMethod('post')) {
-            $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
-        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
-            $rules['password'] = ['nullable', 'string', 'min:8', 'confirmed'];
+            // CREATE
+            $rules['password'] = ['required', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'];
+        } else {
+            // UPDATE
+            $rules['password'] = ['nullable', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'];
             $rules['status'] = ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])];
         }
 
+
+
+        // RULES GURU
         if ($this->input('role') === User::ROLE_GURU) {
-            $guruRules = $this->guruRules();
-            $rules = array_merge($rules, $guruRules);
-        } elseif ($this->input('role') === User::ROLE_STAFF_GEREJA) {
-            $staffGerejaRules = $this->staffGerejaRules();
-            $rules = array_merge($rules, $staffGerejaRules);
+            $rules = array_merge($rules, [
+                'nip' => [
+                    'required',
+                    'string',
+                    'max:50',
+                    $this->isMethod('post')
+                        ? Rule::unique('gurus', 'nip')
+                        : Rule::unique('gurus', 'nip')->ignore(optional($user->guru)->id)
+                ],
+                'tempat_lahir' => ['required', 'string', 'max:100'],
+                'tanggal_lahir' => ['required', 'date'],
+                'sekolah_id' => ['required', 'array'],
+                'sekolah_id.*' => ['exists:sekolahs,id'],
+            ]);
+        }
+
+        // RULES STAFF GEREJA
+        if ($this->input('role') === User::ROLE_STAFF_GEREJA) {
+            $rules = array_merge($rules, [
+                'gembala_sidang' => ['required', 'string', 'max:100'],
+                'gereja_id' => ['required', 'exists:gerejas,id'],
+            ]);
         }
 
         return $rules;
     }
+
 
     public function guruRules(): array
     {
@@ -85,5 +108,14 @@ class UserRequest extends FormRequest
         ];
 
         return $staffGerejaRules;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, dan angka.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+        ];
     }
 }
