@@ -1,17 +1,17 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Detail Data Periodik Perbulan')
+@section('title', 'Detail Data Periode Per Bulan')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periodik
-            Perbulan</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periode
+            Per Bulan</a></li>
     <li class="breadcrumb-item active" aria-current="page">Detail Data</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Detail Data Periodik Perbulan</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Detail Data Periode Per Bulan</h5>
 
             <a href="{{ route('admin.per-bulan.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali

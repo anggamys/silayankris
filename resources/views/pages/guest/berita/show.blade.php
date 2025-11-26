@@ -3,11 +3,11 @@
 @section('title', $berita->judul . ' - SILAYANKRIS')
 
 @section('content')
- <div class="container-fluid  pt-3  text-dark border-bottom">
+    <div class="container-fluid  pt-3  text-dark border-bottom">
         <div class="container pb-3 ">
             <a href="" class="text-dark fs-6 mb-0 text-decoration-none">Berita</a>
             <span>></span>
-            <span  class="text-dark fs-6 mb-0 text-decoration-none ">{{ $berita->judul }}</span>
+            <span class="text-dark fs-6 mb-0 text-decoration-none ">{{ $berita->judul }}</span>
         </div>
     </div>
     <div class="container-xxl flex-grow-1 container-p-y">

@@ -41,6 +41,7 @@
                             <th>#</th>
                             <th>Nama Pengunggah</th>
                             <th>Tanggal Diunggah</th>
+                            <th>Status</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -50,6 +51,27 @@
                                 <td class="text-start">{{ $perBulan->firstItem() + $loop->index }}</td>
                                 <td class="fw-semibold">{{ $item->guru->user->name }}</td>
                                 <td>{{ $item->created_at->format('d-m-Y H:i:s') }}</td>
+
+                                {{-- Status --}}
+                                <td>
+                                    @php
+                                        $isIncomplete =
+                                            !$item->daftar_gaji_path ||
+                                            !$item->daftar_hadir_path ||
+                                            !$item->rekening_bank_path;
+                                    @endphp
+                                    @if ($isIncomplete)
+                                        <span class="badge bg-label-secondary">Belum Lengkap</span>
+                                    @elseif($item->status == 'menunggu')
+                                        <span class="badge bg-label-warning">Menunggu</span>
+                                    @elseif($item->status == 'ditolak')
+                                        <span class="badge bg-label-danger">Ditolak</span>
+                                    @else
+                                        <span class="badge bg-label-success">Diterima</span>
+                                    @endif
+                                </td>
+
+                                {{-- Aksi --}}
                                 <td class="d-flex justify-content-center gap-2">
                                     <a href="{{ route('admin.per-bulan.show', $item) }}"
                                         class="btn btn-sm btn-info align-items-center text-light" data-bs-toggle="tooltip"
@@ -71,6 +93,7 @@
                                             Hapus
                                         </button>
                                     </form>
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalCenter{{ $item->id }}" tabindex="-1"
                                         aria-hidden="true">
@@ -84,7 +107,7 @@
                                                 <div class="modal-body">
                                                     <p>
                                                         Apakah anda yakin ingin menghapus
-                                                        <strong>{{ Str::limit($item->nama, 15, '...') }}</strong> ?
+                                                        <strong>{{ Str::limit($item->nama ?? 'item', 15, '...') }}</strong> ?
                                                     </p>
 
                                                     <div class="modal-footer">
@@ -92,7 +115,7 @@
                                                             data-bs-dismiss="modal">
                                                             Tidak
                                                         </button>
-                                                        <form action="{{ route('admin.sekolah.destroy', $item) }}"
+                                                        <form action="{{ route('admin.per-bulan.destroy', $item) }}"
                                                             method="POST" onsubmit=" ">
                                                             @csrf
                                                             @method('DELETE')
@@ -109,7 +132,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
+                                <td colspan="5" class="text-center text-muted py-4">
                                     <i class="bi bi-person-x fs-4 d-block mb-2"></i>
                                     Tidak ada data periode bulanan.
                                 </td>

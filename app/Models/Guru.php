@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Sekolah;
+use App\Models\PerBulan;
 
 class Guru extends Model
 {
@@ -47,5 +48,13 @@ class Guru extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relasi: satu guru punya banyak PerBulan (berkas bulanan).
+     */
+    public function perBulans()
+    {
+        return $this->hasMany(PerBulan::class, 'guru_id');
     }
 }
