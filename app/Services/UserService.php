@@ -74,7 +74,10 @@ class UserService
     {
         // Upload foto baru jika ada
         if (isset($data['profile_photo_path'])) {
-            FileUploads::delete($user->profile_photo_path, true);
+            // Hapus foto lama bila ada
+            if ($user->profile_photo_path) {
+                FileUploads::delete($user->profile_photo_path, true);
+            }
 
             $file = $data['profile_photo_path'];
             $path = FileUploads::upload($file, 'profiles', '', $data['name']);
