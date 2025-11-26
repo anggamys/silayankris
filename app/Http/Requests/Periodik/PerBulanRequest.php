@@ -23,14 +23,25 @@ class PerBulanRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'guru_id' => ['required', 'exists:gurus,id'],
             'daftar_gaji_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'daftar_hadir_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'rekening_bank_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'ceklist_berkas' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', 'in:menunggu,diterima,ditolak'],
             'catatan' => ['nullable', 'string', 'max:1000'],
         ];
+
+        // Jika pengguna yang diautentikasi merupakan guru terkait, mereka tidak perlu
+        // memasukkan `guru_id` atau `status` — controller akan mengaturnya di sisi server.
+        $user = Auth::user();
+        if ($user && $user->guru) {
+            // Izinkan controller untuk mengatur nilai-nilai ini; tidak perlu diminta dari form.
+            $rules['guru_id'] = ['nullable', 'exists:gurus,id'];
+            $rules['status'] = ['nullable', 'in:menunggu,diterima,ditolak'];
+        } else {
+            // Untuk admin atau pemanggil lain, harus menyertakan guru_id dan status secara eksplisit.
+            $rules['guru_id'] = ['required', 'exists:gurus,id'];
+            $rules['status'] = ['required', 'in:menunggu,diterima,ditolak'];
+        }
 
         return $rules;
     }

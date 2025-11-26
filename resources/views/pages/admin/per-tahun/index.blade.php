@@ -40,6 +40,7 @@
                             <th>#</th>
                             <th>Nama Pengunggah</th>
                             <th>Tanggal Diunggah</th>
+                            <th>Status</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -50,8 +51,42 @@
                                 <td class="fw-semibold">{{ $item->guru->user->name }}</td>
                                 <td>{{ $item->created_at->format('d-m-Y H:i:s') }}</td>
 
+                                {{-- Status --}}
+                                <td>
+                                    @php
+                                        $isIncomplete =
+                                            !$item->biodata_path ||
+                                            !$item->sertifikat_pendidik_path ||
+                                            !$item->sk_dirjen_path||
+                                            !$item->sk_kelulusan_path ||
+                                            !$item->nrg_path ||
+                                            !$item->nuptk_path ||
+                                            !$item->npwp_path ||
+                                            !$item->ktp_path ||
+                                            !$item->ijazah_sd_path ||
+                                            !$item->ijazah_smp_path ||
+                                            !$item->ijazah_sma_path ||
+                                            !$item->sk_pns_path ||
+                                            !$item->sk_gty_path ||
+                                            !$item->ijazah_s1_path ||
+                                            !$item->transkrip_nilai_s1_path;
+
+                                    @endphp
+                                    @if ($isIncomplete)
+                                        <span class="badge bg-label-secondary">Belum Lengkap</span>
+                                    @elseif($item->status == 'menunggu')
+                                        <span class="badge bg-label-warning">Menunggu</span>
+                                    @elseif($item->status == 'ditolak')
+                                        <span class="badge bg-label-danger">Ditolak</span>
+                                    @else
+                                        <span class="badge bg-label-success">Diterima</span>
+                                    @endif
+                                </td>
+
+                                {{-- Aksi --}}
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('admin.per-tahun.show', $item) }}" class="btn btn-sm btn-info text-light">
+                                    <a href="{{ route('admin.per-tahun.show', $item) }}"
+                                        class="btn btn-sm btn-info text-light">
                                         <i class="bx bx-info-circle"></i> Lihat
                                     </a>
                                     <a href="{{ route('admin.per-tahun.edit', $item) }}"

@@ -130,7 +130,7 @@
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Layanan</a>
                         <ul class="dropdown-menu">
                             @if (auth()->user()->role == 'guru')
-                                <li><a class="dropdown-item" href="/layanan/a">Berkas Perbulan</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.perbulan.index') }}">Berkas Perbulan</a></li>
                                 <li><a class="dropdown-item" href="/layanan/a">Berkas Persemester</a></li>
                                 <li><a class="dropdown-item" href="/layanan/a">Berkas Pertahun</a></li>
                             @endif
