@@ -5,6 +5,50 @@
 {{-- Landing Page --}}
 @section('content')
     <style>
+        /* --- Foto Profil 3:4 --- */
+        .profil-photo-wrapper {
+            width: 100%;
+            max-width: 300px;
+            /* batas maksimal supaya tidak terlalu besar */
+            aspect-ratio: 3 / 4;
+            /* rasio 3:4 */
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: auto;
+            background: rgba(0, 0, 0, 0) !important;
+            padding: 0;
+        }
+
+        .profil-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 4px solid #008080
+                /* memenuhi area 3:4 */
+        }
+
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .brand-logo {
+            width: 100%;
+            max-width: 850px;
+            /* dinaikkan ukuran maksimum */
+            height: auto;
+            /* biar tetap proporsional */
+            object-fit: contain;
+            padding: 15px;
+            /* padding diperbesar */
+            border-radius: 12px;
+            /* sedikit membulat lebih rapi */
+            background: #fff;
+        }
+
+
         .hero-image {
             width: 100%;
             height: 260px;
@@ -178,8 +222,8 @@
             <div class="container pb-5">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <div class="py-4">
-                            <h1 class="fw-bold text-primary mb-3 display-5">
+                        <div class="py-4 text-center text-lg-start">
+                            <h1 class="fw-bold text-primary mb-3 display-5 ">
                                 Selamat Datang di SILAYANKRIS
                             </h1>
                             <p class="fs-5 mb-3">
@@ -190,9 +234,11 @@
                                 Akses berbagai layanan dan informasi penyelenggaraan Kristen
                                 secara cepat, mudah, dan terintegrasi dalam satu sistem.
                             </p>
+                            <a href="/layanan">
                             <button class="btn btn-primary btn-lg">
-                                Mulai
+                                Masuk Layanan
                             </button>
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -217,43 +263,52 @@
 
                 <div class="profil-card mx-auto">
                     <div class="row align-items-center gy-4">
+
                         {{-- Foto --}}
-                        <div class="col-md-5 text-center">
-                            <div class="profil-photo-wrapper mx-auto">
-                                <img src="{{ asset('assets/img/6 (1).jpg') }}" class="img-fluid shadow-sm"
+                        <div class="col-lg-4 col-md-12 col-sm-12 text-center">
+                            {{-- col-12 col-md-6 col-lg-3 --}}
+                            <div class="profil-photo-wrapper">
+                                <img src="{{ asset('assets/img/foto bu ester 34.png') }}" class="img-fluid shadow-sm"
                                     alt="Penyelenggara Kristen">
                             </div>
                         </div>
 
+
                         {{-- Konten --}}
-                        <div class="col-md-7">
-                            <p class="text-uppercase text-secondary fw-semibold mb-1" style="letter-spacing: .5px;">
+                        <div class="col-lg-8 col-md-12 col-sm-12 ">
+                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1" style="letter-spacing: .5px;">
                                 Penyelenggara Kristen
                             </p>
 
-                            <h1 class="fw-bold mb-4 text-dark" style="font-size: 2.4rem; line-height: 1.3;">
-                                Kantor Kementerian <br>
-                                Agama Kota <br>
-                                Surabaya.
+
+                            <h1 class="fw-bold mb-4 text-dark text-center text-lg-start fs-3 fs-md-1"
+                                style="line-height: 1.3;">
+                                ESTHER SRIWIDYASTUTI, S.Th.
                             </h1>
 
-                            <div class="p-4 mb-2 rounded" style="background: #f7f9fb; border-left: 4px solid #dfb484;">
+
+                            <div class="p-4 mb-2 rounded" style="background: #f7f9fb; border-left: 4px solid #008080;">
                                 <p class="text-muted lh-lg mb-0" style="font-size: 0.97rem;">
-                                    Selamat Datang di Website Resmi Seksi Pendidikan Agama Islam (PAIS)
-                                    Kantor Kementerian Agama Kota Surabaya. Kami hadir disini untuk menjadi pusat
-                                    informasi dan layanan terpadu dalam bidang pendidikan agama Islam di Kota Surabaya.
-                                    Melalui platform ini, kami berkomitmen untuk menyediakan akses yang mudah bagi
-                                    para guru, siswa, dan masyarakat umum terhadap program, kebijakan, serta berita terbaru.
-                                    Mari bersama-sama kita wujudkan pendidikan agama Islam yang berkualitas, modern, dan
-                                    berkarakter untuk generasi penerus bangsa. Terima kasih atas kunjungan Anda.
+                                    Selamat datang di Website Resmi <strong>Seksi Penyelenggara Kristen</strong>
+                                    Kantor Kementerian Agama Kota Surabaya. Melalui platform ini, kami menyediakan
+                                    pusat informasi dan layanan terpadu yang berkaitan dengan pendidikan, pembinaan,
+                                    serta pelayanan umat Kristen di Kota Surabaya.
+                                    Kami berkomitmen memberikan akses yang mudah bagi para pendidik, peserta didik,
+                                    lembaga keagamaan, dan masyarakat umum terhadap berbagai program, kebijakan,
+                                    data, dan berita terbaru. Harapan kami, layanan ini dapat mendukung terwujudnya
+                                    pembinaan kehidupan umat beragama yang harmonis, berkualitas, dan berkarakter.
+                                    <br><br>
+                                    Terima kasih atas kunjungan Anda.
                                 </p>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
             </div>
         </section>
+
 
 
         {{-- PELAYANAN SECTION --}}
@@ -316,7 +371,7 @@
 
             <div class="container py-5 border-bottom">
 
-                {{-- Header konsisten --}}
+                {{-- Header --}}
                 <div class="text-center mb-5">
                     <h6 class="fw-bold text-secondary mb-1">PEGAWAI SEKSI</h6>
                     <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
@@ -327,8 +382,9 @@
                 </div>
 
                 <div class="row g-4">
+
                     {{-- CARD 1 --}}
-                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
@@ -337,8 +393,9 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
+
                     {{-- CARD 2 --}}
-                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
@@ -347,8 +404,9 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
+
                     {{-- CARD 3 --}}
-                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
@@ -357,8 +415,9 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
+
                     {{-- CARD 4 --}}
-                    <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="500">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
                                 <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
@@ -367,42 +426,36 @@
                             <p class="text-muted mb-3">Product Designer</p>
                         </div>
                     </div>
-
-
 
                 </div>
             </div>
         </section>
 
+
         {{-- LOGO SECTION --}}
         <section class="logo-section bg-white py-5" data-aos="fade-up">
-
             <div class="container text-center">
-                <div class="mb-4">
-                    <h6 class="fw-bold text-secondary mb-1">DIDUKUNG OLEH</h6>
-                    <h2 class="fw-bold text-dark mb-2">Mitra Kerja Sama</h2>
-                    <div class="partner-divider mx-auto mb-3"></div>
-                    <p class="text-muted fs-6">
-                        SILAYANKRIS dikembangkan dengan dukungan berbagai lembaga dan institusi terkait.
-                    </p>
-                </div>
 
                 <div class="row justify-content-center align-items-center g-5">
 
                     <!-- Logo 1 -->
-                    <div class="col-6 col-md-3 logo-wrapper">
-                        <img src="{{ asset('assets/img/logo.png') }}" class="brand-logo img-fluid" alt="Logo 1">
+                    <div class="col-12 col-lg-5 logo-wrapper">
+                        <img src="{{ asset('assets/img/logo Kemenag_silayan fix2.png') }}" class="brand-logo"
+                            alt="Logo 1">
                     </div>
 
                     <!-- Logo 2 -->
-                    <div class="col-6 col-md-3 logo-wrapper">
-                        <img src="{{ asset('assets/img/Logo UPN JATIM.png') }}" class="brand-logo img-fluid"
+                    <div class="col-12 col-lg-5 logo-wrapper">
+                        <img src="{{ asset('assets/img/Logo upn_silayan fix2.png') }}" class="brand-logo"
                             alt="Logo 2">
                     </div>
 
                 </div>
+
             </div>
         </section>
+
+
 
 
     </main>
