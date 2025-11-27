@@ -33,16 +33,16 @@ class UserRequest extends FormRequest
             'nomor_telepon' => ['nullable', 'string', 'max:15'],
             'profile_photo_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_STAFF_GEREJA])],
+            'status' => ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])],
         ];
 
         // PASSWORD
         if ($this->isMethod('post')) {
             // CREATE
             $rules['password'] = ['required', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'];
-        } else {
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             // UPDATE
             $rules['password'] = ['nullable', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'];
-            $rules['status'] = ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])];
         }
 
 

@@ -20,15 +20,28 @@
         <div class="card-body">
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                {{-- PERAN --}}
-                <div class="mb-3">
-                    <label for="role" class="form-label">Peran</label>
-                    <x-select-input id="role" name="role" label="Peran" :options="[
-                        'guru' => 'Guru',
-                        'staff-gereja' => 'Pengurus Gereja',
-                        'admin' => 'Admin',
-                    ]" :selected="old('role')"
-                        :searchable="false" />
+                {{-- PERAN & STATUS --}}
+                <div class="row">
+                    {{-- PERAN (kiri) --}}
+                    <div class="col-md-6 mb-3">
+                        <label for="role" class="form-label">Peran</label>
+                        <x-select-input id="role" name="role" label="Peran" :options="[
+                            'guru' => 'Guru',
+                            'staff-gereja' => 'Pengurus Gereja',
+                            'admin' => 'Admin',
+                        ]" :selected="old('role')"
+                            :searchable="false" required />
+                    </div>
+
+                    {{-- STATUS (kanan) --}}
+                    <div class="col-md-6 mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <x-select-input id="status" name="status" label="Status" :options="[
+                            'aktif' => 'Aktif',
+                            'nonaktif' => 'Nonaktif',
+                        ]" :selected="old('status')"
+                            :searchable="false" />
+                    </div>
                 </div>
 
                 {{-- NAMA --}}

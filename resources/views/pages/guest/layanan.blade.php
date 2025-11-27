@@ -46,13 +46,13 @@
                         <div class="card border-0 shadow-lg h-100">
                             <div class="card-body text-center py-5">
                                 <div class="mb-3">
-                                    <i class="bi bi-person-badge fs-1 text-success"></i>
+                                    <i class="bi bi-person-badge fs-1 text-primary"></i>
                                 </div>
                                 <h5 class="card-title fw-bold mb-3">Pelayanan TPG Guru</h5>
                                 <p class="card-text text-muted">
                                     Unggah dan kelola berkas Tunjangan Profesi Guru secara online.
                                 </p>
-                                <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-success mt-3">
+                                <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-primary mt-3">
                                     Masuk ke Pelayanan TPG Guru
                                 </a>
                             </div>

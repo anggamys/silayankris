@@ -10,6 +10,7 @@
     'ulClass' => '', // custom class
     'selected' => null, // value terpilih
     'searchable' => true, // dropdown searchable
+    'required' => false, // required input
 ])
 <div class="dropdown {{ $dropdownClass }}">
 	<button id="btn-{{ $id }}"
@@ -41,7 +42,11 @@
 			@endforelse
 		</div>
 	</ul>
-	<input type="hidden" name="{{ $name }}" id="{{ $id }}" value="{{ $selected }}">
+	<input type="hidden" name="{{ $name }}" id="{{ $id }}" value="{{ $selected }} "
+		@if ($required) required @endif>
+	<div id="error-{{ $id }}" class="invalid-feedback" style="display:none;">
+		{{ $label }} wajib dipilih.
+	</div>
 </div>
 
 <script>
@@ -82,5 +87,35 @@
 				});
 			});
 		@endif
+
+		// Validasi required saat submit form
+		if ({{ $required ? 'true' : 'false' }}) {
+			const form = document.getElementById("{{ $id }}").closest('form');
+			if (form) {
+				form.addEventListener('submit', function(e) {
+					const hiddenInput = document.getElementById("{{ $id }}");
+					const button = document.getElementById("btn-{{ $id }}");
+					const errorDiv = document.getElementById("error-{{ $id }}");
+					if (!hiddenInput.value.trim()) {
+						button.classList.add('is-invalid');
+						errorDiv.style.display = '';
+						e.preventDefault();
+					} else {
+						button.classList.remove('is-invalid');
+						errorDiv.style.display = 'none';
+					}
+				});
+
+				// Hilangkan error saat memilih
+				document.querySelectorAll("#list-{{ $id }} .dropdown-item").forEach(item => {
+					item.addEventListener("click", function() {
+						const button = document.getElementById("btn-{{ $id }}");
+						const errorDiv = document.getElementById("error-{{ $id }}");
+						button.classList.remove('is-invalid');
+						errorDiv.style.display = 'none';
+					});
+				});
+			}
+		}
 	});
 </script>

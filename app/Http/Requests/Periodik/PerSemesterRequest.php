@@ -25,18 +25,18 @@ class PerSemesterRequest extends FormRequest
 
         $rules = [
             'guru_id' => ['required', 'exists:gurus,id'],
-            'sk_pbm_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sk_terakhir_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sk_berkala_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sp_bersedia_mengembalikan_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sp_perangkat_pembelajaran_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'keaktifan_simpatika_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'berkas_s28a_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'berkas_skmt_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'permohonan_skbk_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'berkas_skbk_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sertifikat_pengembangan_diri_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'status' => ['nullable', 'in:menunggu,diterima,ditolak'],
+            'sk_pbm_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sk_terakhir_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sk_berkala_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sp_bersedia_mengembalikan_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sp_perangkat_pembelajaran_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'keaktifan_simpatika_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'berkas_s28a_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'berkas_skmt_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'permohonan_skbk_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'berkas_skbk_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sertifikat_pengembangan_diri_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'status' => ['required', 'in:menunggu,diterima,ditolak'],
             'catatan' => ['nullable', 'string', 'max:1000'],
         ];
 

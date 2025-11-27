@@ -1,17 +1,17 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Edit Data Periodik Perbulan')
+@section('title', 'Edit Data Periode Per Bulan')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periodik
-            Perbulan</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Ubah Data Periodik Perbulan</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periode
+            Per Bulan</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Ubah Data Periode Per Bulan</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Ubah Data Periodik Perbulan</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Ubah Data Periode Per Bulan</h5>
 
             <a href="{{ route('admin.per-bulan.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
@@ -24,23 +24,14 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Guru--}}
-                <div id="guru_id">
-                    <label for="guru_id" class="form-label">Guru</label>
-                    <div class="mb-2 guru-group"
-                        style="display: flex; flex-direction: row; justify-content: space-between;">
-                        @php
-                            $guruOptions = $gurus
-                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
-                                ->toArray();
-                        @endphp
-                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id', $perBulan->guru_id)"
-                            dropdownClass="flex-fill" />
-                        @error('guru_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
+                {{-- Guru --}}
+                <label class="form-label">Guru</label>
+                <input type="text" class="form-control mb-2"
+																				value="{{ $perBulan->guru->user->name ?? ($perBulan->guru->nip ?? 'Guru #' . $perBulan->guru->id) }}"
+																				readonly>
+
+																{{-- INPUT HIDDEN (DIKIRIM) --}}
+																<input type="hidden" name="guru_id" value="{{ old('guru_id', $perBulan->guru_id) }}">
 
                 {{-- Daftar Gaji --}}
                 <div class="mb-3">
@@ -61,7 +52,6 @@
                     </div>
                 </div>
 
-
                 {{-- Daftar Hadir --}}
                 <div class="mb-3">
                     <label for="daftar_hadir_path" class="form-label">Daftar Hadir (File)</label>
@@ -81,7 +71,6 @@
                         </span>
                     </div>
                 </div>
-
 
                 {{-- Rekening Bank --}}
                 <div class="mb-3">
@@ -107,23 +96,21 @@
                 <div class="mb-3">
                     <label for="ceklist_berkas" class="form-label">Ceklist Berkas</label>
                     <input type="text" name="ceklist_berkas" id="ceklist_berkas" class="form-control"
-                        value="{{ old('ceklist_berkas', $perBulan->ceklist_berkas) }}" required>
+                        value="{{ old('ceklist_berkas', $perBulan->ceklist_berkas) }}">
                 </div>
 
                 {{-- Status --}}
                 <div class="mb-3">
                     <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select" required>
-                        <option value="menunggu" {{ old('status', $perBulan->status) == 'menunggu' ? 'selected' : '' }}>
-                            Menunggu
-                        </option>
-                        <option value="diterima" {{ old('status', $perBulan->status) == 'diterima' ? 'selected' : '' }}>
-                            Diterima
-                        </option>
-                        <option value="ditolak" {{ old('status', $perBulan->status) == 'ditolak' ? 'selected' : '' }}>
-                            Ditolak
-                        </option>
-                    </select>
+                    <x-select-input id="status" label="Status" name="status" :options="[
+                        'menunggu' => 'Menunggu',
+                        'diterima' => 'Diterima',
+                        'ditolak' => 'Ditolak',
+                    ]"
+                        placeholder="Pilih Status"	:selected="old('status', $perBulan->status)" :searchable="false" required />
+                    @error('status')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 {{-- Catatan --}}

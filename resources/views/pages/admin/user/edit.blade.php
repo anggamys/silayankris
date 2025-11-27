@@ -22,7 +22,7 @@
                 @csrf
                 @method('PUT')
 
-                {{-- PERAN --}}
+                {{-- PERAN & STATUS--}}
                 <div class="row">
                     {{-- PERAN (kiri) --}}
                     <div class="col-md-6 mb-3">
@@ -32,7 +32,7 @@
                             'staff-gereja' => 'Pengurus Gereja',
                             'admin' => 'Admin',
                         ]" :selected="old('role', $user->role)"
-                            :searchable="false" />
+                            :searchable="false" required/>
                     </div>
 
                     {{-- STATUS (kanan) --}}

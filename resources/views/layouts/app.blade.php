@@ -14,6 +14,13 @@
     @yield('content')
 
     @include('components.guest.footer')
+    <script>
+        // Guard AOS init: only call if AOS is available (prevents "AOS is not defined" errors
+        // when module-bundled scripts haven't executed yet).
+        if (typeof AOS !== 'undefined' && AOS && typeof AOS.init === 'function') {
+            AOS.init();
+        }
+    </script>
 </body>
 
 </html>
