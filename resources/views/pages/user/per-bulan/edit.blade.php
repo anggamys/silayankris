@@ -10,7 +10,7 @@
             <span class="mx-2">></span>
             <a href="" class="text-dark fs-6 mb-0 text-decoration-none">Layanan</a>
             <span class="mx-2">></span>
-            <a href="/user/perbulan" class="text-dark fs-6 mb-0 text-decoration-none">Upload Berkas Per-bulan</a>
+            <a href="/user/perbulan" class="text-dark fs-6 mb-0 text-decoration-none">Lengkapi Berkas Per-bulan</a>
             <span class="mx-2">></span>
             <span class="text-dark fs-6 mb-0">Detail Berkas Per-bulan</span>
         </div>
@@ -18,7 +18,7 @@
 
     <div class="container-fluid  py-4 bg-primary text-light">
         <div class="container pb-3 ">
-            <h1 class="fw-bold mb-0">Detail Berkas Per-bulan</h1>
+            <h1 class="fw-bold mb-0">Detail berkas Per-bulan</h1>
             <p class="text-light fs-6 mb-0">Layanan Guru untuk melihat detail berkas per-bulan</p>
         </div>
     </div>
@@ -61,7 +61,7 @@
             </a>
         </div>
 
-
+        <div class="card shadow-sm border-0 mb-5"></div>
         {{-- CARD: PROGRESS + STATUS --}}
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white border-0">
@@ -155,6 +155,7 @@
             </div>
         </div>
 
+
         {{-- Periode Per Bulan --}}
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white border-0">
@@ -168,89 +169,127 @@
             </div>
         </div>
 
+
         {{-- CARD: FILES --}}
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-white border-0">
-                <h5 class="fw-semibold mb-0">Berkas Upload</h5>
+        <form action="{{ route('user.perbulan.update', $perBulan) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-semibold mb-0">Berkas Upload</h5>
+                </div>
+
+                <div class="card-body">
+
+                    @php
+                        $files = [
+                            'Daftar Gaji' => $perBulan->daftar_gaji_path,
+                            'Daftar Hadir' => $perBulan->daftar_hadir_path,
+                            'Rekening Bank' => $perBulan->rekening_bank_path,
+                        ];
+                    @endphp
+
+                    {{-- Daftar Gaji --}}
+                    <div class="mb-3">
+                        <label for="daftar_gaji_path" class="form-label">Daftar Gaji (File)</label>
+
+                        <input type="file" name="daftar_gaji_path" id="daftar_gaji_path" class="form-control"
+                            accept=".pdf">
+
+                        {{-- Jika file ADA --}}
+                        @if ($perBulan->daftar_gaji_path)
+                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_gaji_path]) }}"
+                                    target="_blank" class="text-primary text-decoration-underline">
+                                    Lihat File Lama
+                                </a>
+                                <span class="text-muted old-file-name">
+                                    {{ basename($perBulan->daftar_gaji_path) }}
+                                </span>
+                            </div>
+                        @else
+                            {{-- Jika file TIDAK ADA --}}
+                            <p class="text-muted mt-1">Belum ada file</p>
+                        @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="daftar_hadir_path" class="form-label">Daftar Hadir (File)</label>
+
+                        <input type="file" name="daftar_hadir_path" id="daftar_hadir_path" class="form-control"
+                            accept=".pdf">
+
+                        @if ($perBulan->daftar_hadir_path)
+                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_hadir_path]) }}"
+                                    target="_blank" class="text-primary text-decoration-underline">
+                                    Lihat File Lama
+                                </a>
+                                <span class="text-muted old-file-name">
+                                    {{ basename($perBulan->daftar_hadir_path) }}
+                                </span>
+                            </div>
+                        @else
+                            <p class="text-muted mt-1">Belum ada file</p>
+                        @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="rekening_bank_path" class="form-label">Rekening Bank (File)</label>
+
+                        <input type="file" name="rekening_bank_path" id="rekening_bank_path" class="form-control"
+                            accept=".pdf">
+
+                        @if ($perBulan->rekening_bank_path)
+                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                <a href="{{ route('gdrive.preview', ['path' => $perBulan->rekening_bank_path]) }}"
+                                    target="_blank" class="text-primary text-decoration-underline">
+                                    Lihat File Lama
+                                </a>
+                                <span class="text-muted old-file-name">
+                                    {{ basename($perBulan->rekening_bank_path) }}
+                                </span>
+                            </div>
+                        @else
+                            <p class="text-muted mt-1">Belum ada file</p>
+                        @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="ceklist_berkas" class="form-label">Ceklist Berkas (File)</label>
+
+                        <input type="file" name="ceklist_berkas" id="ceklist_berkas" class="form-control"
+                            accept=".pdf">
+
+                        @if ($perBulan->ceklist_berkas)
+                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                <a href="{{ route('gdrive.preview', ['path' => $perBulan->ceklist_berkas]) }}"
+                                    target="_blank" class="text-primary text-decoration-underline">
+                                    Lihat File Lama
+                                </a>
+                                <span class="text-muted old-file-name">
+                                    {{ basename($perBulan->ceklist_berkas) }}
+                                </span>
+                            </div>
+                        @else
+                            <p class="text-muted mt-1">Belum ada file</p>
+                        @endif
+                    </div>
+
+
+                    {{-- SUBMIT --}}
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send me-1"></i> Kirim
+                        </button>
+                    </div>
+
+                </div>
             </div>
-
-            <div class="card-body">
-
-                {{-- DAFTAR GAJI --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Daftar Gaji (PDF)</label>
-
-                    @if ($perBulan->daftar_gaji_path)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->daftar_gaji_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_gaji_path]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-                {{-- DAFTAR HADIR --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Daftar Hadir (PDF)</label>
-
-                    @if ($perBulan->daftar_hadir_path)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->daftar_hadir_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_hadir_path]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-                {{-- REKENING BANK --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Rekening Bank (PDF)</label>
-
-                    @if ($perBulan->rekening_bank_path)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->rekening_bank_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->rekening_bank_path]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-                {{-- CEKLIST --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Ceklist Berkas (PDF)</label>
-
-                    @if ($perBulan->ceklist_berkas)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->ceklist_berkas) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->ceklist_berkas]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-            </div>
-        </div>
-
 
     </div>
 

@@ -3,42 +3,51 @@
 @section('title', 'Berkas Perbulan')
 
 @section('content')
-    <!-- Component Toast -->
+
+    <!-- Toast Notification -->
     <x-toast />
-    
+
+    <!-- Breadcrumb -->
     <div class="container-fluid pt-3 text-dark border-bottom">
         <div class="container pb-3">
-            <a href="/home" class="text-dark fs-6 mb-0 text-decoration-none">Home</a>
+            <a href="/home" class="text-dark text-decoration-none">Home</a>
             <span class="mx-2">></span>
-            <a href="" class="text-dark fs-6 mb-0 text-decoration-none">Layanan</a>
+            <a href="#" class="text-dark text-decoration-none">Layanan</a>
             <span class="mx-2">></span>
-            <span class="text-dark fs-6 mb-0">Upload Berkas Per-bulan</span>
+            <span class="text-dark">Upload Berkas Per-bulan</span>
         </div>
     </div>
 
-    <div class="container-fluid  py-4 bg-primary text-light">
-        <div class="container pb-3 ">
+    <!-- Header -->
+    <div class="container-fluid py-4 bg-primary text-light">
+        <div class="container">
             <h1 class="fw-bold mb-0">Upload Berkas Per-bulan</h1>
-            <p class="text-light fs-6 mb-0">Layanan Guru untuk upload berkas per-bulan</p>
+            <p class="mb-0">Layanan Guru untuk upload berkas per-bulan</p>
         </div>
     </div>
 
 
     <div class="container py-5">
-        {{-- RIWAYAT PENGAJUAN --}}
+
+        {{-- ===========================
+             RIWAYAT UPLOAD
+        ============================ --}}
         <div class="text-center mb-4">
-            <extralarge class="text-muted d-block fw-semibold">Per-bulan</extralarge>
+            <div class="text-muted fw-semibold">Per-bulan</div>
             <h2 class="fw-bold mb-0">Riwayat Upload Berkas</h2>
         </div>
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-body p-4">
+
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Periode</th>
+                                <th>Progress</th>
                                 <th>Tanggal Pengajuan</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
@@ -47,48 +56,83 @@
 
                         <tbody>
                             @forelse($items as $item)
+                                @php
+                                    // Cek kelengkapan file
+                                    $fields = [
+                                        $item->daftar_gaji_path,
+                                        $item->daftar_hadir_path,
+                                        $item->rekening_bank_path,
+                                        $item->ceklist_berkas,
+                                    ];
+                                    $uploaded = collect($fields)->filter()->count();
+                                    $total = 4;
+                                    $progress = ($uploaded / $total) * 100;
+                                    $isIncomplete = $uploaded < $total;
+                                @endphp
+
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-
-                                    {{-- nama guru --}}
-                                    <td>{{ $item->guru->user->name ?? 'Guru #' . $item->guru_id }}</td>
-
-                                    {{-- tanggal upload --}}
-                                    <td>{{ $item->created_at->format('d M Y - H:i') }}</td>
-
-                                    {{-- periode bulan
-                                    <td>
-                                        {{ $item->bulan ? \Carbon\Carbon::create()->month($item->bulan)->translatedFormat('F') : '-' }}
-                                        {{ $item->tahun }}
+                                    {{-- Make numbering continuous across pages using paginator firstItem() --}}
+                                    <td>{{ optional($items)->firstItem() ? $items->firstItem() + $loop->index : $loop->iteration }}
                                     </td>
-                                    --}}
 
-                                    {{-- status --}}
+                                    {{-- Nama --}}
+                                    <td>{{ $item->guru->user->name }}</td>
+
+                                    {{-- PERIODE --}}
                                     <td>
-                                        @php
-                                            $isIncomplete =
-                                                !$item->daftar_gaji_path ||
-                                                !$item->daftar_hadir_path ||
-                                                !$item->rekening_bank_path;
-                                        @endphp
-
-                                        @if ($isIncomplete)
-                                            <span class="badge bg-label-secondary">Belum Lengkap</span>
-                                        @elseif($item->status == 'menunggu')
-                                            <span class="badge bg-label-warning">Menunggu</span>
-                                        @elseif($item->status == 'ditolak')
-                                            <span class="badge bg-label-danger">Ditolak</span>
+                                        @if ($item->bulan && $item->tahun)
+                                            {{ \Carbon\Carbon::create($item->tahun, $item->bulan, 1)->translatedFormat('F Y') }}
                                         @else
+                                            -
+                                        @endif
+                                    </td>
+
+                                    {{-- PROGRESS --}}
+                                    <td style="min-width: 60px;">
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar 
+                            @if ($progress == 100) bg-success
+                            @elseif($progress >= 50) bg-warning
+                            @else bg-danger @endif"
+                                                style="width: {{ $progress }}%;"></div>
+                                        </div>
+                                        <small class="text-muted">{{ $uploaded }}/{{ $total }}</small>
+                                    </td>
+
+                                    {{-- TANGGAL --}}
+                                    <td>{{ $item->created_at->format('d M Y') }}</td>
+
+                                    {{-- STATUS --}}
+                                    <td>
+                                        @if ($isIncomplete && $item->status !== 'ditolak')
+                                            <span class="badge bg-label-secondary">Belum Lengkap</span>
+                                        @elseif ($item->status === 'ditolak')
+                                            <span class="badge bg-label-danger">Ditolak</span>
+                                        @elseif ($item->status === 'menunggu')
+                                            <span class="badge bg-label-warning">Menunggu</span>
+                                        @elseif ($item->status === 'diterima')
                                             <span class="badge bg-label-success">Diterima</span>
                                         @endif
                                     </td>
 
-                                    {{-- tombol buka --}}
+                                    {{-- AKSI --}}
                                     <td>
-                                        <a href="{{ route('user.perbulan.show', $item) }}"
-                                            class="btn btn-sm btn-primary px-3">
-                                            Buka
-                                        </a>
+                                        @if ($isIncomplete && $item->status !== 'ditolak')
+                                            <a href="{{ route('user.perbulan.edit', $item) }}"
+                                                class="btn btn-sm btn-warning text-white">
+                                                <i class="bi bi-pencil"></i> Lengkapi
+                                            </a>
+                                        @elseif ($item->status === 'ditolak')
+                                            <a href="{{ route('user.perbulan.show', $item) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <i class="bi bi-eye"></i> Buka
+                                            </a>
+                                        @else
+                                            <a href="{{ route('user.perbulan.show', $item) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <i class="bi bi-eye"></i> Buka
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -102,18 +146,29 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+                    <div class="small text-muted">
+                        Halaman <strong>{{ $currentPage }}</strong> dari <strong>{{ $lastPage }}</strong><br>
+                        Menampilkan <strong>{{ $perPage }}</strong> data dari <strong>{{ $total }}</strong>
+                        berkas
+                    </div>
+                    <div>
+                        {{ $items->links() }}
+                    </div>
+                </div>
+
             </div>
         </div>
 
 
-        {{-- FORM UPLOAD BERKAS --}}
 
-        @php
-            $usedMonths = $items->pluck('bulan')->toArray();
-        @endphp
+        {{-- ===========================
+             FORM UPLOAD BARU
+        ============================ --}}
 
         <div class="text-center mb-4">
-            <large class="text-muted d-block fw-semibold">Per-bulan</large>
+            <div class="text-muted fw-semibold">Per-bulan</div>
             <h2 class="fw-bold mb-0">Form Upload Berkas</h2>
         </div>
 
@@ -131,7 +186,6 @@
 
                         <div class="card-body">
 
-                            {{-- NAMA - NIP - NO HP --}}
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Nama Lengkap</label>
@@ -149,7 +203,6 @@
                                 </div>
                             </div>
 
-                            {{-- TEMPAT LAHIR - TANGGAL LAHIR --}}
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Tempat Lahir</label>
@@ -159,52 +212,46 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Tanggal Lahir</label>
                                     <input type="text" class="form-control"
-                                        value="{{ $guru->tanggal_lahir ? $guru->tanggal_lahir->format('d F Y') : '-' }}"
-                                        readonly>
+                                        value="{{ $guru->tanggal_lahir?->format('d F Y') }}" readonly>
                                 </div>
                             </div>
 
-                            {{-- ASAL SEKOLAH INDUK --}}
                             <div class="mb-3">
                                 <label class="form-label">Asal Sekolah Induk</label>
-                                @if ($user->guru && $user->guru->sekolah && $user->guru->sekolah->count())
-                                    @foreach ($user->guru->sekolah as $sekolah)
-                                        <input type="text" class="form-control mb-1" value="{{ $sekolah->nama }}"
-                                            readonly>
-                                    @endforeach
-                                @else
+                                @forelse ($guru->sekolah as $sekolah)
+                                    <input type="text" class="form-control mb-1" value="{{ $sekolah->nama }}" readonly>
+                                @empty
                                     <input type="text" class="form-control" value="-" readonly>
-                                @endif
+                                @endforelse
                             </div>
 
                         </div>
                     </div>
 
 
-
-                    {{-- PILIH PERIODE --}}
+                    {{-- PERIODE --}}
                     <div class="card shadow-sm border-0 mb-4">
-
-                        {{-- 
                         <div class="card-header bg-white border-0">
-                            <h5 class="fw-semibold mb-0">Pilih Periode Berkas</h5>
+                            <h5 class="fw-semibold mb-0">Pilih Periode Per-Bulan</h5>
                         </div>
-                        <div class="card-body"></div>
-                            <!-- Periode (gabungan bulan+tahun) -->
+
+                        <div class="card-body">
+
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Periode</label>
-                                <!-- HTML5 month input returns value in format YYYY-MM -->
-                                <input type="month" name="periode" class="form-control" required
-                                    value="{{ old('periode', date('Y-m')) }}">
-                                <small class="text-muted">Pilih bulan dan tahun untuk periode berkas Anda</small>
+                                <input type="month" name="periode_per_bulan" class="form-control" required
+                                    min="{{ now()->subMonths(35)->format('Y-m') }}" max="{{ now()->format('Y-m') }}"
+                                    value="{{ old('periode_per_bulan') }}">
                             </div>
 
-                            <!-- Pastikan guru_id terkirim ke request (untuk validasi/service) -->
                             <input type="hidden" name="guru_id" value="{{ $guru->id }}">
-                        </div>
-                        --}}
 
-                        {{-- UPLOAD BERKAS --}}
+                        </div>
+                    </div>
+
+
+                    {{-- FILE UPLOAD --}}
+                    <div class="card shadow-sm border-0 mb-4">
                         <div class="card-header bg-white border-0">
                             <h5 class="fw-semibold mb-0">Upload Berkas</h5>
                         </div>
@@ -213,34 +260,38 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Daftar Gaji (PDF)</label>
-                                <input type="file" name="daftar_gaji_path" class="form-control" accept=".pdf" required>
+                                <input type="file" name="daftar_gaji_path" class="form-control" accept=".pdf">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Daftar Hadir (PDF)</label>
-                                <input type="file" name="daftar_hadir_path" class="form-control" accept=".pdf" required>
+                                <input type="file" name="daftar_hadir_path" class="form-control" accept=".pdf">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Rekening Bank (PDF)</label>
-                                <input type="file" name="rekening_bank_path" class="form-control" accept=".pdf"
-                                    required>
+                                <input type="file" name="rekening_bank_path" class="form-control" accept=".pdf">
                             </div>
 
-                            <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-send me-1"></i> Kirim
-                                </button>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Ceklist Berkas (PDF)</label>
+                                <input type="file" name="ceklist_berkas" class="form-control" accept=".pdf">
                             </div>
-
                         </div>
+                    </div>
+
+
+                    {{-- SUBMIT --}}
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send me-1"></i> Kirim
+                        </button>
                     </div>
 
                 </form>
 
             </div>
         </div>
-    </div>
 
     </div>
 

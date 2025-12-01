@@ -79,8 +79,19 @@
 
             {{-- CEKLIST --}}
             <div class="mb-3">
-                <label class="form-label">Ceklist Berkas</label>
-                <input type="text" class="form-control" value="{{ $perBulan->ceklist_berkas }}" readonly>
+                <label class="form-label">Ceklist Berkas (File)</label>
+
+                <input type="text" class="form-control mb-1" value="{{ basename($perBulan->ceklist_berkas) }}"
+                    readonly>
+
+                @if ($perBulan->ceklist_berkas)
+                    <a href="{{ route('gdrive.preview', ['path' => $perBulan->ceklist_berkas]) }}" target="_blank"
+                        class="text-primary text-decoration-underline">
+                        Lihat File
+                    </a>
+                @else
+                    <p class="text-muted">Belum ada file</p>
+                @endif
             </div>
 
             {{-- STATUS --}}

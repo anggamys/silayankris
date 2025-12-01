@@ -27,11 +27,11 @@
                 {{-- Guru --}}
                 <label class="form-label">Guru</label>
                 <input type="text" class="form-control mb-2"
-																				value="{{ $perBulan->guru->user->name ?? ($perBulan->guru->nip ?? 'Guru #' . $perBulan->guru->id) }}"
-																				readonly>
+                    value="{{ $perBulan->guru->user->name ?? ($perBulan->guru->nip ?? 'Guru #' . $perBulan->guru->id) }}"
+                    readonly>
 
-																{{-- INPUT HIDDEN (DIKIRIM) --}}
-																<input type="hidden" name="guru_id" value="{{ old('guru_id', $perBulan->guru_id) }}">
+                {{-- INPUT HIDDEN (DIKIRIM) --}}
+                <input type="hidden" name="guru_id" value="{{ old('guru_id', $perBulan->guru_id) }}">
 
                 {{-- Daftar Gaji --}}
                 <div class="mb-3">
@@ -92,11 +92,24 @@
                     </div>
                 </div>
 
-                {{-- Ceklist --}}
+                {{-- Ceklist Berkas --}}
                 <div class="mb-3">
-                    <label for="ceklist_berkas" class="form-label">Ceklist Berkas</label>
-                    <input type="text" name="ceklist_berkas" id="ceklist_berkas" class="form-control"
-                        value="{{ old('ceklist_berkas', $perBulan->ceklist_berkas) }}">
+                    <label for="ceklist_berkas" class="form-label">Ceklist Berkas (File)</label><br>
+
+                    <!-- Input File -->
+                    <input type="file" name="ceklist_berkas" id="ceklist_berkas" class="form-control" accept=".pdf">
+                    accept=".pdf">
+
+                    <!-- Baris bawah: Lihat File + Nama File -->
+                    <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                        <a href="{{ route('gdrive.preview', ['path' => $perBulan->ceklist_berkas]) }}" target="_blank"
+                            class="text-primary text-decoration-underline">
+                            Lihat File Lama
+                        </a>
+                        <span class="text-muted old-file-name">
+                            {{ basename($perBulan->ceklist_berkas) }}
+                        </span>
+                    </div>
                 </div>
 
                 {{-- Status --}}
@@ -107,7 +120,7 @@
                         'diterima' => 'Diterima',
                         'ditolak' => 'Ditolak',
                     ]"
-                        placeholder="Pilih Status"	:selected="old('status', $perBulan->status)" :searchable="false" required />
+                        placeholder="Pilih Status" :selected="old('status', $perBulan->status)" :searchable="false" required />
                     @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -126,6 +139,8 @@
                     </button>
                 </div>
             </form>
+
+
             <style>
                 .old-file-name {
                     white-space: nowrap;
