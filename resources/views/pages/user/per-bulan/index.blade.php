@@ -3,20 +3,23 @@
 @section('title', 'Berkas Perbulan')
 
 @section('content')
+    <!-- Component Toast -->
+    <x-toast />
+    
     <div class="container-fluid pt-3 text-dark border-bottom">
         <div class="container pb-3">
             <a href="/home" class="text-dark fs-6 mb-0 text-decoration-none">Home</a>
             <span class="mx-2">></span>
             <a href="" class="text-dark fs-6 mb-0 text-decoration-none">Layanan</a>
             <span class="mx-2">></span>
-            <span class="text-dark fs-6 mb-0">Upload Berkas PerBulan</span>
+            <span class="text-dark fs-6 mb-0">Upload Berkas Per-bulan</span>
         </div>
     </div>
 
     <div class="container-fluid  py-4 bg-primary text-light">
         <div class="container pb-3 ">
-            <h1 class="fw-bold mb-0">Upload Berkas Perbulan</h1>
-            <p class="text-light fs-6 mb-0">Layanan Guru untuk upload berkas perbulan</p>
+            <h1 class="fw-bold mb-0">Upload Berkas Per-bulan</h1>
+            <p class="text-light fs-6 mb-0">Layanan Guru untuk upload berkas per-bulan</p>
         </div>
     </div>
 
