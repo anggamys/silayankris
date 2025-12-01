@@ -20,6 +20,7 @@ class PerBulan extends Model
      */
     protected $fillable = [
         'guru_id',
+        'periode_per_bulan',
         'daftar_gaji_path',
         'daftar_hadir_path',
         'rekening_bank_path',

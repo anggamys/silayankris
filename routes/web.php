@@ -69,6 +69,9 @@ Route::middleware(['auth'])
         Route::get('/create', [PerBulanUserController::class, 'create'])->name('create');
         Route::post('/', [PerBulanUserController::class, 'store'])->name('store');
         Route::get('/{perBulan}', [PerBulanUserController::class, 'show'])->name('show');
+        // Allow users to edit their incomplete submissions and submit revisions
+        Route::get('/{perBulan}/edit', [PerBulanUserController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{perBulan}', [PerBulanUserController::class, 'update'])->name('update');
     });
 
 

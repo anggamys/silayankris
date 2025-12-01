@@ -72,8 +72,9 @@
 
                 {{-- Ceklist Berkas --}}
                 <div class="mb-3">
-                    <label for="ceklist_berkas" class="form-label">Ceklist Berkas</label>
-                    <input type="text" name="ceklist_berkas" id="ceklist_berkas" class="form-control">
+                    <label for="ceklist_berkas" class="form-label">Ceklist Berkas (File)</label>
+                    <input type="file" name="ceklist_berkas" id="ceklist_berkas" class="form-control" accept=".pdf">
+                    <hint class="form-text">Format file harus .pdf</hint>
                     @error('ceklist_berkas')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

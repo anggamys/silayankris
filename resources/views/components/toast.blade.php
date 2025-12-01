@@ -45,7 +45,9 @@
 
                 toastEl.addEventListener("animationend", () => {
                     toast.hide();
-                }, { once: true });
+                }, {
+                    once: true
+                });
 
             }, 3000);
         });
@@ -53,19 +55,28 @@
 </script>
 
 <style>
-    /*  ============================
-        BORDER RADIUS BAWAH TOAST
-        ============================ */
+    /* Toast wrapper */
     .toast,
     .bs-toast {
+        border-radius: 6px !important;
+        overflow: visible !important;
+    }
+
+    /* Header */
+    .toast .toast-header {
+        border-top-left-radius: 6px !important;
+        border-top-right-radius: 6px !important;
+        overflow: visible !important;
+    }
+
+    /* Body */
+    .toast .toast-body {
         border-bottom-left-radius: 6px !important;
         border-bottom-right-radius: 6px !important;
         overflow: hidden;
     }
 
-    /*  ============================
-        ANIMASI MASUK
-        ============================ */
+    /* Animasi masuk */
     .toast.animate-in {
         animation: slideIn 0.45s ease-out forwards;
     }
@@ -75,17 +86,16 @@
             transform: translateX(120%);
             opacity: 0;
         }
+
         to {
             transform: translateX(0);
             opacity: 1;
         }
     }
 
-    /*  ============================
-        ANIMASI KELUAR
-        ============================ */
+    /* Animasi keluar */
     .toast.animate-out {
-        animation: slideOut 0.45s ease-in forwards;
+        animation: slideOut 1s ease-in forwards;
     }
 
     @keyframes slideOut {
@@ -93,9 +103,16 @@
             transform: translateX(0);
             opacity: 1;
         }
+
         to {
             transform: translateX(120%);
             opacity: 0;
         }
+    }
+
+    /* Tombol X */
+    .toast .btn-close {
+        filter: none !important;
+        opacity: .50 !important;
     }
 </style>
