@@ -91,21 +91,6 @@
                     @enderror
                 </div>
 
-                {{-- Status --}}
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <x-select-input id="status" label="Status" name="status" :options="[
-                        'menunggu' => 'Menunggu',
-                        'diterima' => 'Diterima',
-                        'ditolak' => 'Ditolak',
-                        'belum lengkap' => 'Belum Lengkap',
-                    ]"
-                        placeholder="Pilih Status" :selected="old('status')" :searchable="false" required />
-                    @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 {{-- Catatan --}}
                 <div class="mb-3">
                     <label for="catatan" class="form-label">Catatan (Opsional)</label>
