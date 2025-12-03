@@ -76,27 +76,51 @@ class PerBulanController extends Controller
             $user = $guru->user ?? $user;
         }
 
-        // Use validated data and include uploaded files so the service
-        // receives UploadedFile instances (prevents saving temp php*.tmp names).
+        // Wajib upload minimal 1 file
+        $hasFile =
+            $request->hasFile('daftar_gaji_path') ||
+            $request->hasFile('daftar_hadir_path') ||
+            $request->hasFile('rekening_bank_path') ||
+            $request->hasFile('ceklist_berkas');
+
+        if (!$hasFile) {
+            return back()->withInput()->with('error', 'Anda harus mengupload minimal 1 berkas.');
+        }
+
         $data = $request->validated();
 
-        // Merge uploaded files into data array if present
+        // Masukkan UploadedFile ke data
         foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $data[$fileKey] = $request->file($fileKey);
             }
         }
 
-        // FIX format periode (YYYY-MM → YYYY-MM-01)
+        // Periode → YYYY-MM-01
         if (!empty($data['periode_per_bulan']) && strlen($data['periode_per_bulan']) === 7) {
             $data['periode_per_bulan'] .= '-01';
         }
 
+        // ==============================
+        // STATUS OTOMATIS
+        // ==============================
+        $uploadedCount = collect([
+            $request->file('daftar_gaji_path'),
+            $request->file('daftar_hadir_path'),
+            $request->file('rekening_bank_path'),
+            $request->file('ceklist_berkas'),
+        ])->filter()->count();
+
+        $data['status'] = $uploadedCount < 4
+            ? 'belum lengkap'
+            : 'diterima';
+
+        // Simpan data
         $this->service->store($data, $user);
 
-        return redirect()->route('admin.per-bulan.index')->with('success', 'Data per bulan berhasil disimpan');
+        return redirect()->route('admin.per-bulan.index')
+            ->with('success', 'Data per bulan berhasil disimpan');
     }
-
 
     /**
      * Display the specified resource.
@@ -125,8 +149,31 @@ class PerBulanController extends Controller
                 $q->where('status', User::STATUS_AKTIF);
             })->get();
 
-        return view('pages.admin.per-bulan.edit', compact('perBulan', 'gurus'));
+        // ============================================
+        // CEK KELENGKAPAN FILE (0–4 file)
+        // ============================================
+        $uploaded = collect([
+            $perBulan->daftar_gaji_path,
+            $perBulan->daftar_hadir_path,
+            $perBulan->rekening_bank_path,
+            $perBulan->ceklist_berkas,
+        ])->filter()->count();
+
+        // Jika file belum lengkap → hanya boleh status "belum lengkap"
+        // Jika file lengkap → semua opsi muncul
+        $statusOptions = $uploaded < 4
+            ? ['belum lengkap' => 'Belum Lengkap']
+            : [
+                'menunggu' => 'Menunggu',
+                'diterima' => 'Diterima',
+                'ditolak' => 'Ditolak',
+                'belum lengkap' => 'Belum Lengkap',
+            ];
+
+        // Kirim ke Blade
+        return view('pages.admin.per-bulan.edit', compact('perBulan', 'gurus', 'statusOptions'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -160,6 +207,9 @@ class PerBulanController extends Controller
         // LOGIKA STATUS DINAMIS (BERDASARKAN KELENGKAPAN FILE)
         // =====================================================
 
+        // Refresh agar isi model terupdate dari database
+        $perBulan->refresh();
+
         // Hitung jumlah file lengkap
         $uploaded = collect([
             $perBulan->daftar_gaji_path,
@@ -168,12 +218,12 @@ class PerBulanController extends Controller
             $perBulan->ceklist_berkas,
         ])->filter()->count();
 
-        // Tentukan status otomatis
+        // Jika file belum lengkap → status otomatis "belum lengkap"
         if ($uploaded < 4) {
-            // FILE BELUM LENGKAP
             $perBulan->status = 'belum lengkap';
-        } else {
-            // FILE LENGKAP → pakai input admin
+        }
+        // Jika file lengkap → gunakan pilihan admin (menunggu / diterima / ditolak)
+        else {
             $perBulan->status = $request->status;
         }
 
