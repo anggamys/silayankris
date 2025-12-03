@@ -30,12 +30,23 @@
                                 ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
                                 ->toArray();
                         @endphp
-                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions"
-                            :selected="old('guru_id')" dropdownClass="flex-fill" required />
+                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"
+                            dropdownClass="flex-fill" required />
                         @error('guru_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
+
+                {{-- Periode --}}
+                <div class="mb-3">
+                    <label for="periode_per_bulan" class="form-label">Periode Per-Bulan</label>
+                    <input type="month" name="periode_per_bulan" id="periode_per_bulan" class="form-control" required
+                        min="{{ now()->subMonths(35)->format('Y-m') }}" max="{{ now()->format('Y-m') }}"
+                        value="{{ old('periode_per_bulan') }}">
+                    @error('periode_per_bulan')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 {{-- Daftar Gaji --}}
@@ -87,6 +98,7 @@
                         'menunggu' => 'Menunggu',
                         'diterima' => 'Diterima',
                         'ditolak' => 'Ditolak',
+                        'belum lengkap' => 'Belum Lengkap',
                     ]"
                         placeholder="Pilih Status" :selected="old('status')" :searchable="false" required />
                     @error('status')

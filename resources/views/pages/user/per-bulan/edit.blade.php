@@ -48,16 +48,16 @@
         @endphp
 
         {{-- HEADER UTAMA --}}
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-6">
             <h4 class="fw-bold">
                 Detail Berkas Per-bulan
-                <span class="text-muted">
-                    {{ \Carbon\Carbon::create($perBulan->tahun, $perBulan->bulan, 1)->translatedFormat('(F Y)') }}
+                <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2 text-muted">
+                    {{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('(F Y)') }}
                 </span>
             </h4>
 
             <a href="{{ route('user.perbulan.index') }}" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Kembali
+                <i class="bi bi-arrow-left"></i> Batal
             </a>
         </div>
 
@@ -164,8 +164,7 @@
 
             <div class="card-body">
                 <input type="text" class="form-control"
-                    value="{{ \Carbon\Carbon::create($perBulan->tahun, $perBulan->bulan, 1)->translatedFormat('F Y') }}"
-                    readonly>
+                    value="{{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('F Y') }}" readonly>
             </div>
         </div>
 
@@ -187,6 +186,7 @@
                             'Daftar Gaji' => $perBulan->daftar_gaji_path,
                             'Daftar Hadir' => $perBulan->daftar_hadir_path,
                             'Rekening Bank' => $perBulan->rekening_bank_path,
+                            'Ceklist Berkas' => $perBulan->ceklist_berkas,
                         ];
                     @endphp
 
@@ -290,6 +290,8 @@
 
                 </div>
             </div>
+
+        </form>
 
     </div>
 

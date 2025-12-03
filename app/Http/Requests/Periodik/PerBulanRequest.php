@@ -42,7 +42,7 @@ class PerBulanRequest extends FormRequest
         } else {
             // Untuk admin atau pemanggil lain, harus menyertakan guru_id dan status secara eksplisit.
             $rules['guru_id'] = ['required', 'exists:gurus,id'];
-            $rules['status'] = ['required', 'in:menunggu,diterima,ditolak,belum lengkap'];
+            $rules['status'] = ['nullable', 'in:menunggu,diterima,ditolak,belum lengkap'];
         }
 
         return $rules;
