@@ -42,15 +42,15 @@
 
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover">
-                        <thead class="table-light">
+                        <thead class="table-hover">
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Periode</th>
-                                <th>Progress</th>
                                 <th>Tanggal Pengajuan</th>
+                                <th>Progress Upload</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
 
@@ -65,9 +65,9 @@
                                         $item->ceklist_berkas,
                                     ];
                                     $uploaded = collect($fields)->filter()->count();
-                                    $total = 4;
-                                    $progress = ($uploaded / $total) * 100;
-                                    $isIncomplete = $uploaded < $total;
+                                    $filesTotal = 4;
+                                    $progress = ($uploaded / $filesTotal) * 100;
+                                    $isIncomplete = $uploaded < $filesTotal;
                                 @endphp
 
                                 <tr>
@@ -80,12 +80,15 @@
 
                                     {{-- PERIODE --}}
                                     <td>
-                                        @if ($item->bulan && $item->tahun)
-                                            {{ \Carbon\Carbon::create($item->tahun, $item->bulan, 1)->translatedFormat('F Y') }}
+                                        @if ($item->periode_per_bulan)
+                                            {{ \Carbon\Carbon::parse($item->periode_per_bulan)->translatedFormat('F Y') }}
                                         @else
                                             -
                                         @endif
                                     </td>
+
+                                    {{-- TANGGAL --}}
+                                    <td>{{ $item->created_at->format('d M Y') }}</td>
 
                                     {{-- PROGRESS --}}
                                     <td style="min-width: 60px;">
@@ -96,11 +99,8 @@
                             @else bg-danger @endif"
                                                 style="width: {{ $progress }}%;"></div>
                                         </div>
-                                        <small class="text-muted">{{ $uploaded }}/{{ $total }}</small>
+                                        <small class="text-muted">{{ $uploaded }}/{{ $filesTotal }}</small>
                                     </td>
-
-                                    {{-- TANGGAL --}}
-                                    <td>{{ $item->created_at->format('d M Y') }}</td>
 
                                     {{-- STATUS --}}
                                     <td>
@@ -147,11 +147,12 @@
                     </table>
                 </div>
 
+                {{-- Pagination --}}
                 <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
                     <div class="small text-muted">
                         Halaman <strong>{{ $currentPage }}</strong> dari <strong>{{ $lastPage }}</strong><br>
-                        Menampilkan <strong>{{ $perPage }}</strong> data dari <strong>{{ $total }}</strong>
-                        berkas
+                        Menampilkan <strong>{{ $perPage }}</strong> per halaman (total
+                        <strong>{{ $total }}</strong> periode bulanan)
                     </div>
                     <div>
                         {{ $items->links() }}

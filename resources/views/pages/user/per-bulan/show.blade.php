@@ -51,8 +51,8 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold">
                 Detail Berkas Per-bulan
-                <span class="text-muted">
-                    {{ \Carbon\Carbon::create($perBulan->tahun, $perBulan->bulan, 1)->translatedFormat('(F Y)') }}
+                <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2 text-muted">
+                    {{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('(F Y)') }}
                 </span>
             </h4>
 
@@ -160,11 +160,9 @@
             <div class="card-header bg-white border-0">
                 <h5 class="fw-semibold mb-0">Periode Per-bulan</h5>
             </div>
-
             <div class="card-body">
                 <input type="text" class="form-control"
-                    value="{{ \Carbon\Carbon::create($perBulan->tahun, $perBulan->bulan, 1)->translatedFormat('F Y') }}"
-                    readonly>
+                    value="{{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('F Y') }}" readonly>
             </div>
         </div>
 

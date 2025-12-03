@@ -71,15 +71,32 @@ class PerBulanController extends Controller
 
         $user = Auth::user();
 
-        // Jika pengguna admin, set pemilik berkas sebagai user milik guru yang dipilih
         if ($user->role === User::ROLE_ADMIN) {
             $guru = Guru::findOrFail($request['guru_id']);
-            $user = $guru->user ?? $user; // pass the related User model to the service, fallback to current user
+            $user = $guru->user ?? $user;
         }
 
-        $this->service->store($request->all(), $user);
+        // Use validated data and include uploaded files so the service
+        // receives UploadedFile instances (prevents saving temp php*.tmp names).
+        $data = $request->validated();
+
+        // Merge uploaded files into data array if present
+        foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
+            if ($request->hasFile($fileKey)) {
+                $data[$fileKey] = $request->file($fileKey);
+            }
+        }
+
+        // FIX format periode (YYYY-MM → YYYY-MM-01)
+        if (!empty($data['periode_per_bulan']) && strlen($data['periode_per_bulan']) === 7) {
+            $data['periode_per_bulan'] .= '-01';
+        }
+
+        $this->service->store($data, $user);
+
         return redirect()->route('admin.per-bulan.index')->with('success', 'Data per bulan berhasil disimpan');
     }
+
 
     /**
      * Display the specified resource.
@@ -123,14 +140,49 @@ class PerBulanController extends Controller
         // Jika admin, data akan dimiliki oleh user milik guru yang dipilih
         if ($user->role === User::ROLE_ADMIN) {
             $guru = Guru::findOrFail($request['guru_id']);
-            $user = $guru->user ?? $user; // pass the related User model to the service, fallback to current user
+            $user = $guru->user ?? $user;
         }
 
-        $this->service->update($request->all(), $perBulan, $user);
+        // Ambil data validasi
+        $data = $request->validated();
+
+        // Gabungkan file upload
+        foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
+            if ($request->hasFile($fileKey)) {
+                $data[$fileKey] = $request->file($fileKey);
+            }
+        }
+
+        // Update berkas & data lain
+        $this->service->update($data, $perBulan, $user);
+
+        // =====================================================
+        // LOGIKA STATUS DINAMIS (BERDASARKAN KELENGKAPAN FILE)
+        // =====================================================
+
+        // Hitung jumlah file lengkap
+        $uploaded = collect([
+            $perBulan->daftar_gaji_path,
+            $perBulan->daftar_hadir_path,
+            $perBulan->rekening_bank_path,
+            $perBulan->ceklist_berkas,
+        ])->filter()->count();
+
+        // Tentukan status otomatis
+        if ($uploaded < 4) {
+            // FILE BELUM LENGKAP
+            $perBulan->status = 'belum lengkap';
+        } else {
+            // FILE LENGKAP → pakai input admin
+            $perBulan->status = $request->status;
+        }
+
+        $perBulan->save();
 
         return redirect()->route('admin.per-bulan.index')
             ->with('success', 'Data per bulan berhasil diperbarui');
     }
+
 
     /**
      * Remove the specified resource from storage.

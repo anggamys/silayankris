@@ -27,10 +27,17 @@ class PerBulanService
 
   public function store(array $data, User $user)
   {
+
+    // Normalisasi format bulan (YYYY-MM → YYYY-MM-01)
+    if (!empty($data['periode_per_bulan']) && strlen($data['periode_per_bulan']) === 7) {
+        $data['periode_per_bulan'] .= '-01';
+    }
+
     $paths = [
       'daftar_gaji_path' => 'daftar_gaji',
       'daftar_hadir_path' => 'daftar_hadir',
       'rekening_bank_path' => 'rekening_bank',
+      'ceklist_berkas' => 'ceklist_berkas',
     ];
 
     foreach ($paths as $key => $type) {
@@ -50,10 +57,16 @@ class PerBulanService
 
   public function update(array $data, PerBulan $perBulan, User $user)
   {
+        // Normalisasi format bulan (YYYY-MM → YYYY-MM-01)
+    if (!empty($data['periode_per_bulan']) && strlen($data['periode_per_bulan']) === 7) {
+        $data['periode_per_bulan'] .= '-01';
+    }
+
     $paths = [
       'daftar_gaji_path' => 'daftar_gaji',
       'daftar_hadir_path' => 'daftar_hadir',
       'rekening_bank_path' => 'rekening_bank',
+      'ceklist_berkas' => 'ceklist_berkas',
     ];
 
     foreach ($paths as $key => $type) {
@@ -83,6 +96,7 @@ class PerBulanService
       'daftar_gaji_path',
       'daftar_hadir_path',
       'rekening_bank_path',
+      'ceklist_berkas',
     ];
 
     foreach ($paths as $path) {

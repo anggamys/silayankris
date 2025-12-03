@@ -97,11 +97,6 @@ class PerBulanUserController extends Controller
             // Set guru_id
             $validated['guru_id'] = $guru->id;
 
-            // Convert periode YYYY-MM => YYYY-MM-01
-            if (!empty($validated['periode_per_bulan'])) {
-                $validated['periode_per_bulan'] = $validated['periode_per_bulan'] . '-01';
-            }
-
             // Tentukan status awal (lengkap / belum lengkap)
             $files = [
                 $validated['daftar_gaji_path'] ?? null,
@@ -113,6 +108,14 @@ class PerBulanUserController extends Controller
             $validated['status'] = in_array(null, $files)
                 ? 'belum lengkap'
                 : 'menunggu';
+
+            // Merge UploadedFile instances into validated data so the service
+            // receives real UploadedFile objects instead of PHP temp names.
+            foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
+                if ($request->hasFile($fileKey)) {
+                    $validated[$fileKey] = $request->file($fileKey);
+                }
+            }
 
             $this->service->store($validated, $user);
 

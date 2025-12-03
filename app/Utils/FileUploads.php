@@ -57,7 +57,7 @@ class FileUploads
     return $filePath;
   }
 
-  public static function delete(string $path, bool $localDelete = false)
+  public static function delete(?string $path, bool $localDelete = false)
   {
     if (empty($path)) {
       return;
