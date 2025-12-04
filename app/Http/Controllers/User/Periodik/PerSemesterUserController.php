@@ -217,11 +217,34 @@ class PerSemesterUserController extends Controller
         }
 
         try {
-            // Merge uploaded files into the input array because $request->all()
-            // does not include UploadedFile instances on some setups.
-            $data = array_merge($request->all(), $request->files->all());
+            $data = $request->only([
+                'sk_pbm_path',
+                'sk_terakhir_path',
+                'sk_berkala_path',
+                'sp_bersedia_mengembalikan_path',
+                'sp_kebenaran_berkas_path',
+                'sp_perangkat_pembelajaran_path',
+                'keaktifan_simpatika_path',
+                'berkas_s28a_path',
+                'berkas_skmt_path',
+                'permohonan_skbk_path',
+                'berkas_skbk_path',
+                'sertifikat_pengembangan_diri_path',
+            ]);
+
+            // pastikan hanya upload file yang valid
+            foreach ($data as $key => $value) {
+                if ($request->hasFile($key)) {
+                    unset($data[$key]); // jangan sampai string temp file ikut
+                } else {
+                    $data[$key] = $request->file($key);
+                }
+            }
 
             $this->service->update($data, $perSemester, Auth::user());
+
+            // Refresh model so we read updated file paths saved by the service
+            $perSemester->refresh();
 
             // CEK KELENGKAPAN BARU SETELAH UPDATE
             $fields = [
