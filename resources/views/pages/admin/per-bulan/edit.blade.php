@@ -75,6 +75,11 @@
                         <span class="badge {{ $statusBadgeClass }} px-3 py-2 text-capitalize">
                             {{ $perBulan->status }}
                         </span>
+
+                        <div class="mt-3">
+                            <label class="form-label">Catatan Admin</label>
+                            <textarea class="form-control" rows="3" readonly>{{ $perBulan->catatan ?? '-' }}</textarea>
+                        </div>
                     </div>
                 </div>
 
@@ -90,7 +95,7 @@
                 <div class="mb-3">
                     <label for="periode_per_bulan" class="form-label">Periode (Bulan)</label>
                     <input type="month" id="periode_per_bulan" name="periode_per_bulan" class="form-control"
-                        value="{{ old('periode_per_bulan', substr($perBulan->periode_per_bulan, 0, 7)) }}" required>
+                        value="{{ substr($perBulan->periode_per_bulan, 0, 7) }}" readonly>
                 </div>
 
                 {{-- File Uploads --}}
@@ -103,7 +108,8 @@
                     <div class="mb-3">
                         <label class="form-label">{{ $label }} (File)</label>
 
-                        <input type="file" id="{{ $field }}" name="{{ $field }}" class="form-control" accept=".pdf">
+                        <input type="file" id="{{ $field }}" name="{{ $field }}" class="form-control"
+                            accept=".pdf">
 
                         <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
                             @if ($perBulan->$field)
@@ -122,28 +128,31 @@
                 @endforeach
 
 
-                {{-- Status --}}
+                {{-- STATUS --}}
                 <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
+                    <label class="form-label">Status</label>
 
                     @if ($uploaded < 4)
+                        {{-- Kalau file di DATABASE belum lengkap, status disable --}}
                         <x-select-input id="status" name="status" :options="['belum lengkap' => 'Belum Lengkap']" :selected="$perBulan->status" :searchable="false"
                             disabled />
 
-                        <small class="text-muted">
-                            Status <strong>Belum Lengkap</strong>. Silakan lengkapi berkas terlebih dahulu dan <strong>Simpan</strong>.
-                        </small>
-
                         <input type="hidden" name="status" value="belum lengkap">
+
+                        <small class="text-muted">
+                            Lengkapi seluruh file lalu klik <strong>Simpan</strong> untuk bisa mengubah status.
+                        </small>
                     @else
+                        {{-- Jika FILE di DB sudah lengkap, barulah admin boleh ubah status --}}
                         <x-select-input id="status" name="status" :options="[
                             'menunggu' => 'Menunggu',
                             'diterima' => 'Diterima',
                             'ditolak' => 'Ditolak',
-                        ]" placeholder="Pilih Status"
-                            :selected="old('status', $perBulan->status)" :searchable="false" required />
+                        ]" :selected="old('status', $perBulan->status)"
+                            placeholder="Pilih Status" :searchable="false" required />
                     @endif
                 </div>
+
 
                 {{-- Catatan --}}
                 <div class="mb-3">
@@ -193,32 +202,14 @@
                 document.getElementById('ceklist_berkas'),
             ];
 
-            const statusSelect = document.querySelector('[name="status"]');
-            const statusPlaceholder = statusSelect.closest('.mb-3').querySelector('small');
-
-            function checkFiles() {
-                let filled = fileInputs.filter(i => i.files.length > 0).length;
-
-                if (filled < 4) {
-                    statusSelect.innerHTML = `<option value="belum lengkap">Belum Lengkap</option>`;
-                    statusSelect.value = "belum lengkap";
-                    statusSelect.setAttribute("disabled", true);
-                    if (statusPlaceholder) {
-                        statusPlaceholder.innerHTML =
-                            "Status otomatis menjadi <strong>Belum Lengkap</strong> karena file belum lengkap.";
-                    }
-                } else {
-                    statusSelect.removeAttribute("disabled");
-                    statusSelect.innerHTML = `
-                <option value="menunggu">Menunggu</option>
-                <option value="diterima">Diterima</option>
-                <option value="ditolak">Ditolak</option>
-            `;
-                    if (statusPlaceholder) statusPlaceholder.textContent = "";
-                }
-            }
-
-            fileInputs.forEach(input => input.addEventListener('change', checkFiles));
+            // The custom select component uses a hidden input with name="status" and
+            // a visible button with id="btn-status". We must not treat the hidden
+            // input as a <select>. Instead, update its value and enable/disable the
+            // visible button so the hidden input is still submitted.
+            const hiddenStatusInput = document.querySelector('[name="status"]');
+            const statusButton = document.getElementById('btn-status');
+            const statusWrapper = hiddenStatusInput ? hiddenStatusInput.closest('.mb-3') : null;
+            const statusPlaceholder = statusWrapper ? statusWrapper.querySelector('small') : null;
 
         });
     </script>

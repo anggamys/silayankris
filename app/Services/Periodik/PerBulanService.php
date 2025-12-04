@@ -12,17 +12,71 @@ class PerBulanService
 
   public function getAll(?string $search = null)
   {
-    $query = PerBulan::query()
-      ->with('guru.user');
-    if ($search) {
-      $query->where(function ($q) use ($search) {
-        $q->WhereHas('guru.user', function ($q2) use ($search) {
-          $q2->where('name', 'like', "%$search%");
-        });
-      });
-    }
-    return $query->orderByDesc('updated_at')
-      ->paginate(10)->withQueryString();
+      $query = PerBulan::with('guru.user');
+
+      if ($search) {
+          $searchLower = strtolower($search);
+
+          $query->where(function ($q) use ($searchLower) {
+
+              // =========================================================
+              // 1. Nama Guru
+              // =========================================================
+              $q->whereHas('guru.user', function ($u) use ($searchLower) {
+                  $u->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
+              })
+
+              // =========================================================
+              // 2. Periode (raw: YYYY-MM-01)
+              // =========================================================
+              ->orWhereRaw("LOWER(periode_per_bulan) LIKE ?", ["%{$searchLower}%"])
+
+              // =========================================================
+              // 3. Nama bulan Inggris (June 2025) 
+              // =========================================================
+              ->orWhereRaw("LOWER(DATE_FORMAT(periode_per_bulan, '%M %Y')) LIKE ?", ["%{$searchLower}%"])
+
+              // =========================================================
+              // 4. Bulan angka (06-2025, 6-2025)
+              // =========================================================
+              ->orWhereRaw("DATE_FORMAT(periode_per_bulan, '%m-%Y') LIKE ?", ["%{$searchLower}%"])
+              ->orWhereRaw("DATE_FORMAT(periode_per_bulan, '%c-%Y') LIKE ?", ["%{$searchLower}%"])
+
+              // =========================================================
+              // 5. Status
+              // =========================================================
+              ->orWhereRaw("LOWER(status) LIKE ?", ["%{$searchLower}%"])
+
+              // =========================================================
+              // 6. Tanggal dibuat (03 Dec 2025)
+              // =========================================================
+              ->orWhereRaw("LOWER(DATE_FORMAT(created_at, '%d %M %Y')) LIKE ?", ["%{$searchLower}%"])
+
+              // Support format lain seperti "03 dec", "3 dec"
+              ->orWhereRaw("LOWER(DATE_FORMAT(created_at, '%d %b %Y')) LIKE ?", ["%{$searchLower}%"])
+
+              // =========================================================
+              // 7. Progress Upload (misal: "3/4", "4/4")
+              // =========================================================
+              ->orWhere(function ($q2) use ($searchLower) {
+                  $q2->whereRaw("
+                      CONCAT(
+                          (daftar_gaji_path IS NOT NULL) +
+                          (daftar_hadir_path IS NOT NULL) +
+                          (rekening_bank_path IS NOT NULL) +
+                          (ceklist_berkas IS NOT NULL),
+                          '/',
+                          4
+                      ) LIKE ?
+                  ", ["%{$searchLower}%"]);
+              });
+          });
+      }
+
+      return $query
+          ->orderByDesc('periode_per_bulan')
+          ->paginate(10)
+          ->withQueryString();
   }
 
   public function store(array $data, User $user)
