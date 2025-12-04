@@ -24,7 +24,7 @@ class PerBulanRequest extends FormRequest
     {
         $rules = [
             // Accept year-month format from the HTML month input (e.g. 2025-12)
-            'periode_per_bulan' => ['required', 'date_format:Y-m'],
+            'periode_per_bulan' => ['sometimes', 'date_format:Y-m'],
             'daftar_gaji_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'daftar_hadir_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'rekening_bank_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb

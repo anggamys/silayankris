@@ -193,12 +193,20 @@ class PerBulanController extends Controller
         // Ambil data validasi
         $data = $request->validated();
 
-        // Upload file baru jika ada
-        foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
-            if ($request->hasFile($fileKey)) {
-                $data[$fileKey] = $request->file($fileKey);
+        // Masukkan UploadedFile ke data
+        foreach (['daftar_gaji_path','daftar_hadir_path','rekening_bank_path','ceklist_berkas'] as $key) {
+            if ($request->hasFile($key)) {
+
+                // masukkan UploadedFile ke $data
+                $data[$key] = $request->file($key);
+
+            } else {
+
+                // Jangan override file lama dengan null
+                unset($data[$key]);
             }
         }
+
 
         // Update data & file
         $this->service->update($data, $perBulan, $user);
