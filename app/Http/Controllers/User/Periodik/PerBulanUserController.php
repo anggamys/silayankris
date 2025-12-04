@@ -184,11 +184,28 @@ class PerBulanUserController extends Controller
         }
 
         try {
-            // Merge uploaded files into the input array because $request->all()
-            // does not include UploadedFile instances on some setups.
-            $data = array_merge($request->all(), $request->files->all());
+            $data = $request->only([
+                'daftar_gaji_path',
+                'daftar_hadir_path',
+                'rekening_bank_path',
+                'ceklist_berkas',
+                'catatan'
+            ]);
+
+            // pastikan hanya upload file yang valid
+            foreach ($data as $key => $value) {
+                if (!$request->hasFile($key)) {
+                    unset($data[$key]); // jangan sampai string temp file ikut
+                } else {
+                    $data[$key] = $request->file($key);
+                }
+            }
+
 
             $this->service->update($data, $perBulan, Auth::user());
+
+            // Refresh model so we read updated file paths saved by the service
+            $perBulan->refresh();
 
             // CEK KELENGKAPAN BARU SETELAH UPDATE
             $fields = [
