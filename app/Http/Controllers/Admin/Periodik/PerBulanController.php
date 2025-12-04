@@ -170,10 +170,8 @@ class PerBulanController extends Controller
                 'belum lengkap' => 'Belum Lengkap',
             ];
 
-        // Kirim ke Blade
         return view('pages.admin.per-bulan.edit', compact('perBulan', 'gurus', 'statusOptions'));
     }
-
 
     /**
      * Update the specified resource in storage.

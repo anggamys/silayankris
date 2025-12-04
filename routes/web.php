@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\LokasiController;
 use App\Http\Controllers\Admin\SekolahController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\Periodik\PerBulanUserController;
+use App\Http\Controllers\User\Periodik\PerSemesterUserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
@@ -74,6 +75,19 @@ Route::middleware(['auth'])
         Route::match(['put', 'patch'], '/{perBulan}', [PerBulanUserController::class, 'update'])->name('update');
     });
 
+// Resourceful routes for PerSemester for users
+Route::middleware(['auth'])
+    ->prefix('user/persemester')
+    ->as('user.persemester.')
+    ->group(function () {   
+        Route::get('/', [PerSemesterUserController::class, 'index'])->name('index');
+        Route::get('/create', [PerSemesterUserController::class, 'create'])->name('create');
+        Route::post('/', [PerSemesterUserController::class, 'store'])->name('store');
+        Route::get('/{perSemester}', [PerSemesterUserController::class, 'show'])->name('show');
+        // Allow users to edit their incomplete submissions and submit revisions
+        Route::get('/{perSemester}/edit', [PerSemesterUserController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{perSemester}', [PerSemesterUserController::class, 'update'])->name('update');
+    });
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/gdrive.php';

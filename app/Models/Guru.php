@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Sekolah;
 use App\Models\PerBulan;
+use App\Models\PerSemester;
 
 class Guru extends Model
 {
@@ -56,5 +57,13 @@ class Guru extends Model
     public function perBulans()
     {
         return $this->hasMany(PerBulan::class, 'guru_id');
+    }
+
+    /**
+     * Relasi: satu guru punya banyak PerSemester (berkas semester).
+     */
+    public function perSemesters()
+    {
+        return $this->hasMany(PerSemester::class, 'guru_id');
     }
 }

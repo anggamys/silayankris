@@ -131,7 +131,7 @@
                         <ul class="dropdown-menu">
                             @if (auth()->user()->role == 'guru')
                                 <li><a class="dropdown-item" href="{{ route('user.perbulan.index') }}">Berkas Perbulan</a></li>
-                                <li><a class="dropdown-item" href="/layanan/a">Berkas Persemester</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.persemester.index') }}">Berkas Persemester</a></li>
                                 <li><a class="dropdown-item" href="/layanan/a">Berkas Pertahun</a></li>
                             @endif
                             @if (auth()->user()->role == 'staff-gereja')
