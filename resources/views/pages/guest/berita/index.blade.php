@@ -4,16 +4,17 @@
 
 {{-- Landing Page --}}
 @section('content')
-<style>
-    .hover-item:hover .hover-link {
-        color: #008080 !important; /* biru elegan */
-        transform: translateX(3px);
-    }
+    <style>
+        .hover-item:hover .hover-link {
+            color: #008080 !important;
+            /* biru elegan */
+            transform: translateX(3px);
+        }
 
-    .hover-item:hover {
-        opacity: 0.9;
-    }
-</style>
+        .hover-item:hover {
+            opacity: 0.9;
+        }
+    </style>
 
     <div class="container-fluid  py-4 bg-primary text-light">
         <div class="container pb-3 ">
@@ -39,7 +40,8 @@
                     </div>
 
                     <a href="{{ url()->current() }}"
-                        class="btn btn-lg  btn-outline-secondary border d-flex align-items-center gap-1">
+                        class="btn btn-secondary border d-flex align-items-center justify-content-center {{ request('search') ? '' : 'd-none' }}"
+                        style="height:50px; min-width:48px; padding:0 12px;">
                         <i class="bi bi-arrow-counterclockwise"></i>
                     </a>
                 </form>
@@ -116,7 +118,8 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class="card-body p-0">
-                                    <a href="{{ route('berita.show', $item->slug) }}" class="text-decoration-none news-title card-title h5">
+                                    <a href="{{ route('berita.show', $item->slug) }}"
+                                        class="text-decoration-none news-title card-title h5">
                                         {{ Str::limit($item->judul, 50, '...') }}
                                     </a>
                                     <p class="card-text mt-2">{{ Str::limit($item->isi, 150, '...') }}</p>
@@ -142,33 +145,32 @@
 
             </div>
 
-           <div class="col-md-3">
-    <div class="card border-0 shadow-sm p-3" style="border-radius: 12px; background: #f8f9fa;">
-        <h5 class="fw-bold mb-3 pb-2 border-bottom">
-            Rekomendasi Berita
-        </h5>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3" style="border-radius: 12px; background: #f8f9fa;">
+                    <h5 class="fw-bold mb-3 pb-2 border-bottom">
+                        Rekomendasi Berita
+                    </h5>
 
-        <div class="d-flex flex-column gap-3">
+                    <div class="d-flex flex-column gap-3">
 
-            @foreach ($randomBerita as $item)
-                <div class="d-flex align-items-start rounded hover-item"
-                    style="transition: .2s; cursor: pointer;">
+                        @foreach ($randomBerita as $item)
+                            <div class="d-flex align-items-start rounded hover-item"
+                                style="transition: .2s; cursor: pointer;">
 
-                    <span class="fw-bold text-primary me-3 fs-4" style="line-height: 1;">
-                        {{ $loop->iteration }}
-                    </span>
+                                <span class="fw-bold text-primary me-3 fs-4" style="line-height: 1;">
+                                    {{ $loop->iteration }}
+                                </span>
 
-                    <a href="{{ route('berita.show', $item->slug) }}"
-                        class="text-dark text-decoration-none fw-medium hover-link"
-                        style="transition: .2s;">
-                        {{ $item->judul }}
-                    </a>
+                                <a href="{{ route('berita.show', $item->slug) }}"
+                                    class="text-dark text-decoration-none fw-medium hover-link" style="transition: .2s;">
+                                    {{ $item->judul }}
+                                </a>
+                            </div>
+                        @endforeach
+
+                    </div>
                 </div>
-            @endforeach
-
-        </div>
-    </div>
-</div>
+            </div>
 
         </div>
 

@@ -39,7 +39,6 @@
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-body p-4">
-
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover">
                         <thead class="table-hover">

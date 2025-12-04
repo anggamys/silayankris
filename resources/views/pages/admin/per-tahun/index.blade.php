@@ -11,19 +11,31 @@
 
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 mb-2">
-            <h5 class="card-title fw-semibold">Daftar Data Periode Tahunan</h5>
+            <h5 class="card-title fw-semibold">Daftar Data Periode Per-tahun</h5>
 
             <div class="row g-2 align-items-center">
 
+                <!-- Search -->
                 <div class="col-12 col-md-6">
-                    <form method="GET" class="input-group w-100">
-                        <span class="input-group-text"><i class="bx bx-search"></i></span>
-                        <input type="text" name="search" value="{{ $search }}" class="form-control border-end-1"
-                            placeholder="Cari...">
-                        <button class="btn btn-outline-secondary border" type="submit">Cari</button>
+                    <form method="GET" class="w-100 d-flex align-items-center gap-2">
+                        {{-- 🔍 Input pencarian --}}
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bx bx-search"></i></span>
+                            <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
+                                placeholder="Cari...">
+                            <button class="btn btn-outline-secondary border" type="submit">Cari</button>
+                        </div>
+
+                        <a href="{{ url()->current() }}"
+                            class="btn btn-secondary border d-flex align-items-center gap-1
+          {{ request('search') ? '' : 'd-none' }}">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span>Reset</span>
+                        </a>
                     </form>
                 </div>
 
+                <!-- Button tambah -->
                 <div class="col-12 col-md-auto ms-md-auto text-md-end">
                     <a href="{{ route('admin.per-tahun.create') }}" class="btn btn-primary w-100 w-md-auto">
                         <i class="bi bi-plus-lg me-1"></i> Tambah Baru
@@ -57,7 +69,7 @@
                                         $isIncomplete =
                                             !$item->biodata_path ||
                                             !$item->sertifikat_pendidik_path ||
-                                            !$item->sk_dirjen_path||
+                                            !$item->sk_dirjen_path ||
                                             !$item->sk_kelulusan_path ||
                                             !$item->nrg_path ||
                                             !$item->nuptk_path ||

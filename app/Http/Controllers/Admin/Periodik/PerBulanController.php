@@ -193,24 +193,20 @@ class PerBulanController extends Controller
         // Ambil data validasi
         $data = $request->validated();
 
-        // Gabungkan file upload
+        // Upload file baru jika ada
         foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $data[$fileKey] = $request->file($fileKey);
             }
         }
 
-        // Update berkas & data lain
+        // Update data & file
         $this->service->update($data, $perBulan, $user);
 
-        // =====================================================
-        // LOGIKA STATUS DINAMIS (BERDASARKAN KELENGKAPAN FILE)
-        // =====================================================
-
-        // Refresh agar isi model terupdate dari database
+        // Refresh agar data terbaru terbaca (khususnya path file)
         $perBulan->refresh();
 
-        // Hitung jumlah file lengkap
+        // Hitung file yang sudah lengkap
         $uploaded = collect([
             $perBulan->daftar_gaji_path,
             $perBulan->daftar_hadir_path,
@@ -218,13 +214,37 @@ class PerBulanController extends Controller
             $perBulan->ceklist_berkas,
         ])->filter()->count();
 
-        // Jika file belum lengkap → status otomatis "belum lengkap"
+        /*
+        |--------------------------------------------------------------------------
+        | LOGIKA STATUS OTOMATIS — FINAL
+        |--------------------------------------------------------------------------
+        |
+        | 1. Jika file < 4 → status = "belum lengkap"
+        | 2. Jika file lengkap dan admin belum memilih status (karena dropdown
+        |    disable), maka status otomatis "diterima"
+        | 3. Jika file lengkap dan admin memilih manual, gunakan status pilihan admin
+        |
+        */
+
         if ($uploaded < 4) {
+            // File belum lengkap → fix
             $perBulan->status = 'belum lengkap';
-        }
-        // Jika file lengkap → gunakan pilihan admin (menunggu / diterima / ditolak)
-        else {
-            $perBulan->status = $request->status;
+        } else {
+            // File lengkap → cek apakah admin pilih status atau tidak
+            $requestedStatus = $request->status;
+
+            // Jika request membawa "belum lengkap", itu berasal dari input hidden
+            $isAutoHidden = ($requestedStatus === "belum lengkap");
+
+            if ($isAutoHidden) {
+                // Jika sebelumnya status belum pernah final → auto diterima
+                if (!in_array($perBulan->status, ['diterima', 'ditolak', 'menunggu'])) {
+                    $perBulan->status = 'diterima';
+                }
+            } else {
+                // Admin memilih status secara manual
+                $perBulan->status = $requestedStatus;
+            }
         }
 
         $perBulan->save();

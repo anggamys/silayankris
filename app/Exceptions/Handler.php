@@ -16,19 +16,19 @@ class Handler extends ExceptionHandler
 {
   public function render($request, Throwable $e)
   {
-    Log::error('Exception caught', [
-      'error' => $e->getMessage(),
-      'trace' => $e->getTraceAsString(),
-      'url' => $request->fullUrl(),
-      'input' => $request->all(),
-    ]);
+      Log::error('Exception caught', [
+          'error' => $e->getMessage(),
+          'trace' => $e->getTraceAsString(),
+          'url' => $request->fullUrl(),
+          'input' => $request->all(),
+      ]);
 
-    if ($request->expectsJson()) {
-      // Handle JSON/API error responses
-      return $this->renderJson($e);
-    }
+      // Gunakan wantsJson untuk akurat, dan cek hanya API route
+      if ($request->is('api/*') || $request->wantsJson()) {
+          return $this->renderJson($e);
+      }
 
-    return parent::render($request, $e);
+      return parent::render($request, $e);
   }
 
   protected function renderJson(Throwable $e)
