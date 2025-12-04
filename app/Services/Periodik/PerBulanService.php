@@ -111,36 +111,43 @@ class PerBulanService
 
   public function update(array $data, PerBulan $perBulan, User $user)
   {
-        // Normalisasi format bulan (YYYY-MM → YYYY-MM-01)
-    if (!empty($data['periode_per_bulan']) && strlen($data['periode_per_bulan']) === 7) {
-        $data['periode_per_bulan'] .= '-01';
-    }
-
-    $paths = [
-      'daftar_gaji_path' => 'daftar_gaji',
-      'daftar_hadir_path' => 'daftar_hadir',
-      'rekening_bank_path' => 'rekening_bank',
-      'ceklist_berkas' => 'ceklist_berkas',
-    ];
-
-    foreach ($paths as $key => $type) {
-      if (!empty($data[$key]) && $data[$key] instanceof UploadedFile) {
-        FileUploads::delete($perBulan->$key);
-
-        $data[$key] = FileUploads::upload(
-          $data[$key],
-          'periodik/perbulan',
-          $type,
-          $user->name
-        );
+      // Normalisasi format bulan (YYYY-MM → YYYY-MM-01)
+      if (!empty($data['periode_per_bulan']) && strlen($data['periode_per_bulan']) === 7) {
+          $data['periode_per_bulan'] .= '-01';
       }
-    }
 
-    // Update data di database
-    $perBulan->update($data);
+      $paths = [
+          'daftar_gaji_path' => 'daftar_gaji',
+          'daftar_hadir_path' => 'daftar_hadir',
+          'rekening_bank_path' => 'rekening_bank',
+          'ceklist_berkas' => 'ceklist_berkas',
+      ];
 
-    return $perBulan;
+      // Update file baru jika ada
+      foreach ($paths as $key => $type) {
 
+          if (isset($data[$key]) && $data[$key] instanceof UploadedFile) {
+
+              // hapus file lama
+              FileUploads::delete($perBulan->$key);
+
+              // upload baru
+              $data[$key] = FileUploads::upload(
+                  $data[$key],
+                  'periodik/perbulan',
+                  $type,
+                  $user->name
+              );
+          } else {
+              // pastikan tidak menimpa path di database
+              unset($data[$key]);
+          }
+      }
+
+      // Update database
+      $perBulan->update($data);
+
+      return $perBulan;
   }
 
   public function destroy(PerBulan $perBulan)
