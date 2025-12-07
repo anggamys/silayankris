@@ -1,12 +1,12 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Edit Data Periode Per Bulan')
+@section('title', 'Edit Data Periode Per-bulan')
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
-        <a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periode Per Bulan</a>
+        <a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periode Per-bulan</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Ubah Data Periode Per Bulan</li>
+    <li class="breadcrumb-item active" aria-current="page">Ubah Data Periode Per-bulan</li>
 @endsection
 
 @php
@@ -34,7 +34,10 @@
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Ubah Data Periode Per Bulan</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Ubah Data Periode Per-bulan<span
+                    class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">
+                    {{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('(F Y)') }}</span>
+            </h5>
             <a href="{{ route('admin.per-bulan.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
             </a>

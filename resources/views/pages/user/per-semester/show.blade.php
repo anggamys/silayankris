@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Berkas Per-Semester')
+@section('title', 'Detail Berkas Per-semester')
 
 @section('content')
 
@@ -10,15 +10,15 @@
             <span class="mx-2">></span>
             <a href="" class="text-dark fs-6 mb-0 text-decoration-none">Layanan</a>
             <span class="mx-2">></span>
-            <a href="/user/persemester" class="text-dark fs-6 mb-0 text-decoration-none">Upload Berkas Per-Semester</a>
+            <a href="/user/persemester" class="text-dark fs-6 mb-0 text-decoration-none">Upload Berkas Per-semester</a>
             <span class="mx-2">></span>
-            <span class="text-dark fs-6 mb-0">Detail Berkas Per-Semester</span>
+            <span class="text-dark fs-6 mb-0">Detail Berkas Per-semester</span>
         </div>
     </div>
 
     <div class="container-fluid  py-4 bg-primary text-light">
         <div class="container pb-3 ">
-            <h1 class="fw-bold mb-0">Detail Berkas Per-Semester</h1>
+            <h1 class="fw-bold mb-0">Detail Berkas Per-semester</h1>
             <p class="text-light fs-6 mb-0">Layanan Guru untuk melihat detail berkas per-semester</p>
         </div>
     </div>
@@ -51,20 +51,20 @@
                     'ditolak' => 'badge bg-label-danger',
                     'diterima' => 'badge bg-label-success',
                     'belum lengkap' => 'badge bg-label-secondary',
-                ][$perBulan->status] ?? 'badge bg-label-secondary';
+                ][$perSemester->status] ?? 'badge bg-label-secondary';
         @endphp
 
         {{-- HEADER UTAMA --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold">
-         Detail Berkas Per-Semester
-         <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">
-             {{ $perSemester->periode_per_semester }}
-         </span>
+                Detail Berkas Per-Semester
+                <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">
+                    ({{ $perSemester->periode_per_semester }})
+                </span>
             </h4>
 
             <a href="{{ route('user.persemester.index') }}" class="btn btn-secondary">
-         <i class="bi bi-arrow-left"></i> Kembali
+                <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>
 
@@ -72,7 +72,7 @@
         {{-- CARD: PROGRESS + STATUS --}}
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white border-0">
-         <h5 class="fw-semibold mb-0">Progress Pengajuan</h5>
+                <h5 class="fw-semibold mb-0">Progress Pengajuan</h5>
             </div>
 
             <div class="card-body">
@@ -95,14 +95,14 @@
                 {{-- STATUS --}}
                 <label class="form-label fw-semibold">Status Pengajuan</label><br>
                 <span class="badge {{ $statusBadgeClass }} px-3 py-2 text-capitalize">
-                    {{ $perBulan->status }}
+                    {{ $perSemester->status }}
                 </span>
 
                 {{-- CATATAN --}}
-                @if ($perBulan->catatan)
+                @if ($perSemester->catatan)
                     <div class="mt-3">
                         <label class="form-label">Catatan Admin</label>
-                        <textarea class="form-control" rows="3" readonly>{{ $perBulan->catatan }}</textarea>
+                        <textarea class="form-control" rows="3" readonly>{{ $perSemester->catatan }}</textarea>
                     </div>
                 @endif
 
@@ -122,35 +122,35 @@
 
                     <div class="col-md-4">
                         <label class="form-label">Nama</label>
-                        <input type="text" class="form-control" value="{{ $perBulan->guru->user->name }}" readonly>
+                        <input type="text" class="form-control" value="{{ $perSemester->guru->user->name }}" readonly>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label">NIP</label>
-                        <input type="text" class="form-control" value="{{ $perBulan->guru->nip }}" readonly>
+                        <input type="text" class="form-control" value="{{ $perSemester->guru->nip }}" readonly>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label">Nomor HP</label>
-                        <input type="text" class="form-control" value="{{ $perBulan->guru->user->nomor_telepon }}"
+                        <input type="text" class="form-control" value="{{ $perSemester->guru->user->nomor_telepon }}"
                             readonly>
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Tempat Lahir</label>
-                        <input type="text" class="form-control" value="{{ $perBulan->guru->tempat_lahir }}" readonly>
+                        <input type="text" class="form-control" value="{{ $perSemester->guru->tempat_lahir }}" readonly>
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Tanggal Lahir</label>
                         <input type="text" class="form-control"
-                            value="{{ $perBulan->guru->tanggal_lahir?->format('d F Y') }}" readonly>
+                            value="{{ $perSemester->guru->tanggal_lahir?->format('d F Y') }}" readonly>
                     </div>
 
                     <div class="col-12">
                         <label class="form-label">Asal Sekolah Induk</label>
-                        @if ($perBulan->guru && $perBulan->guru->sekolah && $perBulan->guru->sekolah->count())
-                            @foreach ($perBulan->guru->sekolah as $sekolah)
+                        @if ($perSemester->guru && $perSemester->guru->sekolah && $perSemester->guru->sekolah->count())
+                            @foreach ($perSemester->guru->sekolah as $sekolah)
                                 <input type="text" class="form-control mb-1" value="{{ $sekolah->nama }}" readonly>
                             @endforeach
                         @else
@@ -162,14 +162,18 @@
             </div>
         </div>
 
-        {{-- Periode Per Bulan --}}
+        {{-- Periode Per Semester --}}
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white border-0">
-                <h5 class="fw-semibold mb-0">Periode Per-bulan</h5>
+                <h5 class="fw-semibold mb-0">Periode Per-semester</h5>
             </div>
             <div class="card-body">
-                <input type="text" class="form-control"
-                    value="{{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('F Y') }}" readonly>
+                <div class="mb-3">
+                    <label for="periode_per_semester" class="form-label">Periode Per-semester</label>
+                    <input type="text" name="periode_per_semester" id="periode_per_semester"
+                        class="form-control @error('periode_per_semester') is-invalid @enderror"
+                        value="{{ old('periode_per_semester', $perSemester->periode_per_semester) }}" readonly>
+                </div>
             </div>
         </div>
 
@@ -181,15 +185,15 @@
 
             <div class="card-body">
 
-                {{-- DAFTAR GAJI --}}
+                {{-- SURAT KETERANGAN PBM --}}
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Daftar Gaji (PDF)</label>
+                    <label class="form-label fw-semibold">Surat Keterangan PBM (PDF)</label>
 
-                    @if ($perBulan->daftar_gaji_path)
+                    @if ($perSemester->sk_pbm_path)
                         <div class="d-flex flex-column">
                             <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->daftar_gaji_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_gaji_path]) }}"
+                                value="{{ basename($perSemester->sk_pbm_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->sk_pbm_path]) }}"
                                 target="_blank" class="text-primary text-decoration-underline">
                                 Lihat File
                             </a>
@@ -199,15 +203,15 @@
                     @endif
                 </div>
 
-                {{-- DAFTAR HADIR --}}
+                {{-- SURAT KETERANGAN TERAKHIR / BERKALA --}}
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Daftar Hadir (PDF)</label>
+                    <label class="form-label fw-semibold">Surat Keterangan Terakhir atau Berkala (PDF)</label>
 
-                    @if ($perBulan->daftar_hadir_path)
+                    @if ($perSemester->sk_terakhir_berkala_path)
                         <div class="d-flex flex-column">
                             <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->daftar_hadir_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_hadir_path]) }}"
+                                value="{{ basename($perSemester->sk_terakhir_berkala_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->sk_terakhir_berkala_path]) }}"
                                 target="_blank" class="text-primary text-decoration-underline">
                                 Lihat File
                             </a>
@@ -217,15 +221,15 @@
                     @endif
                 </div>
 
-                {{-- REKENING BANK --}}
+                {{-- SURAT PERNYATAAN BERSEDIA MENGEMBALIKAN --}}
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Rekening Bank (PDF)</label>
+                    <label class="form-label fw-semibold">Surat Pernyataan Bersedia Mengembalikan (PDF)</label>
 
-                    @if ($perBulan->rekening_bank_path)
+                    @if ($perSemester->sp_bersedia_mengembalikan_path)
                         <div class="d-flex flex-column">
                             <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->rekening_bank_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->rekening_bank_path]) }}"
+                                value="{{ basename($perSemester->sp_bersedia_mengembalikan_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->sp_bersedia_mengembalikan_path]) }}"
                                 target="_blank" class="text-primary text-decoration-underline">
                                 Lihat File
                             </a>
@@ -235,15 +239,15 @@
                     @endif
                 </div>
 
-                {{-- CEKLIST --}}
+                {{-- SURAT PERNYATAAN KEBENARAN BERKAS --}}
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Ceklist Berkas (PDF)</label>
+                    <label class="form-label fw-semibold">Surat Pernyataan Kebenaran Berkas (PDF)</label>
 
-                    @if ($perBulan->ceklist_berkas)
+                    @if ($perSemester->sp_kebenaran_berkas_path)
                         <div class="d-flex flex-column">
                             <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->ceklist_berkas) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->ceklist_berkas]) }}"
+                                value="{{ basename($perSemester->sp_kebenaran_berkas_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->sp_kebenaran_berkas_path]) }}"
                                 target="_blank" class="text-primary text-decoration-underline">
                                 Lihat File
                             </a>
@@ -253,10 +257,126 @@
                     @endif
                 </div>
 
+                {{-- SURAT PERNYATAAN PERANGKAT PEMBELAJARAN --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Surat Pernyataan Perangkat Pembelajaran (PDF)</label>
+                    @if ($perSemester->sp_perangkat_pembelajaran_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->sp_perangkat_pembelajaran_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->sp_perangkat_pembelajaran_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
+
+                {{-- KEAKTIFAN SIMPATIKA --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Bukti Keaktifan Simpatika (PDF)</label>
+                    @if ($perSemester->keaktifan_simpatika_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->keaktifan_simpatika_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->keaktifan_simpatika_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
+
+                {{-- BERKAS S28A --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Berkas S28a (PDF)</label>
+                    @if ($perSemester->berkas_s28a_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->berkas_s28a_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->berkas_s28a_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
+
+                {{-- BERKAS SKMT --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Berkas SKMT (PDF)</label>
+                    @if ($perSemester->berkas_skmt_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->berkas_skmt_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->berkas_skmt_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
+
+                {{-- PERMOHONAN SKBK --}}   
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Permohonan SKBK (PDF)</label>
+                    @if ($perSemester->permohonan_skbk_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->permohonan_skbk_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->permohonan_skbk_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
+
+                {{-- BERKAS SKBK --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Berkas SKBK (PDF)</label>
+                    @if ($perSemester->berkas_skbk_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->berkas_skbk_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->berkas_skbk_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
+
+                {{-- SERTIFIKAT PENGEMBANGAN DIRI --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Sertifikat Pengembangan Diri (PDF)</label>
+                    @if ($perSemester->sertifikat_pengembangan_diri_path)
+                        <div class="d-flex flex-column">
+                            <input type="text" class="form-control mb-2"
+                                value="{{ basename($perSemester->sertifikat_pengembangan_diri_path) }}" readonly>
+                            <a href="{{ route('gdrive.preview', ['path' => $perSemester->sertifikat_pengembangan_diri_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-muted mb-0">Belum ada file</p>
+                    @endif
+                </div>
             </div>
         </div>
-
-
     </div>
 
 

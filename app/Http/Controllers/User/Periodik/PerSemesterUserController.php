@@ -228,7 +228,7 @@ class PerSemesterUserController extends Controller
 
             // pastikan hanya upload file yang valid
             foreach ($data as $key => $value) {
-                if ($request->hasFile($key)) {
+                if (!($request->hasFile($key))) {
                     unset($data[$key]); // jangan sampai string temp file ikut
                 } else {
                     $data[$key] = $request->file($key);

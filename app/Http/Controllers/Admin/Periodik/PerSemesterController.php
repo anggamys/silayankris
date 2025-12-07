@@ -97,18 +97,11 @@ class PerSemesterController extends Controller
         $data = $request->validated();
 
         // Masukkan UploadedFile ke data
-        foreach (['sk_pbm_path','sk_terakhir_path','sk_berkala_path','sp_bersedia_mengembalikan_path','sp_perangkat_pembelajaran_path','keaktifan_simpatika_path','berkas_s28a_path','berkas_skmt_path','permohonan_skbk_path','berkas_skbk_path','sertifikat_pengembangan_diri_path'] as $fileKey) {
+        foreach (['sk_pbm_path','sk_terakhir_berkala_path','sp_bersedia_mengembalikan_path','sp_perangkat_pembelajaran_path','keaktifan_simpatika_path','berkas_s28a_path','berkas_skmt_path','permohonan_skbk_path','berkas_skbk_path','sertifikat_pengembangan_diri_path'] as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $data[$fileKey] = $request->file($fileKey);
             }
-        }
-
-        // Periode -> Set semester (semester ganjil: 01 July - 31 Dec, semester genap: 01 Jan - 30 June)
-        if (!empty($data['periode_per_semester']) && strlen($data['periode_per_semester']) === 7) {
-            $month = (int) substr($data['periode_per_semester'], 5, 2);
-            $year = (int) substr($data['periode_per_semester'], 0, 4);
-            $data['semester'] = ($month >= 7) ? 'ganjil' : 'genap';
-        }
+        }       
 
         // ==============================
         // STATUS OTOMATIS
@@ -127,7 +120,7 @@ class PerSemesterController extends Controller
             $request->file('sertifikat_pengembangan_diri_path'),
         ])->filter()->count();
 
-        $data['status'] = $uploadedCount < 12
+        $data['status'] = $uploadedCount < 11
             ? 'belum lengkap'
             : 'diterima';
 
@@ -166,7 +159,7 @@ class PerSemesterController extends Controller
             })->get();
 
         // =====================================
-        // CEK KELENGKAPAN FILE (0-12 file)
+        // CEK KELENGKAPAN FILE (0-11 file)
         // =====================================
         $uploaded = collect([
             $perSemester->sk_pbm_path,
@@ -184,7 +177,7 @@ class PerSemesterController extends Controller
 
         // Jika file belum lengkap -> hanya boleh status "belum lengkap"
         // Jika sudah lengkap -> boleh semua status
-        $statusOptions = $uploaded < 12
+        $statusOptions = $uploaded < 11
             ? ['belum lengkap' => 'Belum Lengkap']
             : ['menunggu' => 'Menunggu', 'diterima' => 'Diterima', 'ditolak' => 'Ditolak', 'belum lengkap' => 'Belum Lengkap'];
 
@@ -250,14 +243,14 @@ class PerSemesterController extends Controller
         | LOGIKA STATUS OTOMATIS — FINAL
         |--------------------------------------------------------------------------
         |
-        | 1. Jika file < 4 → status = "belum lengkap"
+        | 1. Jika file < 11 → status = "belum lengkap"
         | 2. Jika file lengkap dan admin belum memilih status (karena dropdown
         |    disable), maka status otomatis "diterima"
         | 3. Jika file lengkap dan admin memilih manual, gunakan status pilihan admin
         |
         */
 
-        if ($uploaded < 12) {
+        if ($uploaded < 11) {
             // File belum lengkap → fix
             $perSemester->status = 'belum lengkap';
         } else {
