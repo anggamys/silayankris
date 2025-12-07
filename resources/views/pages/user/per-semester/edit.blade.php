@@ -57,7 +57,8 @@
         {{-- HEADER UTAMA --}}
         <div class="d-flex justify-content-between align-items-center mb-6">
             <h4 class="fw-bold">
-                Detail Berkas Per-semester <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">({{ $perSemester->periode_per_semester }})</span>
+                Detail Berkas Per-semester <span
+                    class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">({{ $perSemester->periode_per_semester }})</span>
                 </span>
             </h4>
 
@@ -205,253 +206,43 @@
                         ];
                     @endphp
 
-                    {{-- Surat Keterangan PBM --}}
-                    <div class="mb-3">
-                        <label for="sk_pbm_path" class="form-label">Surat Keterangan PBM (File)</label>
+                    @foreach ($files as $label => $filePath)
+                        @php
+                            $fieldName = collect([
+                                'Surat Keterangan PBM' => 'sk_pbm_path',
+                                'Surat Keterangan Terakhir atau Berkala' => 'sk_terakhir_berkala_path',
+                                'Surat Pernyataan Bersedia Mengembalikan' => 'sp_bersedia_mengembalikan_path',
+                                'Surat Pernyataan Kebenaran Berkas' => 'sp_kebenaran_berkas_path',
+                                'Surat Pernyataan Perangkat Pembelajaran' => 'sp_perangkat_pembelajaran_path',
+                                'Bukti Keaktifan SIMPATIKA' => 'keaktifan_simpatika_path',
+                                'Berkas S28a' => 'berkas_s28a_path',
+                                'Berkas SKMT' => 'berkas_skmt_path',
+                                'Permohonan SKBK' => 'permohonan_skbk_path',
+                                'Berkas SKBK' => 'berkas_skbk_path',
+                                'Sertifikat Pengembangan Diri' => 'sertifikat_pengembangan_diri_path',
+                            ])[$label];
+                        @endphp
 
-                        <input type="file" name="sk_pbm_path" id="sk_pbm_path" class="form-control" accept=".pdf">
+                        <div class="mb-3">
+                            <label for="{{ $fieldName }}" class="form-label">{{ $label }} (File)</label>
+                            <input type="file" name="{{ $fieldName }}" id="{{ $fieldName }}"
+                                class="form-control" accept=".pdf">
 
-                        {{-- Jika file ADA --}}
-                        @if ($perSemester->sk_pbm_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->sk_pbm_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->sk_pbm_path) }}
-                                </span>
-                            </div>
-                        @else
-                            {{-- Jika file TIDAK ADA --}}
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Surat Keterangan Terakhir atau Berkala --}}
-                    <div class="mb-3">
-                        <label for="sk_terakhir_berkala_path" class="form-label">Surat Keterangan Terakhir atau Berkala
-                            (File)</label>
-
-                        <input type="file" name="sk_terakhir_berkala_path" id="sk_terakhir_berkala_path"
-                            class="form-control" accept=".pdf">
-
-                        @if ($perSemester->sk_terakhir_berkala_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->sk_terakhir_berkala_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->sk_terakhir_berkala_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Surat Pernyataan Bersedia Mengembalikan --}}
-                    <div class="mb-3">
-                        <label for="sp_bersedia_mengembalikan_path" class="form-label">Surat Pernyataan Bersedia
-                            Mengembalikan (File)</label>
-
-                        <input type="file" name="sp_bersedia_mengembalikan_path" id="sp_bersedia_mengembalikan_path"
-                            class="form-control" accept=".pdf">
-
-                        @if ($perSemester->sp_bersedia_mengembalikan_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->sp_bersedia_mengembalikan_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->sp_bersedia_mengembalikan_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Surat Pernyataan Kebenaran Berkas --}}
-                    <div class="mb-3">
-                        <label for="sp_kebenaran_berkas_path" class="form-label">Surat Pernyataan Kebenaran Berkas
-                            (File)</label>
-
-                        <input type="file" name="sp_kebenaran_berkas_path" id="sp_kebenaran_berkas_path"
-                            class="form-control" accept=".pdf">
-
-                        @if ($perSemester->sp_kebenaran_berkas_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->sp_kebenaran_berkas_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->sp_kebenaran_berkas_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Surat Pernyataan Perangkat Pembelajaran --}}
-                    <div class="mb-3">
-                        <label for="sp_perangkat_pembelajaran_path" class="form-label">Surat Pernyataan Perangkat
-                            Pembelajaran (File)</label>
-
-                        <input type="file" name="sp_perangkat_pembelajaran_path" id="sp_perangkat_pembelajaran_path"
-                            class="form-control" accept=".pdf">
-
-                        @if ($perSemester->sp_perangkat_pembelajaran_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->sp_perangkat_pembelajaran_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->sp_perangkat_pembelajaran_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Bukti Keaktifan SIMPATIKA --}}
-                    <div class="mb-3">
-                        <label for="keaktifan_simpatika_path" class="form-label">Bukti Keaktifan SIMPATIKA (File)</label>
-
-                        <input type="file" name="keaktifan_simpatika_path" id="keaktifan_simpatika_path"
-                            class="form-control" accept=".pdf">
-
-                        @if ($perSemester->keaktifan_simpatika_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->keaktifan_simpatika_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->keaktifan_simpatika_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Berkas S28a --}}
-                    <div class="mb-3">
-                        <label for="berkas_s28a_path" class="form-label">Berkas S28a (File)</label>
-
-                        <input type="file" name="berkas_s28a_path" id="berkas_s28a_path" class="form-control"
-                            accept=".pdf">
-
-                        @if ($perSemester->berkas_s28a_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->berkas_s28a_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->berkas_s28a_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Berkas SKMT --}}
-                    <div class="mb-3">
-                        <label for="berkas_skmt_path" class="form-label">Berkas SKMT (File)</label>
-
-                        <input type="file" name="berkas_skmt_path" id="berkas_skmt_path" class="form-control"
-                            accept=".pdf">
-
-                        @if ($perSemester->berkas_skmt_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->berkas_skmt_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->berkas_skmt_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Permohonan SKBK --}}
-                    <div class="mb-3">
-                        <label for="permohonan_skbk_path" class="form-label">Permohonan SKBK (File)</label>
-
-                        <input type="file" name="permohonan_skbk_path" id="permohonan_skbk_path" class="form-control"
-                            accept=".pdf">
-
-                        @if ($perSemester->permohonan_skbk_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->permohonan_skbk_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->permohonan_skbk_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Berkas SKBK --}}
-                    <div class="mb-3">
-                        <label for="berkas_skbk_path" class="form-label">Berkas SKBK (File)</label>
-
-                        <input type="file" name="berkas_skbk_path" id="berkas_skbk_path" class="form-control"
-                            accept=".pdf">
-
-                        @if ($perSemester->berkas_skbk_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->berkas_skbk_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->berkas_skbk_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
-
-                    {{-- Sertifikat Pengembangan Diri --}}
-                    <div class="mb-3">
-                        <label for="sertifikat_pengembangan_diri_path" class="form-label">Sertifikat Pengembangan Diri
-                            (File)</label>
-
-                        <input type="file" name="sertifikat_pengembangan_diri_path"
-                            id="sertifikat_pengembangan_diri_path" class="form-control" accept=".pdf">
-
-                        @if ($perSemester->sertifikat_pengembangan_diri_path)
-                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                                <a href="{{ route('gdrive.preview', ['path' => $perSemester->sertifikat_pengembangan_diri_path]) }}"
-                                    target="_blank" class="text-primary text-decoration-underline">
-                                    Lihat File Lama
-                                </a>
-                                <span class="text-muted old-file-name">
-                                    {{ basename($perSemester->sertifikat_pengembangan_diri_path) }}
-                                </span>
-                            </div>
-                        @else
-                            <p class="text-muted mt-1">Belum ada file</p>
-                        @endif
-                    </div>
+                            @if ($filePath)
+                                <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                    <a href="{{ route('gdrive.preview', ['path' => $filePath]) }}" target="_blank"
+                                        class="text-primary text-decoration-underline">
+                                        Lihat File Lama
+                                    </a>
+                                    <span class="text-muted old-file-name">
+                                        {{ basename($filePath) }}
+                                    </span>
+                                </div>
+                            @else
+                                <p class="text-muted mt-1">Belum ada file</p>
+                            @endif
+                        </div>
+                    @endforeach
 
                     {{-- SUBMIT --}}
                     <div class="d-flex justify-content-end">

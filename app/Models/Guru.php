@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Sekolah;
 use App\Models\PerBulan;
 use App\Models\PerSemester;
+use App\Models\PerTahun;
 
 class Guru extends Model
 {
@@ -65,5 +66,13 @@ class Guru extends Model
     public function perSemesters()
     {
         return $this->hasMany(PerSemester::class, 'guru_id');
+    }
+
+    /**
+     * Relasi: satu guru punya banyak PerTahun (berkas tahunan).
+     */
+    public function perTahuns()
+    {
+        return $this->hasMany(PerTahun::class, 'guru_id');
     }
 }

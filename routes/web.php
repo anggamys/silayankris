@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\User\Periodik\PerBulanUserController;
 use App\Http\Controllers\User\Periodik\PerSemesterUserController;
+use App\Http\Controllers\User\Periodik\PerTahunUserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
@@ -75,7 +76,6 @@ Route::middleware(['auth', 'role:guru'])
     });
 
 
-
 // Resourceful routes for PerSemester for users
 Route::middleware(['auth', 'role:guru'])
     ->prefix('user/persemester')
@@ -90,6 +90,19 @@ Route::middleware(['auth', 'role:guru'])
         Route::match(['put', 'patch'], '/{perSemester}', [PerSemesterUserController::class, 'update'])->name('update');
     });
 
+// Resourceful routes for PerTahun for users
+Route::middleware(['auth', 'role:guru'])
+    ->prefix('user/pertahun')
+    ->as('user.pertahun.')
+    ->group(function () {   
+        Route::get('/', [PerTahunUserController::class, 'index'])->name('index');
+        Route::get('/create', [PerTahunUserController::class, 'create'])->name('create');
+        Route::post('/', [PerTahunUserController::class, 'store'])->name('store');
+        Route::get('/{perTahun}', [PerTahunUserController::class, 'show'])->name('show');
+        // Allow users to edit their incomplete submissions and submit revisions
+        Route::get('/{perTahun}/edit', [PerTahunUserController::class, 'edit'])->name('edit');
+        Route::match(['put', 'patch'], '/{perTahun}', [PerTahunUserController::class, 'update'])->name('update');
+    });
 
 // Resourceful routes for Pendataan Gereja for users
     Route::middleware(['auth', 'role:staff-gereja'])
