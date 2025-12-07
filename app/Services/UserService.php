@@ -158,4 +158,14 @@ class UserService
         // Hapus user
         return $user->delete();
     }
+
+    /**
+     * Get total count of User records.
+     */
+    public function getCountUser(): int
+    {
+        return User::count();
+    }
+
+   
 }

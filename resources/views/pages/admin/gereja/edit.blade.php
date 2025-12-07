@@ -159,12 +159,170 @@
                     @enderror
                 </div>
 
-                {{-- Tombol --}}
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save me-1"></i> Simpan
-                    </button>
-                </div>
+                {{-- JSON Fields --}}
+                <h5 class="mt-4 fw-bold">Data Jemaat</h5>
+                <div class="row">
+                    {{-- Jumlah Umat --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Umat</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_umat[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_umat.laki_laki', $gereja->jumlah_umat['laki_laki'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_umat.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_umat[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan" value="{{ old('jumlah_umat.perempuan', $gereja->jumlah_umat['perempuan'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span>
+                        </div>
+                        @error('jumlah_umat.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Majelis --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Majelis</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_majelis[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_majelis.laki_laki', $gereja->jumlah_majelis['laki_laki'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_majelis.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_majelis[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan" value="{{ old('jumlah_majelis.perempuan', $gereja->jumlah_majelis['perempuan'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span>
+                        </div>
+                        @error('jumlah_majelis.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Pemuda --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Pemuda</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_pemuda[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_pemuda.laki_laki', $gereja->jumlah_pemuda['laki_laki'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_pemuda.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_pemuda[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan" value="{{ old('jumlah_pemuda.perempuan', $gereja->jumlah_pemuda['perempuan'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span>
+                        </div>
+                        @error('jumlah_pemuda.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Guru Sekolah Minggu --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Guru Sekolah Minggu</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_guru_sekolah_minggu[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_guru_sekolah_minggu.laki_laki', $gereja->jumlah_guru_sekolah_minggu['laki_laki'] ?? 0) }}" min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_guru_sekolah_minggu.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_guru_sekolah_minggu[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_guru_sekolah_minggu.perempuan', $gereja->jumlah_guru_sekolah_minggu['perempuan'] ?? 0) }}" min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span>
+                        </div>
+                        @error('jumlah_guru_sekolah_minggu.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Murid Sekolah Minggu --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Murid Sekolah Minggu</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_murid_sekolah_minggu[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_murid_sekolah_minggu.laki_laki', $gereja->jumlah_murid_sekolah_minggu['laki_laki'] ?? 0) }}" min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_murid_sekolah_minggu.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_murid_sekolah_minggu[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_murid_sekolah_minggu.perempuan', $gereja->jumlah_murid_sekolah_minggu['perempuan'] ?? 0) }}" min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span>
+                        </div>
+                        @error('jumlah_murid_sekolah_minggu.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Tombol --}}
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-1"></i> Simpan
+                        </button>
+                    </div>
             </form>
 
             <script>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\GerejaController;
 use App\Http\Controllers\Admin\LokasiController;
 use App\Http\Controllers\Admin\SekolahController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\User\Periodik\PerBulanUserController;
 use App\Http\Controllers\User\Periodik\PerSemesterUserController;
 use Illuminate\Support\Facades\Route;
@@ -29,15 +30,13 @@ Route::get('/berita', [BeritaController::class, 'publicIndex'])->name('berita.in
 Route::get('/berita/{berita:slug}', [BeritaController::class, 'publicShow'])->name('berita.show');
 
 // Resourceful routes for admin (requires auth)
-Route::middleware(['auth'])
+Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->as('admin.')
     ->group(function () {
 
         // Dashboard route
-        Route::get('/dashboard', function () {
-            return view('pages.admin.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         // Resourceful routes for admin entities
         Route::resource('users', UserController::class)->names('users');
         // Berita routes
@@ -61,7 +60,7 @@ Route::middleware(['auth'])
     });
 
     // Resourceful routes for PerBulan for users
-Route::middleware(['auth'])
+Route::middleware(['auth', 'role:guru'])
     ->prefix('user/perbulan')
     ->as('user.perbulan.')
     ->group(function () {
@@ -75,8 +74,10 @@ Route::middleware(['auth'])
         Route::match(['put', 'patch'], '/{perBulan}', [PerBulanUserController::class, 'update'])->name('update');
     });
 
+
+
 // Resourceful routes for PerSemester for users
-Route::middleware(['auth'])
+Route::middleware(['auth', 'role:guru'])
     ->prefix('user/persemester')
     ->as('user.persemester.')
     ->group(function () {   
@@ -87,6 +88,16 @@ Route::middleware(['auth'])
         // Allow users to edit their incomplete submissions and submit revisions
         Route::get('/{perSemester}/edit', [PerSemesterUserController::class, 'edit'])->name('edit');
         Route::match(['put', 'patch'], '/{perSemester}', [PerSemesterUserController::class, 'update'])->name('update');
+    });
+
+
+// Resourceful routes for Pendataan Gereja for users
+    Route::middleware(['auth', 'role:staff-gereja'])
+    ->prefix('user')
+    ->as('user.')
+    ->group(function () {
+        Route::get('/pendataan-gereja', [GerejaController::class, 'indexUser'])->name('gereja.index');
+        Route::put('/pendataan-gereja/{gereja}', [GerejaController::class, 'updateUser'])->name('gereja.update');
     });
 
 require __DIR__ . '/auth.php';

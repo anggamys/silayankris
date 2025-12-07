@@ -130,4 +130,12 @@ class PerTahunService
         // Hapus data dari database
         $perTahun->delete();
     }
+
+    /**
+     * Get total count of PerTahun records.
+     */
+    public function getCountPertahun(): int
+    {
+        return PerTahun::count();
+    }
 }
