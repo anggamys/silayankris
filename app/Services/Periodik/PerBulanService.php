@@ -169,4 +169,12 @@ class PerBulanService
     // Hapus data dari database
     $perBulan->delete();
   }
+
+  /**
+   * Get total count of PerBulan records.
+   */
+  public function getCountPerBulan(): int
+  {
+      return PerBulan::count();
+  }
 }

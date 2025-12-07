@@ -135,7 +135,7 @@
                                 <li><a class="dropdown-item" href="/layanan/a">Berkas Pertahun</a></li>
                             @endif
                             @if (auth()->user()->role == 'staff-gereja')
-                                <li><a class="dropdown-item" href="/layanan/b">Pendataan Gereja</a></li>
+                                <li><a class="dropdown-item" href="/user/pendataan-gereja">Pendataan Gereja</a></li>
                             @endif
                         </ul>
                     </li>
