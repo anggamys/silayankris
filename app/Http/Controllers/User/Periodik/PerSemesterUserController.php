@@ -85,8 +85,7 @@ class PerSemesterUserController extends Controller
         // =====================================
         $hasFile =
             $request->hasFile('sk_pbm_path') ||
-            $request->hasFile('sk_terakhir_path') ||
-            $request->hasFile('sk_berkala_path') ||
+            $request->hasFile('sk_terakhir_berkala_path') ||
             $request->hasFile('sp_bersedia_mengembalikan_path') ||
             $request->hasFile('sp_kebenaran_berkas_path') ||
             $request->hasFile('sp_perangkat_pembelajaran_path') ||
@@ -96,7 +95,6 @@ class PerSemesterUserController extends Controller
             $request->hasFile('permohonan_skbk_path') ||
             $request->hasFile('berkas_skbk_path') ||
             $request->hasFile('sertifikat_pengembangan_diri_path');
-           
 
         if (!$hasFile) {
             return back()->withInput()->with('error', 'Anda harus mengupload minimal 1 berkas.');
@@ -109,8 +107,7 @@ class PerSemesterUserController extends Controller
             // Tentukan status awal (lengkap / belum lengkap)
             $files = [
                 $validated['sk_pbm_path'] ?? null,
-                $validated['sk_terakhir_path'] ?? null,
-                $validated['sk_berkala_path'] ?? null,
+                $validated['sk_terakhir_berkala_path'] ?? null,
                 $validated['sp_bersedia_mengembalikan_path'] ?? null,
                 $validated['sp_kebenaran_berkas_path'] ?? null,
                 $validated['sp_perangkat_pembelajaran_path'] ?? null,
@@ -182,8 +179,7 @@ class PerSemesterUserController extends Controller
 
         $request->validate([
             'sk_pbm_path' => 'nullable|mimes:pdf',
-            'sk_terakhir_path' => 'nullable|mimes:pdf', 
-            'sk_berkala_path' => 'nullable|mimes:pdf',
+            'sk_terakhir_berkala_path' => 'nullable|mimes:pdf',
             'sp_bersedia_mengembalikan_path' => 'nullable|mimes:pdf',
             'sp_kebenaran_berkas_path' => 'nullable|mimes:pdf',
             'sp_perangkat_pembelajaran_path' => 'nullable|mimes:pdf',
@@ -198,8 +194,7 @@ class PerSemesterUserController extends Controller
         // CEK MINIMAL SATU FILE DIUPLOAD
         $hasFile =
             $request->hasFile('sk_pbm_path') ||
-            $request->hasFile('sk_terakhir_path') ||
-            $request->hasFile('sk_berkala_path') ||
+            $request->hasFile('sk_terakhir_berkala_path') ||
             $request->hasFile('sp_bersedia_mengembalikan_path') ||
             $request->hasFile('sp_kebenaran_berkas_path') ||
             $request->hasFile('sp_perangkat_pembelajaran_path') ||
@@ -219,8 +214,7 @@ class PerSemesterUserController extends Controller
         try {
             $data = $request->only([
                 'sk_pbm_path',
-                'sk_terakhir_path',
-                'sk_berkala_path',
+                'sk_terakhir_berkala_path',
                 'sp_bersedia_mengembalikan_path',
                 'sp_kebenaran_berkas_path',
                 'sp_perangkat_pembelajaran_path',
@@ -249,9 +243,9 @@ class PerSemesterUserController extends Controller
             // CEK KELENGKAPAN BARU SETELAH UPDATE
             $fields = [
                 $perSemester->sk_pbm_path,
-                $perSemester->sk_terakhir_path,
-                $perSemester->sk_berkala_path,
+                $perSemester->sk_terakhir_berkala_path,
                 $perSemester->sp_bersedia_mengembalikan_path,
+                $perSemester->sp_kebenaran_berkas_path,
                 $perSemester->sp_perangkat_pembelajaran_path,
                 $perSemester->keaktifan_simpatika_path,
                 $perSemester->berkas_s28a_path,

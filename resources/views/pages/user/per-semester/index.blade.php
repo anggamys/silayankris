@@ -59,9 +59,9 @@
                                     // Cek kelengkapan file
                                     $fields = [
                                         $item->sk_pbm_path,
-                                        $item->sk_terakhir_path,
-                                        $item->sk_berkala_path,
+                                        $item->sk_terakhir_berkala_path,
                                         $item->sp_bersedia_mengembalikan_path,
+                                        $item->sp_kebenaran_berkas_path,
                                         $item->sp_perangkat_pembelajaran_path,
                                         $item->keaktifan_simpatika_path,
                                         $item->berkas_s28a_path,
@@ -243,9 +243,9 @@
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Periode</label>
                                 <input type="string" name="periode_per_semester" class="form-control" type="month"
-                                     type="text" name="periode_per_semester" class="form-control"
-                                     placeholder="Contoh: Semester Genap 2024/2025"
-                                     value="{{ old('periode_per_semester') }}" required>
+                                    type="text" name="periode_per_semester" class="form-control"
+                                    placeholder="Contoh: Semester Genap 2024/2025"
+                                    value="{{ old('periode_per_semester') }}" required>
                             </div>
 
                             <input type="hidden" name="guru_id" value="{{ $guru->id }}">
@@ -268,13 +268,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Surat Keterangan Terakhir (PDF)</label>
-                                <input type="file" name="sk_terakhir_path" class="form-control" accept=".pdf">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Surat Keterangan Berkala (PDF)</label>
-                                <input type="file" name="sk_berkala_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Surat Keterangan Terakhir atau Berkala (PDF)</label>
+                                <input type="file" name="sk_terakhir_berkala_path" class="form-control" accept=".pdf">
                             </div>
 
                             <div class="mb-3">
@@ -294,7 +289,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Bukti Keaktifan Simpatika (PDF)</label>
-                                <input type="file" name="bukti_keaktifan_simpatika_path" class="form-control" accept=".pdf">
+                                <input type="file" name="keaktifan_simpatika_path" class="form-control" accept=".pdf">
                             </div> 
 
                             <div class="mb-3">

@@ -27,8 +27,7 @@ class PerSemesterRequest extends FormRequest
             'guru_id' => ['required', 'exists:gurus,id'],
             'periode_per_semester' => ['sometimes', 'string', 'max:100'], // max 100 characters
             'sk_pbm_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
-            'sk_terakhir_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
-            'sk_berkala_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sk_terakhir_berkala_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'sp_bersedia_mengembalikan_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'sp_kebenaran_berkas_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'sp_perangkat_pembelajaran_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
