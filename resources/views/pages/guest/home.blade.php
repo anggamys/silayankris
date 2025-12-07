@@ -387,10 +387,10 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">John Doe</h5>
-                            <p class="text-muted mb-3">Product Designer</p>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 1</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
                         </div>
                     </div>
 
@@ -398,10 +398,10 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/32.png') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">John Doe</h5>
-                            <p class="text-muted mb-3">Product Designer</p>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 2</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
                         </div>
                     </div>
 
@@ -409,10 +409,10 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">John Doe</h5>
-                            <p class="text-muted mb-3">Product Designer</p>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 3</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
                         </div>
                     </div>
 
@@ -420,10 +420,10 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="500">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/6 (1).jpg') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/32.png') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">John Doe</h5>
-                            <p class="text-muted mb-3">Product Designer</p>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 4</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
                         </div>
                     </div>
 

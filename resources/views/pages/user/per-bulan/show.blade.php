@@ -173,78 +173,28 @@
             </div>
 
             <div class="card-body">
-
-                {{-- DAFTAR GAJI --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Daftar Gaji (PDF)</label>
-
-                    @if ($perBulan->daftar_gaji_path)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->daftar_gaji_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_gaji_path]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-                {{-- DAFTAR HADIR --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Daftar Hadir (PDF)</label>
-
-                    @if ($perBulan->daftar_hadir_path)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->daftar_hadir_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->daftar_hadir_path]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-                {{-- REKENING BANK --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Rekening Bank (PDF)</label>
-
-                    @if ($perBulan->rekening_bank_path)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->rekening_bank_path) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->rekening_bank_path]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
-
-                {{-- CEKLIST --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Ceklist Berkas (PDF)</label>
-
-                    @if ($perBulan->ceklist_berkas)
-                        <div class="d-flex flex-column">
-                            <input type="text" class="form-control mb-2"
-                                value="{{ basename($perBulan->ceklist_berkas) }}" readonly>
-                            <a href="{{ route('gdrive.preview', ['path' => $perBulan->ceklist_berkas]) }}"
-                                target="_blank" class="text-primary text-decoration-underline">
-                                Lihat File
-                            </a>
-                        </div>
-                    @else
-                        <p class="text-muted mb-0">Belum ada file</p>
-                    @endif
-                </div>
+                {{-- FILES UPLOAD --}}
+                @foreach ([
+            'Daftar Gaji' => $perBulan->daftar_gaji_path,
+            'Daftar Hadir' => $perBulan->daftar_hadir_path,
+            'Rekening Bank' => $perBulan->rekening_bank_path,
+            'Ceklist Berkas' => $perBulan->ceklist_berkas,
+        ] as $label => $path)
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">{{ $label }} (PDF)</label>
+                        @if ($path)
+                            <div class="d-flex flex-column">
+                                <input type="text" class="form-control mb-2" value="{{ basename($path) }}" readonly>
+                                <a href="{{ route('gdrive.preview', ['path' => $path]) }}" target="_blank"
+                                    class="text-primary text-decoration-underline">
+                                    Lihat File
+                                </a>
+                            </div>
+                        @else
+                            <p class="text-muted mb-0">Belum ada file</p>
+                        @endif
+                    </div>
+                @endforeach
 
             </div>
         </div>
