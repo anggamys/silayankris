@@ -202,4 +202,12 @@ class PerSemesterService
     // Hapus data dari database
     $perSemester->delete();
   }
+
+  /**
+   * Get total count of PerSemester records.
+   */
+  public function getCountOfPerSemester(): int
+  {
+      return PerSemester::count();
+  }
 }
