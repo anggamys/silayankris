@@ -79,8 +79,7 @@ class PerSemesterController extends Controller
         // Wajib upload minimal 1 file
         $hasFile =
             $request->hasFile('sk_pbm_path') ||
-            $request->hasFile('sk_terakhir_path') ||
-            $request->hasFile('sk_berkala_path') ||
+            $request->hasFile('sk_terakhir_berkala_path') ||
             $request->hasFile('sp_bersedia_mengembalikan_path') ||
             $request->hasFile('sp_kebenaran_berkas_path') ||
             $request->hasFile('sp_perangkat_pembelajaran_path') ||
@@ -116,8 +115,7 @@ class PerSemesterController extends Controller
         // ==============================
         $uploadedCount = collect([
             $request->file('sk_pbm_path'),
-            $request->file('sk_terakhir_path'),
-            $request->file('sk_berkala_path'),
+            $request->file('sk_terakhir_berkala_path'),
             $request->file('sp_bersedia_mengembalikan_path'),
             $request->file('sp_kebenaran_berkas_path'),
             $request->file('sp_perangkat_pembelajaran_path'),
@@ -172,8 +170,7 @@ class PerSemesterController extends Controller
         // =====================================
         $uploaded = collect([
             $perSemester->sk_pbm_path,
-            $perSemester->sk_terakhir_path,
-            $perSemester->sk_berkala_path,
+            $perSemester->sk_terakhir_berkala_path,
             $perSemester->sp_bersedia_mengembalikan_path,
             $perSemester->sp_kebenaran_berkas_path,
             $perSemester->sp_perangkat_pembelajaran_path,
@@ -236,8 +233,7 @@ class PerSemesterController extends Controller
         // Hitung file yang sudah lengkap
         $uploaded = collect([
             $perSemester->sk_pbm_path,
-            $perSemester->sk_terakhir_path,
-            $perSemester->sk_berkala_path,
+            $perSemester->sk_terakhir_berkala_path,
             $perSemester->sp_bersedia_mengembalikan_path,
             $perSemester->sp_kebenaran_berkas_path,
             $perSemester->sp_perangkat_pembelajaran_path,

@@ -62,8 +62,7 @@ class PerSemesterService
                   $q2->whereRaw("
                       CONCAT(
                           (sk_pbm_path IS NOT NULL) +
-                          (sk_terakhir_path IS NOT NULL) +
-                          (sk_berkala_path IS NOT NULL) +
+                          (sk_terakhir_berkala_path IS NOT NULL) +
                           (sp_bersedia_mengembalikan_path IS NOT NULL) +
                           (sp_kebenaran_berkas_path IS NOT NULL) +
                           (sp_perangkat_pembelajaran_path IS NOT NULL) +
@@ -74,7 +73,7 @@ class PerSemesterService
                           (berkas_skbk_path IS NOT NULL) +
                           (sertifikat_pengembangan_diri_path IS NOT NULL),
                           '/',
-                          12
+                          11
                       ) LIKE ?
                   ", ["%{$searchLower}%"]);
               });
@@ -97,8 +96,7 @@ class PerSemesterService
 
     $paths = [
       'sk_pbm_path' => 'sk_pbm',
-      'sk_terakhir_path' => 'sk_terakhir',
-      'sk_berkala_path' => 'sk_berkala',
+      'sk_terakhir_berkala_path' => 'sk_terakhir_berkala',
       'sp_bersedia_mengembalikan_path' => 'sp_bersedia_mengembalikan',
       'sp_kebenaran_berkas_path' => 'sp_kebenaran_berkas',
       'sp_perangkat_pembelajaran_path' => 'sp_perangkat_pembelajaran',
@@ -134,8 +132,7 @@ class PerSemesterService
 
       $paths = [
           'sk_pbm_path' => 'sk_pbm',
-          'sk_terakhir_path' => 'sk_terakhir',
-          'sk_berkala_path' => 'sk_berkala',
+          'sk_terakhir_berkala_path' => 'sk_terakhir_berkala',
           'sp_bersedia_mengembalikan_path' => 'sp_bersedia_mengembalikan',
           'sp_kebenaran_berkas_path' => 'sp_kebenaran_berkas',
           'sp_perangkat_pembelajaran_path' => 'sp_perangkat_pembelajaran',
@@ -180,8 +177,7 @@ class PerSemesterService
     $paths = [
       'daftar_gaji_path',
       'sk_pbm_path',
-      'sk_terakhir_path',
-      'sk_berkala_path',
+      'sk_terakhir_berkala_path',
       'sp_bersedia_mengembalikan_path',
       'sp_kebenaran_berkas_path',
       'sp_perangkat_pembelajaran_path',

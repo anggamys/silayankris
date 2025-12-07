@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('guru_id')->constrained('gurus')->onDelete('cascade');
             $table->string('periode_per_semester')->nullable();
             $table->string('sk_pbm_path')->nullable();
-            $table->string('sk_terakhir_path')->nullable();
-            $table->string('sk_berkala_path')->nullable();
+            $table->string('sk_terakhir_berkala_path')->nullable();
             $table->string('sp_bersedia_mengembalikan_path')->nullable();
             $table->string('sp_kebenaran_berkas_path')->nullable();
             $table->string('sp_perangkat_pembelajaran_path')->nullable();
@@ -27,7 +26,7 @@ return new class extends Migration
             $table->string('permohonan_skbk_path')->nullable();
             $table->string('berkas_skbk_path')->nullable();
             $table->string('sertifikat_pengembangan_diri_path')->nullable();
-            $table->enum('status', ['menunggu', 'diterima', 'ditolak'])->default('menunggu');
+            $table->enum('status', ['menunggu', 'belum lengkap', 'diterima', 'ditolak'])->default('menunggu');
             $table->string('catatan')->nullable();
             $table->timestamps();
         });
