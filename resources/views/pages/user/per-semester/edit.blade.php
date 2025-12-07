@@ -57,9 +57,7 @@
         {{-- HEADER UTAMA --}}
         <div class="d-flex justify-content-between align-items-center mb-6">
             <h4 class="fw-bold">
-                Detail Berkas Per-semester
-                <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2 text-muted">
-                    {{ \Carbon\Carbon::parse($perSemester->periode_per_semester)->translatedFormat('(F Y)') }}
+                Detail Berkas Per-semester <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">({{ $perSemester->periode_per_semester }})</span>
                 </span>
             </h4>
 
@@ -173,14 +171,7 @@
                     <label for="periode_per_semester" class="form-label">Periode Per-semester</label>
                     <input type="text" name="periode_per_semester" id="periode_per_semester"
                         class="form-control @error('periode_per_semester') is-invalid @enderror"
-                        value="{{ old('periode_per_semester', $perSemester->periode_per_semester ? \Carbon\Carbon::parse($perSemester->periode_per_semester)->translatedFormat('F Y') : '') }}"
-                        readonly>
-
-                    @error('periode_per_semester')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        value="{{ old('periode_per_semester', $perSemester->periode_per_semester) }}" readonly>
                 </div>
             </div>
         </div>
@@ -218,8 +209,7 @@
                     <div class="mb-3">
                         <label for="sk_pbm_path" class="form-label">Surat Keterangan PBM (File)</label>
 
-                        <input type="file" name="sk_pbm_path" id="sk_pbm_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="sk_pbm_path" id="sk_pbm_path" class="form-control" accept=".pdf">
 
                         {{-- Jika file ADA --}}
                         @if ($perSemester->sk_pbm_path)
@@ -240,10 +230,11 @@
 
                     {{-- Surat Keterangan Terakhir atau Berkala --}}
                     <div class="mb-3">
-                        <label for="sk_terakhir_berkala_path" class="form-label">Surat Keterangan Terakhir atau Berkala (File)</label>
+                        <label for="sk_terakhir_berkala_path" class="form-label">Surat Keterangan Terakhir atau Berkala
+                            (File)</label>
 
-                        <input type="file" name="sk_terakhir_berkala_path" id="sk_terakhir_berkala_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="sk_terakhir_berkala_path" id="sk_terakhir_berkala_path"
+                            class="form-control" accept=".pdf">
 
                         @if ($perSemester->sk_terakhir_berkala_path)
                             <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
@@ -262,10 +253,11 @@
 
                     {{-- Surat Pernyataan Bersedia Mengembalikan --}}
                     <div class="mb-3">
-                        <label for="sp_bersedia_mengembalikan_path" class="form-label">Surat Pernyataan Bersedia Mengembalikan (File)</label>
+                        <label for="sp_bersedia_mengembalikan_path" class="form-label">Surat Pernyataan Bersedia
+                            Mengembalikan (File)</label>
 
-                        <input type="file" name="sp_bersedia_mengembalikan_path" id="sp_bersedia_mengembalikan_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="sp_bersedia_mengembalikan_path" id="sp_bersedia_mengembalikan_path"
+                            class="form-control" accept=".pdf">
 
                         @if ($perSemester->sp_bersedia_mengembalikan_path)
                             <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
@@ -284,10 +276,11 @@
 
                     {{-- Surat Pernyataan Kebenaran Berkas --}}
                     <div class="mb-3">
-                        <label for="sp_kebenaran_berkas_path" class="form-label">Surat Pernyataan Kebenaran Berkas (File)</label>
+                        <label for="sp_kebenaran_berkas_path" class="form-label">Surat Pernyataan Kebenaran Berkas
+                            (File)</label>
 
-                        <input type="file" name="sp_kebenaran_berkas_path" id="sp_kebenaran_berkas_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="sp_kebenaran_berkas_path" id="sp_kebenaran_berkas_path"
+                            class="form-control" accept=".pdf">
 
                         @if ($perSemester->sp_kebenaran_berkas_path)
                             <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
@@ -306,10 +299,11 @@
 
                     {{-- Surat Pernyataan Perangkat Pembelajaran --}}
                     <div class="mb-3">
-                        <label for="sp_perangkat_pembelajaran_path" class="form-label">Surat Pernyataan Perangkat Pembelajaran (File)</label>
+                        <label for="sp_perangkat_pembelajaran_path" class="form-label">Surat Pernyataan Perangkat
+                            Pembelajaran (File)</label>
 
-                        <input type="file" name="sp_perangkat_pembelajaran_path" id="sp_perangkat_pembelajaran_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="sp_perangkat_pembelajaran_path" id="sp_perangkat_pembelajaran_path"
+                            class="form-control" accept=".pdf">
 
                         @if ($perSemester->sp_perangkat_pembelajaran_path)
                             <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
@@ -330,8 +324,8 @@
                     <div class="mb-3">
                         <label for="keaktifan_simpatika_path" class="form-label">Bukti Keaktifan SIMPATIKA (File)</label>
 
-                        <input type="file" name="keaktifan_simpatika_path" id="keaktifan_simpatika_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="keaktifan_simpatika_path" id="keaktifan_simpatika_path"
+                            class="form-control" accept=".pdf">
 
                         @if ($perSemester->keaktifan_simpatika_path)
                             <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
@@ -438,10 +432,11 @@
 
                     {{-- Sertifikat Pengembangan Diri --}}
                     <div class="mb-3">
-                        <label for="sertifikat_pengembangan_diri_path" class="form-label">Sertifikat Pengembangan Diri (File)</label>
+                        <label for="sertifikat_pengembangan_diri_path" class="form-label">Sertifikat Pengembangan Diri
+                            (File)</label>
 
-                        <input type="file" name="sertifikat_pengembangan_diri_path" id="sertifikat_pengembangan_diri_path" class="form-control"
-                            accept=".pdf">
+                        <input type="file" name="sertifikat_pengembangan_diri_path"
+                            id="sertifikat_pengembangan_diri_path" class="form-control" accept=".pdf">
 
                         @if ($perSemester->sertifikat_pengembangan_diri_path)
                             <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">

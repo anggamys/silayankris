@@ -1,12 +1,12 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Detail Data Periode Per Bulan')
+@section('title', 'Detail Data Periode Per-bulan')
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
-        <a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periode Per Bulan</a>
+        <a href="{{ route('admin.per-bulan.index') }}" class="text-decoration-none">Data Periode Per-bulan</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Detail Data Periode Per Bulan</li>
+    <li class="breadcrumb-item active" aria-current="page">Detail Data Periode Per-bulan</li>
 @endsection
 
 @php
@@ -34,7 +34,11 @@
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Detail Data Periode Per-bulan</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Detail Data Periode Per-bulan
+                <span class="text-muted d-block d-md-inline mt-1 mt-md-0 ms-md-2">
+                    {{ \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('(F Y)') }}
+                </span>
+            </h5>
 
             <a href="{{ route('admin.per-bulan.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
@@ -89,6 +93,14 @@
                     readonly>
             </div>
 
+            {{-- PERIODE --}}
+            <div class="mb-3">
+                <label class="form-label">PERIODE (BULAN)</label>
+                <input type="text" class="form-control"
+                    value="{{ old('periode_per_bulan', \Carbon\Carbon::parse($perBulan->periode_per_bulan)->translatedFormat('F Y')) }}"
+                    readonly>
+            </div>
+
             {{-- FILE-FILE --}}
             @foreach ([
             'daftar_gaji_path' => 'Daftar Gaji',
@@ -99,8 +111,7 @@
                 <div class="mb-3">
                     <label class="form-label">{{ $label }} (File)</label>
 
-                    <input type="text" class="form-control mb-2" value="{{ basename($perBulan->$field) }}"
-                        readonly>
+                    <input type="text" class="form-control mb-2" value="{{ basename($perBulan->$field) }}" readonly>
 
                     <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
                         @if ($perBulan->$field)

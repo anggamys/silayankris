@@ -242,10 +242,10 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Periode</label>
-                                <input type="string" name="periode_per_semester" class="form-control" type="month"
-                                    type="text" name="periode_per_semester" class="form-control"
+                                <input type="text" name="periode_per_semester" class="form-control"
                                     placeholder="Contoh: Semester Genap 2024/2025"
                                     value="{{ old('periode_per_semester') }}" required>
+                                <small class="text-muted d-block mt-1">Contoh: Semester Genap 2025/2026</small>
                             </div>
 
                             <input type="hidden" name="guru_id" value="{{ $guru->id }}">
