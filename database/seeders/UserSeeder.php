@@ -2,16 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\Guru;
+use App\Models\StaffGereja;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
+  
   public function run(): void
   {
     $users = [
       [
-        'id' => '00000000-0000-0000-0000-000000000001',
         'name' => 'Sang Admin',
         'email' => 'admin@gmail.com',
         'password' => bcrypt('Admin123'),
@@ -19,7 +21,6 @@ class UserSeeder extends Seeder
         'status' => 'aktif',
       ],
       [ 
-        'id' => '00000000-0000-0000-0000-000000000002',
         'name' => 'Sang Guru',
         'email' => 'guru@gmail.com',
         'password' => bcrypt('Guru123'),
@@ -27,7 +28,6 @@ class UserSeeder extends Seeder
         'status' => 'aktif',
       ],
       [
-        'id' => '00000000-0000-0000-0000-000000000003',
         'name' => 'Sang Gereja',
         'email' => 'gereja@gmail.com',
         'password' => bcrypt('Gereja123'),
@@ -40,6 +40,19 @@ class UserSeeder extends Seeder
       User::create($user);
     }
 
-    // User::factory()->count(10)->create();
+    // make guru in user 
+    Guru::create([
+      'user_id' => User::where('email', 'guru@gmail.com')->first()->id,
+      'nip' => '1234567890',
+      'tempat_lahir' => 'Jakarta',
+      'tanggal_lahir' => '1980-01-01',
+    ]);
+
+    // make gereja in user
+    StaffGereja::create([
+      'user_id' => User::where('email', 'gereja@gmail.com')->first()->id,
+      'gembala_sidang' => 'Pendeta John Doe',
+      'gereja_id' => 1, // Sesuaikan dengan ID gereja yang ada
+    ]);
   }
 }
