@@ -28,7 +28,7 @@
                         style="display: flex; flex-direction: row; justify-content: space-between;">
                         @php
                             $guruOptions = $gurus
-                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nik ?? 'Guru #' . $g->id)])
                                 ->toArray();
                         @endphp
                         <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"

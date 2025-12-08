@@ -49,7 +49,7 @@ class UserService
         // === JIKA GURU ===
         if ($user->role === User::ROLE_GURU) {
             $guru = $user->guru()->create([
-                'nip'           => $data['nip'],
+                'nik'           => $data['nik'],
                 'tempat_lahir'  => $data['tempat_lahir'],
                 'tanggal_lahir' => $data['tanggal_lahir'],
                 'nomor_telepon' => $data['nomor_telepon'],
@@ -102,7 +102,7 @@ class UserService
             $guru = $user->guru ?: $user->guru()->create([]);
 
             $guru->update([
-                'nip'           => $data['nip'] ?? $guru->nip,
+                'nik'           => $data['nik'] ?? $guru->nik,
                 'tempat_lahir'  => $data['tempat_lahir'] ?? $guru->tempat_lahir,
                 'tanggal_lahir' => $data['tanggal_lahir'] ?? $guru->tanggal_lahir,
                 'nomor_telepon' => $data['nomor_telepon'] ?? $guru->nomor_telepon,
@@ -166,6 +166,4 @@ class UserService
     {
         return User::count();
     }
-
-   
 }
