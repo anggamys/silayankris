@@ -98,7 +98,7 @@
                 {{-- Guru --}}
                 <label class="form-label">Guru</label>
                 <input type="text" class="form-control mb-2"
-                    value="{{ $perTahun->guru->user->name ?? ($perTahun->guru->nip ?? 'Guru #' . $perTahun->guru->id) }}"
+                    value="{{ $perTahun->guru->user->name ?? ($perTahun->guru->nik ?? 'Guru #' . $perTahun->guru->id) }}"
                     readonly>
 
                 <input type="hidden" name="guru_id" value="{{ old('guru_id', $perTahun->guru_id) }}">

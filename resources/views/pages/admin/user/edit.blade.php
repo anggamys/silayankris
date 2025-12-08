@@ -137,12 +137,12 @@
                 <div id="form-guru" style="display:none;">
                     <hr>
                     <h5>Data Guru</h5>
-                    {{-- NIP --}}
+                    {{-- NIK --}}
                     <div class="mb-3">
-                        <label for="nip" class="form-label">NIP</label>
-                        <input type="text" name="nip" class="form-control"
-                            value="{{ old('nip', $user->guru->nip ?? '') }}">
-                        @error('nip')
+                        <label for="nik" class="form-label">NIK</label>
+                        <input type="text" name="nik" class="form-control"
+                            value="{{ old('nik', $user->guru->nik ?? '') }}">
+                        @error('nik')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>

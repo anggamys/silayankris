@@ -93,8 +93,8 @@
 				<h5>Data Guru</h5>
 
 				<div class="mb-3">
-					<label class="form-label">NIP</label>
-					<input type="text" class="form-control" value="{{ $user->guru->nip }}" readonly>
+					<label class="form-label">NIK</label>
+					<input type="text" class="form-control" value="{{ $user->guru->nik }}" readonly>
 				</div>
 
 				<div class="mb-3">
