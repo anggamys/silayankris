@@ -193,8 +193,8 @@
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label">NIP</label>
-                                    <input type="text" class="form-control" value="{{ $guru->nip }}" readonly>
+                                    <label class="form-label">NIK</label>
+                                    <input type="text" class="form-control" value="{{ $guru->nik }}" readonly>
                                 </div>
 
                                 <div class="col-md-4 mb-3">

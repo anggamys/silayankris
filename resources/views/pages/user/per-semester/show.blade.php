@@ -126,8 +126,8 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">NIP</label>
-                        <input type="text" class="form-control" value="{{ $perSemester->guru->nip }}" readonly>
+                        <label class="form-label">NIK</label>
+                        <input type="text" class="form-control" value="{{ $perSemester->guru->nik }}" readonly>
                     </div>
 
                     <div class="col-md-4">
