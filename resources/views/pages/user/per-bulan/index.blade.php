@@ -284,7 +284,7 @@
                     {{-- SUBMIT --}}
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-send me-1"></i> Kirim
+                            <i class="bi bi-send me-1"></i> Simpan
                         </button>
                     </div>
 
