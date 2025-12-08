@@ -253,7 +253,7 @@
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL SEKSI</h6>
+                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL</h6>
                     <h2 class="fw-bold mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="section-subtitle fs-6 mb-0">
@@ -290,7 +290,7 @@
 
                             <div class="p-4 mb-2 rounded" style="background: #f7f9fb; border-left: 4px solid #008080;">
                                 <p class="text-muted lh-lg mb-0" style="font-size: 0.97rem;">
-                                    Selamat datang di Website Resmi <strong>Seksi Penyelenggara Kristen</strong>
+                                    Selamat datang di Website Resmi <strong>Penyelenggara Kristen</strong>
                                     Kantor Kementerian Agama Kota Surabaya. Melalui platform ini, kami menyediakan
                                     pusat informasi dan layanan terpadu yang berkaitan dengan pendidikan, pembinaan,
                                     serta pelayanan umat Kristen di Kota Surabaya.
@@ -318,7 +318,7 @@
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PELAYANAN SEKSI</h6>
+                    <h6 class="fw-bold text-secondary mb-1">JENIS LAYANAN</h6>
                     <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="text-muted fs-6 mb-0">
@@ -352,12 +352,12 @@
                                 <div class="mb-3">
                                     <i class="bi bi-person-badge fs-1 text-primary"></i>
                                 </div>
-                                <h5 class="card-title fw-bold mb-3">Pelayanan TPG Guru</h5>
+                                <h5 class="card-title fw-bold mb-3">Layanan TPG Guru</h5>
                                 <p class="card-text text-muted">
                                     Unggah dan kelola berkas Tunjangan Profesi Guru secara online.
                                 </p>
                                 <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-primary mt-3">
-                                    Masuk ke Pelayanan TPG Guru
+                                    Masuk ke Layanan TPG Guru
                                 </a>
                             </div>
                         </div>
@@ -374,11 +374,11 @@
 
                 {{-- Header --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI SEKSI</h6>
+                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI</h6>
                     <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="text-muted fs-6 mb-0">
-                        Daftar pegawai yang bertugas pada Seksi Penyelenggara Kristen.
+                        Daftar pegawai yang bertugas pada Penyelenggara Kristen.
                     </p>
                 </div>
 
