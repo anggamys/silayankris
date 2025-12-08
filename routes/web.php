@@ -56,10 +56,16 @@ Route::middleware(['auth', 'role:admin'])
         // Gereja routes
         Route::resource('gereja', GerejaController::class)->names('gereja');
 
-        Route::get('/get-kecamatan', [LokasiController::class, 'getKecamatan'])->name('lokasi.kecamatan');
-        Route::get('/get-kelurahan', [LokasiController::class, 'getKelurahan'])->name('lokasi.kelurahan');
+     
     });
 
+    Route::middleware(['auth'])
+    ->prefix('admin')
+    ->as('admin.')
+    ->group(function () {
+           Route::get('/get-kecamatan', [LokasiController::class, 'getKecamatan'])->name('lokasi.kecamatan');
+        Route::get('/get-kelurahan', [LokasiController::class, 'getKelurahan'])->name('lokasi.kelurahan');
+    });
     // Resourceful routes for PerBulan for users
 Route::middleware(['auth', 'role:guru'])
     ->prefix('user/perbulan')
