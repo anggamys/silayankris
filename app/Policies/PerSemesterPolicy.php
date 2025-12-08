@@ -4,12 +4,11 @@ namespace App\Policies;
 
 use App\Models\PerSemester;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class PerSemesterPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Admin boleh lihat semua
      */
     public function viewAny(User $user): bool
     {
@@ -17,48 +16,57 @@ class PerSemesterPolicy
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Guru boleh lihat berkas miliknya sendiri
+     * Admin boleh lihat semua
      */
     public function view(User $user, PerSemester $perSemester): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        if ($user->role === User::ROLE_ADMIN) {
+            return true;
+        }
+
+        return $user->role === User::ROLE_GURU
+            && $user->guru
+            && $perSemester->guru_id === $user->guru->id;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Guru & admin boleh membuat berkas
      */
     public function create(User $user): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        return in_array($user->role, [User::ROLE_ADMIN, User::ROLE_GURU]);
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Admin boleh update
+     * Guru hanya boleh update berkas miliknya & status menunggu/ditolak
      */
     public function update(User $user, PerSemester $perSemester): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        if ($user->role === User::ROLE_ADMIN) {
+            return true;
+        }
+
+        return $user->role === User::ROLE_GURU
+            && $user->guru
+            && $perSemester->guru_id === $user->guru->id
+            && in_array($perSemester->status, ['menunggu', 'ditolak', 'belum lengkap']);
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Hanya admin boleh delete
      */
     public function delete(User $user, PerSemester $perSemester): bool
     {
         return $user->role === User::ROLE_ADMIN;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
     public function restore(User $user, PerSemester $perSemester): bool
     {
         return $user->role === User::ROLE_ADMIN;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
     public function forceDelete(User $user, PerSemester $perSemester): bool
     {
         return $user->role === User::ROLE_ADMIN;

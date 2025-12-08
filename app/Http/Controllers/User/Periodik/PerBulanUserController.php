@@ -21,7 +21,9 @@ class PerBulanUserController extends Controller
         $this->service = $service;
     }
 
-    // RIWAYAT
+    // ================================
+    // INDEX / RIWAYAT
+    // ================================
     public function index()
     {
         $user = Auth::user();
@@ -31,18 +33,42 @@ class PerBulanUserController extends Controller
             return back()->with('error', 'Anda belum terhubung sebagai guru.');
         }
 
-        $items = $guru->perBulans()->latest()->get();
+        // Ambil data dengan pagination 5 per halaman
+        $items = $guru->perBulans()
+            ->latest()
+            ->paginate(5)
+            ->withQueryString();
 
-        return view('pages.user.per-bulan.index', compact('items', 'user', 'guru'));
+        // Data untuk pagination info
+        $currentPage = $items->currentPage();
+        $lastPage    = $items->lastPage();
+        $perPage     = $items->perPage();
+        $total       = $items->total();
+
+        return view('pages.user.per-bulan.index', compact(
+            'items',
+            'user',
+            'guru',
+            'currentPage',
+            'lastPage',
+            'perPage',
+            'total'
+        ));
     }
 
+
+    // ================================
     // FORM UPLOAD
+    // ================================
     public function create()
     {
         return view('pages.user.per-bulan.create');
     }
 
+    // ================================
     // STORE DATA
+    // ================================
+
     public function store(PerBulanRequest $request)
     {
         $validated = $request->validated();
@@ -51,25 +77,43 @@ class PerBulanUserController extends Controller
         $guru = $user->guru;
 
         if (!$guru) {
-            return redirect()->back()->with('error', 'Anda belum terhubung sebagai guru.');
+            return back()->with('error', 'Anda belum terhubung sebagai guru.');
+        }
+
+        // =====================================
+        // VALIDASI WAJIB: Minimal upload 1 file
+        // =====================================
+        $hasFile =
+            $request->hasFile('daftar_gaji_path') ||
+            $request->hasFile('daftar_hadir_path') ||
+            $request->hasFile('rekening_bank_path') ||
+            $request->hasFile('ceklist_berkas');
+
+        if (!$hasFile) {
+            return back()->withInput()->with('error', 'Anda harus mengupload minimal 1 berkas.');
         }
 
         try {
-            // Ensure the record is associated with the current guru and default status
+            // Set guru_id
             $validated['guru_id'] = $guru->id;
-            if (! isset($validated['status'])) {
-                $validated['status'] = 'menunggu';
-            }
 
-            // If the form sends a combined `periode` (YYYY-MM), keep it but also
-            // populate bulan/tahun for consistency with admin flow.
-            if (! empty($validated['periode']) && is_string($validated['periode'])) {
-                try {
-                    [$tahun, $bulan] = explode('-', $validated['periode']);
-                    $validated['bulan'] = (int) $bulan;
-                    $validated['tahun'] = (int) $tahun;
-                } catch (\Throwable $ex) {
-                    // ignore parse errors; service/model can still handle `periode` column
+            // Tentukan status awal (lengkap / belum lengkap)
+            $files = [
+                $validated['daftar_gaji_path'] ?? null,
+                $validated['daftar_hadir_path'] ?? null,
+                $validated['rekening_bank_path'] ?? null,
+                $validated['ceklist_berkas'] ?? null,
+            ];
+
+            $validated['status'] = in_array(null, $files)
+                ? 'belum lengkap'
+                : 'menunggu';
+
+            // Merge UploadedFile instances into validated data so the service
+            // receives real UploadedFile objects instead of PHP temp names.
+            foreach (['daftar_gaji_path', 'daftar_hadir_path', 'rekening_bank_path', 'ceklist_berkas'] as $fileKey) {
+                if ($request->hasFile($fileKey)) {
+                    $validated[$fileKey] = $request->file($fileKey);
                 }
             }
 
@@ -77,30 +121,44 @@ class PerBulanUserController extends Controller
 
             return redirect()->route('user.perbulan.index')
                 ->with('success', 'Berkas bulanan berhasil diunggah.');
+
         } catch (\Throwable $e) {
             Log::error('PerBulanUser store error: ' . $e->getMessage());
-            return redirect()->back()->withInput()
-                ->with('error', 'Terjadi kesalahan saat menyimpan. Silakan coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan.');
         }
     }
 
+
+    // ================================
     // DETAIL
+    // ================================
     public function show(PerBulan $perBulan)
     {
         Gate::authorize('view', $perBulan);
 
-        return view('pages.user.per-bulan.show', compact('perBulan'));
+        $user = Auth::user();
+        $guru = $user->guru;
+
+        return view('pages.user.per-bulan.show', compact('perBulan', 'user', 'guru'));
     }
 
-    // FORM EDIT
+    // ================================
+    // FORM EDIT / LENGKAPI
+    // ================================
     public function edit(PerBulan $perBulan)
     {
         Gate::authorize('update', $perBulan);
 
-        return view('pages.user.per-bulan.edit', compact('perBulan'));
+        $user = Auth::user();
+        $guru = $user->guru;
+
+        return view('pages.user.per-bulan.edit', compact('perBulan', 'user', 'guru'));
     }
 
+
+    // ================================
     // UPDATE / REVISI
+    // ================================
     public function update(Request $request, PerBulan $perBulan)
     {
         Gate::authorize('update', $perBulan);
@@ -109,23 +167,71 @@ class PerBulanUserController extends Controller
             'daftar_gaji_path'   => 'nullable|mimes:pdf',
             'daftar_hadir_path'  => 'nullable|mimes:pdf',
             'rekening_bank_path' => 'nullable|mimes:pdf',
+            'ceklist_berkas'     => 'nullable|mimes:pdf',
         ]);
 
-        try {
-            $this->service->update($request->all(), $perBulan, Auth::user());
+        // CEK MINIMAL SATU FILE DIUPLOAD
+        $hasFile =
+            $request->hasFile('daftar_gaji_path') ||
+            $request->hasFile('daftar_hadir_path') ||
+            $request->hasFile('rekening_bank_path') ||
+            $request->hasFile('ceklist_berkas');
 
-            // Reset status setelah revisi
+        if (!$hasFile) {
+            return back()
+                ->withInput()
+                ->with('error', 'Minimal unggah satu berkas untuk memperbarui.');
+        }
+
+        try {
+            $data = $request->only([
+                'daftar_gaji_path',
+                'daftar_hadir_path',
+                'rekening_bank_path',
+                'ceklist_berkas',
+                'catatan'
+            ]);
+
+            // pastikan hanya upload file yang valid
+            foreach ($data as $key => $value) {
+                if (!$request->hasFile($key)) {
+                    unset($data[$key]); // jangan sampai string temp file ikut
+                } else {
+                    $data[$key] = $request->file($key);
+                }
+            }
+
+
+            $this->service->update($data, $perBulan, Auth::user());
+
+            // Refresh model so we read updated file paths saved by the service
+            $perBulan->refresh();
+
+            // CEK KELENGKAPAN BARU SETELAH UPDATE
+            $fields = [
+                $perBulan->daftar_gaji_path,
+                $perBulan->daftar_hadir_path,
+                $perBulan->rekening_bank_path,
+                $perBulan->ceklist_berkas,
+            ];
+
+            $newStatus = in_array(null, $fields)
+                ? 'belum lengkap'
+                : 'menunggu';
+
             $perBulan->update([
-                'status'  => 'menunggu',
-                'catatan' => null, 
+                'status'  => $newStatus,
+                'catatan' => null,
             ]);
 
             return redirect()->route('user.perbulan.index')
-                ->with('success', 'Berkas berhasil diperbarui. Menunggu pemeriksaan admin.');
+                ->with('success', 'Berkas berhasil diperbarui.');
 
         } catch (\Throwable $e) {
             Log::error('PerBulanUser update error: ' . $e->getMessage());
-            return redirect()->back()->withInput()
+
+            return back()
+                ->withInput()
                 ->with('error', 'Terjadi kesalahan saat memperbarui berkas.');
         }
     }

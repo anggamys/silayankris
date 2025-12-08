@@ -51,7 +51,7 @@ class PerBulanPolicy
         return $user->role === User::ROLE_GURU
             && $user->guru
             && $perBulan->guru_id === $user->guru->id
-            && in_array($perBulan->status, ['menunggu', 'ditolak']);
+            && in_array($perBulan->status, ['menunggu', 'ditolak', 'belum lengkap']);
     }
 
     /**

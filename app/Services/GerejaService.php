@@ -57,6 +57,25 @@ class GerejaService
     }
 
     /**
+     * Get total count of Gereja records.
+     */
+    public function getCountGereja(): int
+    {
+        return Gereja::count();
+    }
+
+
+    /**
+     * Get gereja by user ID (for staff gereja).
+     */
+    public function getGerejaByUserId(string $userId): ?Gereja
+    {
+        return Gereja::whereHas('staffGereja', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->first();
+    }
+
+    /**
      * Format JSON fields before saving.
      */
     private function prepareJsonFields(array &$data): void

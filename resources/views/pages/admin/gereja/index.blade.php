@@ -27,7 +27,8 @@
                         </div>
 
                         <a href="{{ url()->current() }}"
-                            class="btn btn-outline-secondary border d-flex align-items-center gap-1">
+                            class="btn btn-secondary border d-flex align-items-center gap-1
+          {{ request('search') ? '' : 'd-none' }}">
                             <i class="bi bi-arrow-counterclockwise"></i>
                             <span>Reset</span>
                         </a>
@@ -47,7 +48,7 @@
             {{-- Tabel Gereja --}}
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover">
-                    <thead>
+                    <thead class="">
                         <tr class="text-start">
                             <th>#</th>
                             <th>Nama Gereja</th>
@@ -75,8 +76,7 @@
                                         : '-' }}
                                 </td>
 
-
-
+                                <!-- Aksi -->
                                 <td class="d-flex justify-content-center gap-2">
                                     <a href="{{ route('admin.gereja.show', $item) }}"
                                         class="btn btn-sm btn-info text-light">

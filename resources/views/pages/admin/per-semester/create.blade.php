@@ -5,13 +5,13 @@
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.per-semester.index') }}" class="text-decoration-none">Data Periode
             Per Semester</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Tambah Data Periode Per Semester</li>
+    <li class="breadcrumb-item active" aria-current="page">Tambah Data Periode Per-semester</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periode Per Semester</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periode Per-semester</h5>
             <a href="{{ route('admin.per-semester.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
             </a>
@@ -67,20 +67,6 @@
                         @enderror
                     </div>
                 @endforeach
-
-                {{-- Status --}}
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <x-select-input id="status" label="Status" name="status" :options="[
-                        'menunggu' => 'Menunggu',
-                        'diterima' => 'Diterima',
-                        'ditolak' => 'Ditolak',
-                    ]"
-                        placeholder="Pilih Status" :selected="old('status')" :searchable="false" required />
-                    @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 {{-- Catatan --}}
                 <div class="mb-3">
