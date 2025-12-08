@@ -235,9 +235,9 @@
                                 secara cepat, mudah, dan terintegrasi dalam satu sistem.
                             </p>
                             <a href="/layanan">
-                            <button class="btn btn-primary btn-lg">
-                                Masuk Layanan
-                            </button>
+                                <button class="btn btn-primary btn-lg">
+                                    Masuk Layanan
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -276,7 +276,8 @@
 
                         {{-- Konten --}}
                         <div class="col-lg-8 col-md-12 col-sm-12 ">
-                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1" style="letter-spacing: .5px;">
+                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1"
+                                style="letter-spacing: .5px;">
                                 Penyelenggara Kristen
                             </p>
 
@@ -381,7 +382,7 @@
                     </p>
                 </div>
 
-                <div class="row g-4">
+                <div class="row g-4 justify-content-center">
 
                     {{-- CARD 1 --}}
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
@@ -427,6 +428,38 @@
                         </div>
                     </div>
 
+                    {{-- CARD 5 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 5</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                        </div>
+                    </div>
+
+                    {{-- CARD 6 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/32.png') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 6</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                        </div>
+                    </div>
+
+                    {{-- CARD 7 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 7</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
