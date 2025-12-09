@@ -1,17 +1,17 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Tambah Data Periodik Persemester')
+@section('title', 'Tambah Data Periode Per Semester')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.per-semester.index') }}" class="text-decoration-none">Data Periodik
-            Persemester</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Tambah Data Periodik Persemester</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.per-semester.index') }}" class="text-decoration-none">Data Periode
+            Per Semester</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Tambah Data Periode Per-semester</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periodik Persemester</h5>
+            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periode Per-semester</h5>
             <a href="{{ route('admin.per-semester.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
             </a>
@@ -22,21 +22,21 @@
                 @csrf
 
                 {{-- Guru --}}
-                <div class="mb-3">
+                <div id="guru_id">
                     <label for="guru_id" class="form-label">Guru</label>
-                    <select name="guru_id" id="guru_id" class="form-select" required>
-                        @if ($gurus->isEmpty())
-                            <option value="" disabled>Tidak ada data guru tersedia</option>
-                        @else
-                            <option value="" disabled selected>Pilih Guru</option>
-                            @foreach ($gurus as $guru)
-                                <option value="{{ $guru->id }}">{{ $guru->user->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('guru_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-2 guru-group"
+                        style="display: flex; flex-direction: row; justify-content: space-between;">
+                        @php
+                            $guruOptions = $gurus
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nik ?? 'Guru #' . $g->id)])
+                                ->toArray();
+                        @endphp
+                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"
+                            dropdownClass="flex-fill" required />
+                        @error('guru_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 {{-- Dokumen-dokumen Persemester (semua optional sesuai Request) --}}
@@ -59,26 +59,14 @@
                 @foreach ($fields as $name => $label)
                     <div class="mb-3">
                         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
-                        <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control" accept=".pdf">
+                        <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control"
+                            accept=".pdf">
                         <hint class="form-text">Format file harus .pdf</hint>
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 @endforeach
-
-                {{-- Status --}}
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select" required>
-                        <option value="menunggu">Menunggu</option>
-                        <option value="diterima">Diterima</option>
-                        <option value="ditolak">Ditolak</option>
-                    </select>
-                    @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 {{-- Catatan --}}
                 <div class="mb-3">

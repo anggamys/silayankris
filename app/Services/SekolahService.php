@@ -54,4 +54,12 @@ class SekolahService
     {
         $sekolah->delete();
     }
+
+    /**
+     * Get total count of Sekolah records.
+     */
+    public function getCountSekolah(): int
+    {
+        return Sekolah::count();
+    }
 }

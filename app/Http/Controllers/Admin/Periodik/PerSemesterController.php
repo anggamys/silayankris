@@ -53,7 +53,11 @@ class PerSemesterController extends Controller
     {
         Gate::authorize('create', PerSemester::class);
 
-        $gurus = Guru::all();
+        // Only include gurus whose related user is active. Eager load user to avoid N+1.
+        $gurus = Guru::with('user')
+            ->whereHas('user', function ($q) {
+                $q->where('status', User::STATUS_AKTIF);
+            })->get();
 
         return view('pages.admin.per-semester.create', compact('gurus'));
     }
@@ -67,14 +71,64 @@ class PerSemesterController extends Controller
 
         $user = Auth::user();
 
-        // Jika pengguna admin, set pemilik berkas sebagai user milik guru yang dipilih
         if ($user->role === User::ROLE_ADMIN) {
             $guru = Guru::findOrFail($request['guru_id']);
-            $user = $guru->user ?? $user; // pass the related User model to the service, fallback to current user
+            $user = $guru->user ?? $user; 
         }
 
-        $this->service->store($request->all(), $user);
-        return redirect()->route('admin.per-semester.index')->with('success', 'Data per semester berhasil disimpan');
+        // Wajib upload minimal 1 file
+        $hasFile =
+            $request->hasFile('sk_pbm_path') ||
+            $request->hasFile('sk_terakhir_berkala_path') ||
+            $request->hasFile('sp_bersedia_mengembalikan_path') ||
+            $request->hasFile('sp_kebenaran_berkas_path') ||
+            $request->hasFile('sp_perangkat_pembelajaran_path') ||
+            $request->hasFile('keaktifan_simpatika_path') ||
+            $request->hasFile('berkas_s28a_path') ||
+            $request->hasFile('berkas_skmt_path') ||
+            $request->hasFile('permohonan_skbk_path') ||
+            $request->hasFile('berkas_skbk_path') ||
+            $request->hasFile('sertifikat_pengembangan_diri_path');
+        
+        if (!$hasFile) {
+            return back()->withInput()->with('error', 'Anda harus mengupload minimal 1 berkas.');
+        }
+
+        $data = $request->validated();
+
+        // Masukkan UploadedFile ke data
+        foreach (['sk_pbm_path','sk_terakhir_berkala_path','sp_bersedia_mengembalikan_path','sp_perangkat_pembelajaran_path','keaktifan_simpatika_path','berkas_s28a_path','berkas_skmt_path','permohonan_skbk_path','berkas_skbk_path','sertifikat_pengembangan_diri_path'] as $fileKey) {
+            if ($request->hasFile($fileKey)) {
+                $data[$fileKey] = $request->file($fileKey);
+            }
+        }       
+
+        // ==============================
+        // STATUS OTOMATIS
+        // ==============================
+        $uploadedCount = collect([
+            $request->file('sk_pbm_path'),
+            $request->file('sk_terakhir_berkala_path'),
+            $request->file('sp_bersedia_mengembalikan_path'),
+            $request->file('sp_kebenaran_berkas_path'),
+            $request->file('sp_perangkat_pembelajaran_path'),
+            $request->file('keaktifan_simpatika_path'),
+            $request->file('berkas_s28a_path'),
+            $request->file('berkas_skmt_path'),
+            $request->file('permohonan_skbk_path'),
+            $request->file('berkas_skbk_path'),
+            $request->file('sertifikat_pengembangan_diri_path'),
+        ])->filter()->count();
+
+        $data['status'] = $uploadedCount < 11
+            ? 'belum lengkap'
+            : 'diterima';
+
+        // Simpan data
+        $this->service->store($data, $user);    
+
+        return redirect()->route('admin.per-semester.index')
+            ->with('success', 'Data per semester berhasil disimpan');
     }
 
     /**
@@ -98,9 +152,36 @@ class PerSemesterController extends Controller
 
         $perSemester->load('guru.user');
 
-        $gurus = Guru::all();
+        // Only include gurus whose related user is active. Eager load user to avoid N+1.
+        $gurus = Guru::with('user')
+            ->whereHas('user', function  ($q) {
+                $q->where('status', User::STATUS_AKTIF);
+            })->get();
 
-        return view('pages.admin.per-semester.edit', compact('perSemester', 'gurus'));
+        // =====================================
+        // CEK KELENGKAPAN FILE (0-11 file)
+        // =====================================
+        $uploaded = collect([
+            $perSemester->sk_pbm_path,
+            $perSemester->sk_terakhir_berkala_path,
+            $perSemester->sp_bersedia_mengembalikan_path,
+            $perSemester->sp_kebenaran_berkas_path,
+            $perSemester->sp_perangkat_pembelajaran_path,
+            $perSemester->keaktifan_simpatika_path,
+            $perSemester->berkas_s28a_path,
+            $perSemester->berkas_skmt_path,
+            $perSemester->permohonan_skbk_path,
+            $perSemester->berkas_skbk_path,
+            $perSemester->sertifikat_pengembangan_diri_path,
+        ])->filter()->count();
+
+        // Jika file belum lengkap -> hanya boleh status "belum lengkap"
+        // Jika sudah lengkap -> boleh semua status
+        $statusOptions = $uploaded < 11
+            ? ['belum lengkap' => 'Belum Lengkap']
+            : ['menunggu' => 'Menunggu', 'diterima' => 'Diterima', 'ditolak' => 'Ditolak', 'belum lengkap' => 'Belum Lengkap'];
+
+        return view('pages.admin.per-semester.edit', compact('perSemester', 'gurus', 'statusOptions'));
     }
 
     /**
@@ -118,7 +199,79 @@ class PerSemesterController extends Controller
             $user = $guru->user ?? $user; // pass the related User model to the service, fallback to current user
         }
 
-        $this->service->update($request->all(), $perSemester, $user);
+        // Ambil data validasi
+        $data = $request->validated();
+
+        // Masukkan UploadedFile ke data
+        foreach (['sk_pbm_path','sk_terakhir_path','sk_berkala_path','sp_bersedia_mengembalikan_path','sp_perangkat_pembelajaran_path','keaktifan_simpatika_path','berkas_s28a_path','berkas_skmt_path','permohonan_skbk_path','berkas_skbk_path','sertifikat_pengembangan_diri_path'] as $key) {
+            if ($request->hasFile($key)) {
+
+                // masukkan UploadedFile ke $data
+                $data[$key] = $request->file($key);
+
+            } else {
+
+                // Jangan override file lama dengan null
+                unset($data[$key]);
+            }
+        }
+
+
+        // Update data & file
+        $this->service->update($data, $perSemester, $user);
+
+        // Refresh agar data terbaru terbaca (khususnya path file)
+        $perSemester->refresh();
+
+        // Hitung file yang sudah lengkap
+        $uploaded = collect([
+            $perSemester->sk_pbm_path,
+            $perSemester->sk_terakhir_berkala_path,
+            $perSemester->sp_bersedia_mengembalikan_path,
+            $perSemester->sp_kebenaran_berkas_path,
+            $perSemester->sp_perangkat_pembelajaran_path,
+            $perSemester->keaktifan_simpatika_path,
+            $perSemester->berkas_s28a_path,
+            $perSemester->berkas_skmt_path,
+            $perSemester->permohonan_skbk_path,
+            $perSemester->berkas_skbk_path,
+            $perSemester->sertifikat_pengembangan_diri_path,
+        ])->filter()->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | LOGIKA STATUS OTOMATIS — FINAL
+        |--------------------------------------------------------------------------
+        |
+        | 1. Jika file < 11 → status = "belum lengkap"
+        | 2. Jika file lengkap dan admin belum memilih status (karena dropdown
+        |    disable), maka status otomatis "diterima"
+        | 3. Jika file lengkap dan admin memilih manual, gunakan status pilihan admin
+        |
+        */
+
+        if ($uploaded < 11) {
+            // File belum lengkap → fix
+            $perSemester->status = 'belum lengkap';
+        } else {
+            // File lengkap → cek apakah admin pilih status atau tidak
+            $requestedStatus = $request->status;
+
+            // Jika request membawa "belum lengkap", itu berasal dari input hidden
+            $isAutoHidden = ($requestedStatus === "belum lengkap");
+
+            if ($isAutoHidden) {
+                // Jika sebelumnya status belum pernah final → auto diterima
+                if (!in_array($perSemester->status, ['diterima', 'ditolak', 'menunggu'])) {
+                    $perSemester->status = 'diterima';
+                }
+            } else {
+                // Admin memilih status secara manual
+                $perSemester->status = $requestedStatus;
+            }
+        }
+
+        $perSemester->save();
 
         return redirect()->route('admin.per-semester.index')
             ->with('success', 'Data per semester berhasil diperbarui');

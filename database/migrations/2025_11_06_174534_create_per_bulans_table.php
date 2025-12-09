@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('per_bulans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('guru_id')->constrained('gurus')->onDelete('cascade');
-            $table->string('daftar_gaji_path');
-            $table->string('daftar_hadir_path');
-            $table->string('rekening_bank_path');
-            $table->string('ceklist_berkas');
-            $table->enum('status', ['menunggu', 'diterima', 'ditolak']);
+            $table->date('periode_per_bulan')->nullable();
+            $table->string('daftar_gaji_path')->nullable();
+            $table->string('daftar_hadir_path')->nullable();
+            $table->string('rekening_bank_path')->nullable();
+            $table->string('ceklist_berkas')->nullable();
+            $table->enum('status', ['menunggu', 'belum lengkap', 'diterima', 'ditolak'])->default('menunggu');
             $table->string('catatan')->nullable();
             $table->timestamps();
         });

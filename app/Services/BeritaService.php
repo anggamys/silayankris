@@ -62,4 +62,15 @@ class BeritaService
     {
         return $berita->delete();
     }
+
+    /**
+     * Get total count of Berita records.
+     */
+    public function getCountBerita(): int
+    {
+        return Berita::count();
+    }
+
+    /** Backward-compatible alias used in some controllers */
+   
 }

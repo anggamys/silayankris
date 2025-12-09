@@ -20,10 +20,11 @@ class PerSemester extends Model
      */
     protected $fillable = [
         'guru_id',
+        'periode_per_semester',
         'sk_pbm_path',
-        'sk_terakhir_path',
-        'sk_berkala_path',
+        'sk_terakhir_berkala_path',
         'sp_bersedia_mengembalikan_path',
+        'sp_kebenaran_berkas_path',
         'sp_perangkat_pembelajaran_path',
         'keaktifan_simpatika_path',
         'berkas_s28a_path',

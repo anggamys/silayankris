@@ -19,6 +19,7 @@ class SelectInput extends Component
     public $ulClass;
     public $selected;
     public $searchable;
+    public $required;
 
     /**
      * Create a new component instance.
@@ -35,6 +36,7 @@ class SelectInput extends Component
         $ulClass = '',
         $selected = null,
         $searchable = true,
+        $required = false
     ) {
         // If id not provided, generate one from name (replace [] for arrays) or uniqid
         if (empty($id)) {
@@ -62,6 +64,7 @@ class SelectInput extends Component
         $this->ulClass = $ulClass;
         $this->selected = $selected;
         $this->searchable = $searchable;
+        $this->required = $required;
     }
 
     /**

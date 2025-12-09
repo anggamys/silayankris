@@ -33,16 +33,16 @@ class UserRequest extends FormRequest
             'nomor_telepon' => ['nullable', 'string', 'max:15'],
             'profile_photo_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_GURU, User::ROLE_STAFF_GEREJA])],
+            'status' => ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])],
         ];
 
         // PASSWORD
         if ($this->isMethod('post')) {
             // CREATE
             $rules['password'] = ['required', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'];
-        } else {
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             // UPDATE
             $rules['password'] = ['nullable', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'];
-            $rules['status'] = ['required', Rule::in([User::STATUS_AKTIF, User::STATUS_NONAKTIF])];
         }
 
 
@@ -50,13 +50,13 @@ class UserRequest extends FormRequest
         // RULES GURU
         if ($this->input('role') === User::ROLE_GURU) {
             $rules = array_merge($rules, [
-                'nip' => [
+                'nik' => [
                     'required',
                     'string',
                     'max:50',
                     $this->isMethod('post')
-                        ? Rule::unique('gurus', 'nip')
-                        : Rule::unique('gurus', 'nip')->ignore(optional($user->guru)->id)
+                        ? Rule::unique('gurus', 'nik')
+                        : Rule::unique('gurus', 'nik')->ignore(optional($user->guru)->id)
                 ],
                 'tempat_lahir' => ['required', 'string', 'max:100'],
                 'tanggal_lahir' => ['required', 'date'],
@@ -81,13 +81,13 @@ class UserRequest extends FormRequest
     {
         $user = $this->route('user');
         $guruRules = [
-            'nip' => [
+            'nik' => [
                 'required',
                 'string',
                 'max:50',
                 $this->isMethod('post')
-                    ? Rule::unique('gurus', 'nip')
-                    : Rule::unique('gurus', 'nip')
+                    ? Rule::unique('gurus', 'nik')
+                    : Rule::unique('gurus', 'nik')
                     ->ignore(optional($user->guru)->id)
                     ->where(fn($q) => $q->where('user_id', $user->id))
             ],

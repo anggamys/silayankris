@@ -73,11 +73,16 @@ let menu, animate;
   // Init helpers & misc
   // --------------------
 
-  // Init BS Tooltip
-  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
+  // Init BS Tooltip (guarded: some pages may not have bootstrap JS available yet)
+  if (typeof window.bootstrap !== 'undefined') {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new window.bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  } else {
+    // graceful fallback: do nothing, avoid throwing ReferenceError
+    // console.warn('Bootstrap JS not available - skipping tooltip initialization');
+  }
 
   // Accordion active class
   const accordionActiveFunction = function (e) {

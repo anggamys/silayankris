@@ -19,8 +19,13 @@ class AuthController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('admin.dashboard', absolute: false));
+        if (Auth::user()->role == 'admin') {
+            return redirect()->intended(route('admin.dashboard', absolute: false));
+        }
+        else {
+            return redirect()->intended(route('home', absolute: false));
+        }
+        
     }
 
     public function destroy(Request $request)

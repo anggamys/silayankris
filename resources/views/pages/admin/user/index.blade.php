@@ -26,7 +26,8 @@
                         </div>
 
                         <a href="{{ url()->current() }}"
-                            class="btn btn-outline-secondary border d-flex align-items-center gap-1">
+                            class="btn btn-secondary border d-flex align-items-center gap-1
+          {{ request('search') ? '' : 'd-none' }}">
                             <i class="bi bi-arrow-counterclockwise"></i>
                             <span>Reset</span>
                         </a>

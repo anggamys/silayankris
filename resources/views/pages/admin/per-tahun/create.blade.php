@@ -1,59 +1,72 @@
 @extends('layouts.appadmin')
 
-@section('title', 'Tambah Data Periodik Pertahun')
+@section('title', 'Tambah Data Periode Per-tahun')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.per-tahun.index') }}" class="text-decoration-none">Data Periodik
-            Pertahun</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Tambah Data Periodik Pertahun</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.per-tahun.index') }}" class="text-decoration-none">Data Periode
+            Per-tahun</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Tambah Data Periode Per-tahun</li>
 @endsection
 
 @section('content')
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periodik Pertahun</h5>
-
+            <h5 class="mb-0 fw-semibold fs-4">Tambah Data Periode Per-tahun</h5>
             <a href="{{ route('admin.per-tahun.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
             </a>
         </div>
+
         <div class="card-body">
             <form action="{{ route('admin.per-tahun.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 {{-- Guru --}}
-                <div class="mb-3">
+                <div id="guru_id">
                     <label for="guru_id" class="form-label">Guru</label>
-                    <select name="guru_id" id="guru_id" class="form-select" required>
-                        @if ($gurus->isEmpty())
-                            <option value="" disabled>Tidak ada data guru tersedia</option>
-                        @else
-                            <option value="" disabled selected>Pilih Guru</option>
-                            @foreach ($gurus as $guru)
-                                <option value="{{ $guru->id }}">{{ $guru->user->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('guru_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-2 guru-group"
+                        style="display: flex; flex-direction: row; justify-content: space-between;">
+                        @php
+                            $guruOptions = $gurus
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nik ?? 'Guru #' . $g->id)])
+                                ->toArray();
+                        @endphp
+                        <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"
+                            dropdownClass="flex-fill" required />
+                        @error('guru_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
+                {{-- Periode Per-tahun --}}
+                <div class="mb-3">
+                    <label for="periode_per_tahun" class="form-label">Periode Per-tahun</label>
+                    <div class="mb-3">
+                        <x-select-input label="Periode" name="periode_per_tahun" :options="collect(range(now()->subYears(10)->year, now()->year))
+                            ->mapWithKeys(fn($year) => [$year => $year])
+                            ->toArray()" required
+                            placeholder="Pilih Periode" :value="old('periode_per_tahun')" />
+                        @error('periode_per_tahun')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Dokumen-dokumen Per-tahun (semua optional sesuai Request) --}}
                 @php
                     $fields = [
                         'biodata_path' => 'Biodata (File)',
                         'sertifikat_pendidik_path' => 'Sertifikat Pendidik (File)',
-                        'sk_dirjen_path' => 'SK Dirjen (File)',
-                        'sk_kelulusan_path' => 'SK Kelulusan (File)',
-                        'nrg_path' => 'NRG (File)',
-                        'nuptk_path' => 'NUPTK (File)',
-                        'npwp_path' => 'NPWP (File)',
-                        'ktp_path' => 'KTP (File)',
+                        'sk_dirjen_kelulusan_path' => 'Surat Keterangan Dirjen atau Kelulusan (File)',
+                        'nrg_path' => 'NRG - Nomor Registrasi Guru (File)',
+                        'nuptk_path' => 'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan (File)',
+                        'npwp_path' => 'NPWP - Nomor Pokok Wajib Pajak (File)',
+                        'ktp_path' => 'KTP - Kartu Tanda Penduduk (File)',
                         'ijazah_sd_path' => 'Ijazah SD (File)',
                         'ijazah_smp_path' => 'Ijazah SMP (File)',
-                        'ijazah_sma_path' => 'Ijazah SMA (File)',
-                        'sk_pns_path' => 'SK PNS (File)',
-                        'sk_gty_path' => 'SK GTY (File)',
+                        'ijazah_sma_pga_path' => 'Ijazah SMA atau PGA (File)',
+                        'sk_pns_gty_path' => 'Surat Keterangan PNS atau GTY (File)',
                         'ijazah_s1_path' => 'Ijazah S1 (File)',
                         'transkrip_nilai_s1_path' => 'Transkrip Nilai S1 (File)',
                     ];
@@ -62,26 +75,14 @@
                 @foreach ($fields as $name => $label)
                     <div class="mb-3">
                         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
-                        <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control" accept=".pdf">
+                        <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control"
+                            accept=".pdf">
                         <hint class="form-text">Format file harus .pdf</hint>
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 @endforeach
-
-                {{-- Status --}}
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select" required>
-                        <option value="menunggu">Menunggu</option>
-                        <option value="diterima">Diterima</option>
-                        <option value="ditolak">Ditolak</option>
-                    </select>
-                    @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 {{-- Catatan --}}
                 <div class="mb-3">

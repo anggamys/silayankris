@@ -57,8 +57,12 @@ class FileUploads
     return $filePath;
   }
 
-  public static function delete(string $path, bool $localDelete = false)
+  public static function delete(?string $path, bool $localDelete = false)
   {
+    if (empty($path)) {
+      return;
+    }
+
     if ($localDelete) {
       $path = preg_replace('/\.[a-zA-Z0-9]+$/', '.jpg', $path);
       $fullPath = storage_path('app/public/' . $path);

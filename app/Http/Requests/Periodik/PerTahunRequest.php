@@ -24,25 +24,37 @@ class PerTahunRequest extends FormRequest
     {
 
         $rules = [
-            'guru_id' => ['required', 'exists:gurus,id'],
-            'biodata_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sertifikat_pendidik_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sk_dirjen_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sk_kelulusan_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'nrg_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'nuptk_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'npwp_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'ktp_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'ijazah_sd_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'ijazah_smp_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'ijazah_sma_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sk_pns_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'sk_gty_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'ijazah_s1_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'transkrip_nilai_s1_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
-            'status' => ['nullable', 'in:menunggu,diterima,ditolak'],
+            // Accept year format from the HTML year input (e.g. 2025)
+            'periode_per_tahun' => ['sometimes', 'date_format:Y'],
+            'biodata_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sertifikat_pendidik_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sk_dirjen_kelulusan_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'nrg_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'nuptk_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'npwp_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'ktp_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'ijazah_sd_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'ijazah_smp_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'ijazah_sma_pga_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'sk_pns_gty_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'ijazah_s1_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
+            'transkrip_nilai_s1_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'], // max 5 mb
             'catatan' => ['nullable', 'string', 'max:1000'],
         ];
+
+        // Jika pengguna yang diautentikasi merupakan guru terkait, mereka tidak perlu
+        // memasukkan `guru_id` atau `status` — controller akan mengaturnya di sisi server.
+        $user = Auth::user();
+        if ($user && $user->guru) {
+            // Izinkan controller untuk mengatur nilai-nilai ini; tidak perlu diminta dari form.
+            $rules['guru_id'] = ['nullable', 'exists:gurus,id'];
+            $rules['status'] = ['nullable', 'in:menunggu,diterima,ditolak,belum lengkap'];
+        } else {
+            // Untuk admin atau pemanggil lain, harus menyertakan guru_id dan status secara eksplisit.
+            $rules['guru_id'] = ['required', 'exists:gurus,id'];
+            $rules['status'] = ['nullable', 'in:menunggu,diterima,ditolak,belum lengkap'];
+        }
+
         return $rules;
     }
 }
