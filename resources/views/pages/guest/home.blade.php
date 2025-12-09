@@ -235,9 +235,9 @@
                                 secara cepat, mudah, dan terintegrasi dalam satu sistem.
                             </p>
                             <a href="/layanan">
-                            <button class="btn btn-primary btn-lg">
-                                Masuk Layanan
-                            </button>
+                                <button class="btn btn-primary btn-lg">
+                                    Masuk Layanan
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -253,7 +253,7 @@
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL SEKSI</h6>
+                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL</h6>
                     <h2 class="fw-bold mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="section-subtitle fs-6 mb-0">
@@ -276,7 +276,8 @@
 
                         {{-- Konten --}}
                         <div class="col-lg-8 col-md-12 col-sm-12 ">
-                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1" style="letter-spacing: .5px;">
+                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1"
+                                style="letter-spacing: .5px;">
                                 Penyelenggara Kristen
                             </p>
 
@@ -289,7 +290,7 @@
 
                             <div class="p-4 mb-2 rounded" style="background: #f7f9fb; border-left: 4px solid #008080;">
                                 <p class="text-muted lh-lg mb-0" style="font-size: 0.97rem;">
-                                    Selamat datang di Website Resmi <strong>Seksi Penyelenggara Kristen</strong>
+                                    Selamat datang di Website Resmi <strong>Penyelenggara Kristen</strong>
                                     Kantor Kementerian Agama Kota Surabaya. Melalui platform ini, kami menyediakan
                                     pusat informasi dan layanan terpadu yang berkaitan dengan pendidikan, pembinaan,
                                     serta pelayanan umat Kristen di Kota Surabaya.
@@ -317,7 +318,7 @@
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PELAYANAN SEKSI</h6>
+                    <h6 class="fw-bold text-secondary mb-1">JENIS LAYANAN</h6>
                     <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="text-muted fs-6 mb-0">
@@ -351,12 +352,12 @@
                                 <div class="mb-3">
                                     <i class="bi bi-person-badge fs-1 text-primary"></i>
                                 </div>
-                                <h5 class="card-title fw-bold mb-3">Pelayanan TPG Guru</h5>
+                                <h5 class="card-title fw-bold mb-3">Layanan TPG Guru</h5>
                                 <p class="card-text text-muted">
                                     Unggah dan kelola berkas Tunjangan Profesi Guru secara online.
                                 </p>
                                 <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-primary mt-3">
-                                    Masuk ke Pelayanan TPG Guru
+                                    Masuk ke Layanan TPG Guru
                                 </a>
                             </div>
                         </div>
@@ -373,15 +374,15 @@
 
                 {{-- Header --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI SEKSI</h6>
+                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI</h6>
                     <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="text-muted fs-6 mb-0">
-                        Daftar pegawai yang bertugas pada Seksi Penyelenggara Kristen.
+                        Daftar pegawai yang bertugas pada Penyelenggara Kristen.
                     </p>
                 </div>
 
-                <div class="row g-4">
+                <div class="row g-4 justify-content-center">
 
                     {{-- CARD 1 --}}
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
@@ -427,6 +428,38 @@
                         </div>
                     </div>
 
+                    {{-- CARD 5 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 5</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                        </div>
+                    </div>
+
+                    {{-- CARD 6 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/32.png') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 6</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                        </div>
+                    </div>
+
+                    {{-- CARD 7 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Nama Pegawai 7</h5>
+                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

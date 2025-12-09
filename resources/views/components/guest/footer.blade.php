@@ -111,7 +111,7 @@
                             <i class="bi bi-geo-alt-fill"></i>
                         </div>
                         <div class="footer-info-text">
-                            Jl. Masjid Agung Timur No. 4  
+                            Jl. Masjid Agung Timur No. 4
                             <br>Surabaya, Jawa Timur
                         </div>
                     </div>
@@ -171,9 +171,9 @@
         <hr class="footer-divider my-4">
 
         <p class="footer-bottom text-center">
-            &copy; 2025 <strong>SILAYANKRIS</strong> — Kementerian Agama Kota Surabaya.  
+            &copy; 2025 <strong>SILAYANKRIS</strong> - Kementerian Agama Kota Surabaya.
             <br>Seluruh hak cipta dilindungi.
         </p>
-      
+
     </div>
 </footer>
