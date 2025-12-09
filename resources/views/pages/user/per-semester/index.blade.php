@@ -264,57 +264,79 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Surat Keterangan PBM (PDF)</label>
-                                <input type="file" name="sk_pbm_path" class="form-control" accept=".pdf">
+                                <input type="file" name="sk_pbm_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Surat Keterangan Terakhir atau Berkala (PDF)</label>
-                                <input type="file" name="sk_terakhir_berkala_path" class="form-control" accept=".pdf">
+                                <input type="file" name="sk_terakhir_berkala_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Surat Pernyataan Bersedia Mengembalikan (PDF)</label>
-                                <input type="file" name="sp_bersedia_mengembalikan_path" class="form-control" accept=".pdf">
+                                <input type="file" name="sp_bersedia_mengembalikan_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Surat Pernyataan Kebenaran Berkas (PDF)</label>
-                                <input type="file" name="sp_kebenaran_berkas_path" class="form-control" accept=".pdf">
+                                <input type="file" name="sp_kebenaran_berkas_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Surat Pernyataan Perangkat Pembelajaran (PDF)</label>
-                                <input type="file" name="sp_perangkat_pembelajaran_path" class="form-control" accept=".pdf">
+                                <input type="file" name="sp_perangkat_pembelajaran_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Bukti Keaktifan Simpatika (PDF)</label>
-                                <input type="file" name="keaktifan_simpatika_path" class="form-control" accept=".pdf">
-                            </div> 
+                                <input type="file" name="keaktifan_simpatika_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
+                            </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Berkas S-28a (PDF)</label>
-                                <input type="file" name="berkas_s28a_path" class="form-control" accept=".pdf">
+                                <input type="file" name="berkas_s28a_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Berkas SKMT (PDF)</label>
-                                <input type="file" name="berkas_skmt_path" class="form-control" accept=".pdf">
+                                <input type="file" name="berkas_skmt_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Permohonan SKBK (PDF)</label>
-                                <input type="file" name="permohonan_skbk_path" class="form-control" accept=".pdf">
+                                <input type="file" name="permohonan_skbk_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Berkas SKBK (PDF)</label>
-                                <input type="file" name="berkas_skbk_path" class="form-control" accept=".pdf">
+                                <input type="file" name="berkas_skbk_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Sertifikat Pengembangan Diri (PDF)</label>
-                                <input type="file" name="sertifikat_pengembangan_diri_path" class="form-control" accept=".pdf">
+                                <input type="file" name="sertifikat_pengembangan_diri_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
                         </div>
                     </div>
