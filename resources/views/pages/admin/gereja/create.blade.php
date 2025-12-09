@@ -139,10 +139,10 @@
 
                 {{-- Nama Pendeta --}}
                 <div class="mb-3">
-                    <label class="form-label">Nama Pendeta</label>
+                    <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
                     <input type="text" name="nama_pendeta"
                         class="form-control @error('nama_pendeta') is-invalid @enderror" value="{{ old('nama_pendeta') }}"
-                        placeholder="Masukkan nama pendeta">
+                        placeholder="Masukkan nama pendeta atau gembala sidang">
 
                     @error('nama_pendeta')
                         <div class="invalid-feedback">{{ $message }}</div>

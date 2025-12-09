@@ -61,7 +61,6 @@ class UserService
         // === JIKA STAFF GEREJA ===
         if ($user->role === User::ROLE_STAFF_GEREJA) {
             $user->staffGereja()->create([
-                'gembala_sidang' => $data['gembala_sidang'],
                 'gereja_id'      => $data['gereja_id'],
                 'nomor_telepon'  => $data['nomor_telepon'],
             ]);
@@ -118,7 +117,6 @@ class UserService
             $staff = $user->staffGereja ?: $user->staffGereja()->create([]);
 
             $staff->update([
-                'gembala_sidang' => $data['gembala_sidang'] ?? $staff->gembala_sidang,
                 'gereja_id'      => $data['gereja_id'] ?? $staff->gereja_id,
                 'nomor_telepon'  => $data['nomor_telepon'] ?? $staff->nomor_telepon,
             ]);
