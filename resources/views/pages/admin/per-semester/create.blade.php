@@ -39,6 +39,19 @@
                     </div>
                 </div>
 
+                {{-- Periode Per-semester --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Periode</label>
+                    <input type="text" name="periode_per_semester" class="form-control"
+                        placeholder="Contoh: Semester Genap 2024/2025"
+                        value="{{ old('periode_per_semester') }}" required>
+                    <small class="text-muted d-block mt-1">Contoh: Semester Genap 2025/2026</small>
+
+                    @error('periode_per_semester')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 {{-- Dokumen-dokumen Persemester (semua optional sesuai Request) --}}
                 @php
                     $fields = [
@@ -60,10 +73,10 @@
                     <div class="mb-3">
                         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
                         <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control"
-                            accept=".pdf">
-                        <hint class="form-text">Format file harus .pdf</hint>
+                            accept=".pdf" placeholder="Pilih file PDF">
+                        <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                         @error($name)
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                 @endforeach

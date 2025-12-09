@@ -76,10 +76,10 @@
                     <div class="mb-3">
                         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
                         <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control"
-                            accept=".pdf">
-                        <hint class="form-text">Format file harus .pdf</hint>
+                            accept=".pdf" placeholder="Pilih file PDF">
+                        <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                         @error($name)
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                 @endforeach

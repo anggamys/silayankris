@@ -98,8 +98,26 @@
                 <input type="text" class="form-control" value="{{ ucfirst($gereja->status_gereja) }}" readonly>
             </div>
 
-            <h5 class="mt-4 fw-bold">Data Jemaat</h5>
+            {{-- Sertifikat Sekolah Minggu --}}
+            <div class="mb-3">
+                <label class="form-label">Sertifikat Sekolah Minggu (File)</label>
 
+                <input type="text" class="form-control mb-2" value="{{ basename($gereja->sertifikat_sekolah_minggu_path) ?? 'Belum ada file' }}" readonly>
+
+                <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                    @if ($gereja->sertifikat_sekolah_minggu_path)
+                        <a href="{{ route('gdrive.preview', ['path' => $gereja->sertifikat_sekolah_minggu_path]) }}" target="_blank"
+                            class="text-primary text-decoration-underline">
+                            Lihat File
+                        </a>
+                    @else
+                        <span class="text-muted">Belum ada file</span>
+                    @endif
+                </div>
+            </div>
+            
+            {{-- JSON Fields --}}
+            <h5 class="mt-4 fw-bold">Data Jemaat</h5>
             <div class="row">
                 {{-- Jumlah Umat --}}
                 <div class="col-md-4 mb-3">
