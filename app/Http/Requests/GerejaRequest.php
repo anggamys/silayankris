@@ -43,7 +43,8 @@ class GerejaRequest extends FormRequest
             'jarak_gereja_lain' => ['nullable', 'string', 'max:255'],
             'email' => ['nullable', 'email', 'max:255'],
             'nomor_telepon' => ['nullable', 'string', 'max:20'],
-            'nama_pendeta' => ['nullable', 'string', 'max:255'],
+            'nama_pendeta' => ['nullable', 'array'],
+            'nama_pendeta.*' => ['nullable', 'string', 'max:255'],
             'status_gereja' => ['nullable', 'in:permanen,semi-permanen,tidak-permanen'],
             'sertifikat_sekolah_minggu_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
 
