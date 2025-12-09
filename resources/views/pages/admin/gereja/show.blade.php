@@ -88,7 +88,7 @@
 
             {{-- Nama Pendeta --}}
             <div class="mb-3">
-                <label class="form-label">Nama Pendeta</label>
+                <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
                 <input type="text" class="form-control" value="{{ $gereja->nama_pendeta }}" readonly>
             </div>
 

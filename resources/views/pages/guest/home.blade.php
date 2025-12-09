@@ -227,11 +227,11 @@
                                 Selamat Datang di SILAYANKRIS
                             </h1>
                             <p class="fs-5 mb-3">
-                                Sistem Informasi Layanan Penyelenggara Kristen
+                                <strong>SILAYANKRIS</strong> - Sistem Informasi Layanan Penyelenggara Kristen <br>
                                 Kementerian Agama Kota Surabaya
                             </p>
-                            <p class="text-muted mb-4">
-                                Akses berbagai layanan dan informasi penyelenggaraan Kristen
+                            <p class="text-muted mb-5">
+                                Akses berbagai layanan dan informasi penyelenggaraan Kristen <br>
                                 secara cepat, mudah, dan terintegrasi dalam satu sistem.
                             </p>
                             <a href="/layanan">
@@ -247,6 +247,7 @@
                 </div>
             </div>
         </section>
+        
         {{-- PROFIL SECTION --}}
         <section class="profil-section" data-aos="fade-up">
             <div class="container py-5">
@@ -344,8 +345,8 @@
                             </div>
                         </div>
                     </div>
+                    
                     {{-- Card 2 --}}
-
                     <div class="col-md-6 mb-4 fade-up">
                         <div class="card border-0 shadow-lg h-100 pelayanan-card">
                             <div class="card-body text-center py-5">
@@ -368,17 +369,18 @@
         </section>
 
         {{-- PEGAWAI SECTION --}}
-        <section class="pegawai-section bg-light" data-aos="fade-up" data-aos-delay="0">
-
+        <section class="pegawai-section" style="background-color: #008080; color: #ffffff;" data-aos="fade-up" data-aos-delay="0">
             <div class="container py-5 border-bottom">
 
                 {{-- Header --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI</h6>
-                    <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
-                    <div class="partner-divider mx-auto mb-3"></div>
-                    <p class="text-muted fs-6 mb-0">
-                        Daftar pegawai yang bertugas pada Penyelenggara Kristen.
+                    <h6 class="fw-bold mb-1 text-uppercase">PEGAWAI</h6>
+                    <h2 class="fw-bold mb-2">Penyelenggara Kristen</h2>
+                    <div class="partner-divider mx-auto mb-3" style="background: #ffc107;"></div>
+                    <p class="text-muted fs-6 mb-0" style="color: rgba(255, 255, 255, 0.8);">
+                        <span style="color: rgba(255,255,255,0.8);">
+                            Daftar pegawai yang bertugas pada Penyelenggara Kristen.
+                        </span>
                     </p>
                 </div>
 

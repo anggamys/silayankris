@@ -126,11 +126,6 @@
 				<h5>Data Pengurus Gereja</h5>
 
 				<div class="mb-3">
-					<label class="form-label">Gembala Sidang</label>
-					<input type="text" class="form-control" value="{{ $user->staffGereja->gembala_sidang }}" readonly>
-				</div>
-
-				<div class="mb-3">
 					<label class="form-label">Gereja</label>
 					<select class="form-select" disabled>
 						@if (is_array($gerejas))

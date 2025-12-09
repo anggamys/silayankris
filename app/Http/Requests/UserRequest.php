@@ -68,7 +68,6 @@ class UserRequest extends FormRequest
         // RULES STAFF GEREJA
         if ($this->input('role') === User::ROLE_STAFF_GEREJA) {
             $rules = array_merge($rules, [
-                'gembala_sidang' => ['required', 'string', 'max:100'],
                 'gereja_id' => ['required', 'exists:gerejas,id'],
             ]);
         }
@@ -103,7 +102,6 @@ class UserRequest extends FormRequest
     public function staffGerejaRules(): array
     {
         $staffGerejaRules = [
-            'gembala_sidang' => ['required', 'string', 'max:100'],
             'gereja_id' => ['required', 'exists:gerejas,id'],
         ];
 

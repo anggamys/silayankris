@@ -212,16 +212,6 @@
                 <div id="form-gereja" style="display:none;">
                     <hr>
                     <h5>Data Pengurus Gereja</h5>
-                    {{-- GEMBALA SIDANG --}}
-                    <div class="mb-3">
-                        <label for="gembala_sidang" class="form-label">Gembala Sidang</label>
-                        <input type="text" name="gembala_sidang" class="form-control"
-                            value="{{ old('gembala_sidang', $user->staffGereja->gembala_sidang ?? '') }}">
-                        @error('gembala_sidang')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     {{-- GEREJA --}}
                     <div class="mb-3">
                         <label for="gereja_id" class="form-label">Gereja</label>
