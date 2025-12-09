@@ -137,12 +137,41 @@
                 {{-- Nama Pendeta atau Gembala Sidang --}}
                 <div class="mb-3">
                     <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
-                    <input type="text" name="nama_pendeta"
-                        class="form-control @error('nama_pendeta') is-invalid @enderror"
-                        value="{{ old('nama_pendeta', $gereja->nama_pendeta) }}"
-                        placeholder="Masukkan nama pendeta atau gembala sidang">
+                    <div id="pendeta-wrapper">
+                        @php
+                            $oldPendetas = old('nama_pendeta', $gereja->nama_pendeta ?? []);
+                            if (!is_array($oldPendetas)) {
+                                $oldPendetas = $oldPendetas ? [$oldPendetas] : [''];
+                            }
+                            if (empty($oldPendetas)) {
+                                $oldPendetas = [''];
+                            }
+                        @endphp
+
+                        @foreach ($oldPendetas as $idx => $nama)
+                            <div class="mb-2 pendeta-group d-flex gap-2 align-items-center">
+                                <input type="text" name="nama_pendeta[]"
+                                    class="form-control @error('nama_pendeta.' . $idx) is-invalid @enderror"
+                                    value="{{ $nama }}" placeholder="Masukkan nama pendeta atau gembala sidang">
+                                <button type="button" class="btn btn-danger remove-pendeta"
+                                    {{ $idx === 0 ? 'disabled' : '' }}>
+                                    &times;
+                                </button>
+                                @error('nama_pendeta.' . $idx)
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <small class="text-muted mb-2" style="display: block;">Untuk menambah pendeta atau
+                        gembala sidang, silakan klik tombol <strong>"Tambah"</strong> di bawah</small>
+                    <button type="button" id="add-pendeta" class="btn btn-outline-secondary rounded px-3 py-1">
+                        <i class="bi bi-plus-lg"></i> Tambah
+                    </button>
+
                     @error('nama_pendeta')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -490,6 +519,46 @@
                         });
                     });
                 }
+
+                // ============ Multiple Pendeta Input ============
+                function clonePendetaGroup() {
+                    const wrapper = document.getElementById('pendeta-wrapper');
+                    const base = wrapper.querySelector('.pendeta-group');
+                    const clone = base.cloneNode(true);
+
+                    // Reset input value
+                    const input = clone.querySelector('input[name="nama_pendeta[]"]');
+                    if (input) {
+                        input.value = '';
+                        input.classList.remove('is-invalid');
+                    }
+
+                    // Enable remove button
+                    const removeBtn = clone.querySelector('.remove-pendeta');
+                    if (removeBtn) removeBtn.disabled = false;
+
+                    // Remove error message if exists
+                    const errorDiv = clone.querySelector('.invalid-feedback');
+                    if (errorDiv) errorDiv.remove();
+
+                    wrapper.appendChild(clone);
+                }
+
+                // Bind add button
+                const addPendetaBtn = document.getElementById('add-pendeta');
+                if (addPendetaBtn) {
+                    addPendetaBtn.addEventListener('click', clonePendetaGroup);
+                }
+
+                // Delegated remove button
+                document.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-pendeta')) {
+                        const groups = document.querySelectorAll('.pendeta-group');
+                        if (groups.length > 1) {
+                            e.target.closest('.pendeta-group').remove();
+                        }
+                    }
+                });
             </script>
 
         </div>

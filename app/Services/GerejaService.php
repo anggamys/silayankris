@@ -43,6 +43,16 @@ class GerejaService
             );
         }
 
+        // Filter empty pendeta names
+        if (isset($data['nama_pendeta']) && is_array($data['nama_pendeta'])) {
+            $data['nama_pendeta'] = array_filter($data['nama_pendeta'], function ($name) {
+                return !empty(trim($name));
+            });
+            if (empty($data['nama_pendeta'])) {
+                $data['nama_pendeta'] = null;
+            }
+        }
+
         $this->prepareJsonFields($data);
 
         return Gereja::create($data);
@@ -70,6 +80,16 @@ class GerejaService
         } else {
             // Don't update file path if no new file was uploaded
             unset($data['sertifikat_sekolah_minggu_path']);
+        }
+
+        // Filter empty pendeta names
+        if (isset($data['nama_pendeta']) && is_array($data['nama_pendeta'])) {
+            $data['nama_pendeta'] = array_filter($data['nama_pendeta'], function ($name) {
+                return !empty(trim($name));
+            });
+            if (empty($data['nama_pendeta'])) {
+                $data['nama_pendeta'] = null;
+            }
         }
 
         $this->prepareJsonFields($data);

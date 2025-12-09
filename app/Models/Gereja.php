@@ -42,6 +42,7 @@ class Gereja extends Model
      * Casting tipe data otomatis (JSON & tanggal)
      */
     protected $casts = [
+        'nama_pendeta' => 'array',
         'jumlah_umat' => 'array',
         'jumlah_majelis' => 'array',
         'jumlah_guru_sekolah_minggu' => 'array',

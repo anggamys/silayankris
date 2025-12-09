@@ -89,7 +89,15 @@
             {{-- Nama Pendeta --}}
             <div class="mb-3">
                 <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
-                <input type="text" class="form-control" value="{{ $gereja->nama_pendeta }}" readonly>
+                @if ($gereja->nama_pendeta && is_array($gereja->nama_pendeta) && count($gereja->nama_pendeta) > 0)
+                    @foreach ($gereja->nama_pendeta as $pendeta)
+                        @if (!empty($pendeta))
+                            <input type="text" class="form-control mb-1" value="{{ $pendeta }}" readonly>
+                        @endif
+                    @endforeach
+                @else
+                    <input type="text" class="form-control" value="-" readonly>
+                @endif
             </div>
 
             {{-- Status --}}

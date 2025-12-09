@@ -157,15 +157,45 @@
                             </div>
                         </div>
 
-                        {{-- Nama Pendeta --}}
+                        {{-- Nama Pendeta atau Gembala Sidang --}}
                         <div class="mb-3">
                             <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
-                            <input type="text" name="nama_pendeta"
-                                class="form-control @error('nama_pendeta') is-invalid @enderror"
-                                value="{{ old('nama_pendeta', $gereja->nama_pendeta) }}"
-                                placeholder="Masukkan nama pendeta atau gembala sidang">
+                            <div id="pendeta-wrapper">
+                                @php
+                                    $oldPendetas = old('nama_pendeta', $gereja->nama_pendeta ?? []);
+                                    if (!is_array($oldPendetas)) {
+                                        $oldPendetas = $oldPendetas ? [$oldPendetas] : [''];
+                                    }
+                                    if (empty($oldPendetas)) {
+                                        $oldPendetas = [''];
+                                    }
+                                @endphp
+
+                                @foreach ($oldPendetas as $idx => $nama)
+                                    <div class="mb-2 pendeta-group d-flex gap-2 align-items-center">
+                                        <input type="text" name="nama_pendeta[]"
+                                            class="form-control @error('nama_pendeta.' . $idx) is-invalid @enderror"
+                                            value="{{ $nama }}"
+                                            placeholder="Masukkan nama pendeta atau gembala sidang">
+                                        <button type="button" class="btn btn-danger remove-pendeta"
+                                            {{ $idx === 0 ? 'disabled' : '' }}>
+                                            &times;
+                                        </button>
+                                        @error('nama_pendeta.' . $idx)
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <small id="pendeta-help-text" class="text-muted mb-2" style="display: none;">Untuk menambah
+                                pendeta atau gembala sidang, silakan klik tombol <strong>"Tambah"</strong> di bawah</small>
+                            <button type="button" id="add-pendeta" class="btn btn-outline-secondary rounded px-3 py-1">
+                                <i class="bi bi-plus-lg"></i> Tambah
+                            </button>
+
                             @error('nama_pendeta')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -393,17 +423,24 @@
                         // Fungsi untuk toggle form state
                         function toggleFormState(enable) {
                             const form = document.getElementById('formGereja');
-                            const inputs = form.querySelectorAll('input, select, textarea');
-                            const dropdownButtons = form.querySelectorAll('[id^="btn-"]');
                             const btnEdit = document.getElementById('btnEdit');
                             const btnCancel = document.getElementById('btnCancel');
                             const btnSubmit = document.getElementById('btnSubmit');
 
-                            inputs.forEach(input => {
+                            // Toggle readonly untuk text/date/email/number inputs
+                            form.querySelectorAll(
+                                'input[type="text"], input[type="date"], input[type="email"], input[type="number"], textarea').forEach(
+                                input => {
+                                    input.readOnly = !enable;
+                                });
+
+                            // Toggle file input
+                            form.querySelectorAll('input[type="file"]').forEach(input => {
                                 input.disabled = !enable;
                             });
 
-                            // Disable/enable dropdown buttons
+                            // Toggle dropdown buttons
+                            const dropdownButtons = form.querySelectorAll('[id^="btn-"]');
                             dropdownButtons.forEach(btn => {
                                 btn.disabled = !enable;
                                 if (!enable) {
@@ -416,6 +453,19 @@
                                     btn.style.opacity = '1';
                                 }
                             });
+
+                            // Toggle pendeta buttons (add/remove)
+                            const pendetaButtons = form.querySelectorAll('#add-pendeta, .remove-pendeta');
+                            pendetaButtons.forEach(btn => {
+                                btn.disabled = !enable;
+                                btn.style.display = enable ? 'inline-block' : 'none';
+                            });
+
+                            // Toggle pendeta help text
+                            const pendetaHelpText = document.getElementById('pendeta-help-text');
+                            if (pendetaHelpText) {
+                                pendetaHelpText.style.display = enable ? 'block' : 'none';
+                            }
 
                             if (enable) {
                                 btnEdit.style.display = 'none';
@@ -444,6 +494,10 @@
                         document.addEventListener('DOMContentLoaded', function() {
                             toggleFormState(false);
                         });
+
+                        // Langsung hide help text saat script load
+                        const helpText = document.getElementById('pendeta-help-text');
+                        if (helpText) helpText.style.display = 'none';
 
                         // Handle Dropdown Kota
                         document.addEventListener("DOMContentLoaded", function() {
@@ -573,6 +627,46 @@
                                 });
                             });
                         }
+
+                        // ============ Multiple Pendeta Input ============
+                        function clonePendetaGroup() {
+                            const wrapper = document.getElementById('pendeta-wrapper');
+                            const base = wrapper.querySelector('.pendeta-group');
+                            const clone = base.cloneNode(true);
+
+                            // Reset input value
+                            const input = clone.querySelector('input[name="nama_pendeta[]"]');
+                            if (input) {
+                                input.value = '';
+                                input.classList.remove('is-invalid');
+                            }
+
+                            // Enable remove button
+                            const removeBtn = clone.querySelector('.remove-pendeta');
+                            if (removeBtn) removeBtn.disabled = false;
+
+                            // Remove error message if exists
+                            const errorDiv = clone.querySelector('.invalid-feedback');
+                            if (errorDiv) errorDiv.remove();
+
+                            wrapper.appendChild(clone);
+                        }
+
+                        // Bind add button
+                        const addPendetaBtn = document.getElementById('add-pendeta');
+                        if (addPendetaBtn) {
+                            addPendetaBtn.addEventListener('click', clonePendetaGroup);
+                        }
+
+                        // Delegated remove button
+                        document.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('remove-pendeta')) {
+                                const groups = document.querySelectorAll('.pendeta-group');
+                                if (groups.length > 1) {
+                                    e.target.closest('.pendeta-group').remove();
+                                }
+                            }
+                        });
                     </script>
                 @else
                     <div class="alert alert-warning">
