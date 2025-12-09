@@ -91,6 +91,12 @@ class GerejaController extends Controller
     {
         Gate::authorize('update', $gereja);
         $data = $request->validated();
+        
+        // Pastikan field file tidak diupdate jika tidak ada file baru yang diupload
+        if (!$request->hasFile('sertifikat_sekolah_minggu_path')) {
+            unset($data['sertifikat_sekolah_minggu_path']);
+        }
+        
         $this->service->update($gereja, $data);
         return redirect()->route('admin.gereja.index')->with('success', 'Gereja berhasil diperbarui!');
     }
@@ -129,6 +135,12 @@ class GerejaController extends Controller
         }
 
         $data = $request->validated();
+        
+        // Pastikan field file tidak diupdate jika tidak ada file baru yang diupload
+        if (!$request->hasFile('sertifikat_sekolah_minggu_path')) {
+            unset($data['sertifikat_sekolah_minggu_path']);
+        }
+        
         $this->service->update($gereja, $data);
         
         return redirect()->route('user.gereja.index')->with('success', 'Data gereja berhasil diperbarui!');

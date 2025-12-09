@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Gereja;
+use App\Utils\FileUploads;
+use Illuminate\Http\UploadedFile;
 
 class GerejaService
 {
@@ -31,6 +33,16 @@ class GerejaService
      */
     public function store(array $data): Gereja
     {
+        // Handle file upload
+        if (isset($data['sertifikat_sekolah_minggu_path']) && $data['sertifikat_sekolah_minggu_path'] instanceof UploadedFile) {
+            $data['sertifikat_sekolah_minggu_path'] = FileUploads::upload(
+                $data['sertifikat_sekolah_minggu_path'],
+                'gerejas',
+                'sertifikat_sekolah_minggu',
+                $data['nama']
+            );
+        }
+
         $this->prepareJsonFields($data);
 
         return Gereja::create($data);
@@ -41,6 +53,25 @@ class GerejaService
      */
     public function update(Gereja $gereja, array $data): Gereja
     {
+        // Handle file upload and deletion
+        if (isset($data['sertifikat_sekolah_minggu_path']) && $data['sertifikat_sekolah_minggu_path'] instanceof UploadedFile) {
+            // Delete old file if exists
+            if ($gereja->sertifikat_sekolah_minggu_path) {
+                FileUploads::delete($gereja->sertifikat_sekolah_minggu_path);
+            }
+
+            // Upload new file
+            $data['sertifikat_sekolah_minggu_path'] = FileUploads::upload(
+                $data['sertifikat_sekolah_minggu_path'],
+                'gerejas',
+                'sertifikat_sekolah_minggu',
+                $data['nama']
+            );
+        } else {
+            // Don't update file path if no new file was uploaded
+            unset($data['sertifikat_sekolah_minggu_path']);
+        }
+
         $this->prepareJsonFields($data);
 
         $gereja->update($data);

@@ -30,6 +30,7 @@ class Gereja extends Model
         'nomor_telepon',
         'nama_pendeta',
         'status_gereja',
+        'sertifikat_sekolah_minggu_path',
         'jumlah_umat',
         'jumlah_majelis',
         'jumlah_guru_sekolah_minggu',

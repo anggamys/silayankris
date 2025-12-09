@@ -165,6 +165,17 @@
                     @enderror
                 </div>
 
+                {{-- Sertifikat Sekolah Minggu --}}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Sertifikat Sekolah Minggu (PDF)</label>
+                    <input type="file" name="sertifikat_sekolah_minggu_path" class="form-control" accept=".pdf"
+                        placeholder="Pilih file PDF">
+                    <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
+                    @error('sertifikat_sekolah_minggu_path')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 {{-- JSON Fields --}}
                 <h5 class="mt-4 fw-bold">Data Jemaat</h5>
                 <div class="row">
