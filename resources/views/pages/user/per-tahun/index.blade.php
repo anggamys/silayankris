@@ -125,15 +125,10 @@
 
                                     {{-- AKSI --}}
                                     <td>
-                                        @if ($isIncomplete && $item->status !== 'ditolak')
+                                        @if ($isIncomplete || $item->status === 'ditolak')
                                             <a href="{{ route('user.pertahun.edit', $item) }}"
                                                 class="btn btn-sm btn-warning text-white">
                                                 <i class="bi bi-pencil"></i> Lengkapi
-                                            </a>
-                                        @elseif ($item->status === 'ditolak')
-                                            <a href="{{ route('user.pertahun.show', $item) }}"
-                                                class="btn btn-sm btn-primary">
-                                                <i class="bi bi-eye"></i> Buka
                                             </a>
                                         @else
                                             <a href="{{ route('user.pertahun.show', $item) }}"
