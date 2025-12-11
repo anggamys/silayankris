@@ -276,7 +276,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Surat Keterangan Dirjen atau Kelulusan (PDF)</label>
+                                <label class="form-label fw-semibold">Surat Keputusan Dirjen atau Kelulusan (PDF)</label>
                                 <input type="file" name="sk_dirjen_kelulusan_path" class="form-control"
                                     accept=".pdf" placeholder="Pilih file PDF">
                                 <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
@@ -333,7 +333,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Surat Keterangan PNS atau GTY (PDF)</label>
+                                <label class="form-label fw-semibold">Surat Keputusan PNS atau GTY (PDF)</label>
                                 <input type="file" name="sk_pns_gty_path" class="form-control" accept=".pdf"
                                     placeholder="Pilih file PDF">
                                 <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>

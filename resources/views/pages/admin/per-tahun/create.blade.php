@@ -58,7 +58,7 @@
                     $fields = [
                         'biodata_path' => 'Biodata (File)',
                         'sertifikat_pendidik_path' => 'Sertifikat Pendidik (File)',
-                        'sk_dirjen_kelulusan_path' => 'Surat Keterangan Dirjen atau Kelulusan (File)',
+                        'sk_dirjen_kelulusan_path' => 'Surat Keputusan Dirjen atau Kelulusan (File)',
                         'nrg_path' => 'NRG - Nomor Registrasi Guru (File)',
                         'nuptk_path' => 'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan (File)',
                         'npwp_path' => 'NPWP - Nomor Pokok Wajib Pajak (File)',
@@ -66,7 +66,7 @@
                         'ijazah_sd_path' => 'Ijazah SD (File)',
                         'ijazah_smp_path' => 'Ijazah SMP (File)',
                         'ijazah_sma_pga_path' => 'Ijazah SMA atau PGA (File)',
-                        'sk_pns_gty_path' => 'Surat Keterangan PNS atau GTY (File)',
+                        'sk_pns_gty_path' => 'Surat Keputusan PNS atau GTY (File)',
                         'ijazah_s1_path' => 'Ijazah S1 (File)',
                         'transkrip_nilai_s1_path' => 'Transkrip Nilai S1 (File)',
                     ];

@@ -188,7 +188,7 @@
                 @foreach ([
             'Biodata' => $perTahun->biodata_path,
             'Sertifikat Pendidik' => $perTahun->sertifikat_pendidik_path,
-            'Surat Keterangan Dirjen atau Kelulusan' => $perTahun->sk_dirjen_kelulusan_path,
+            'Surat Keputusan Dirjen atau Kelulusan' => $perTahun->sk_dirjen_kelulusan_path,
             'NRG - Nomor Registrasi Guru' => $perTahun->nrg_path,
             'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan' => $perTahun->nuptk_path,
             'NPWP - Nomor Pokok Wajib Pajak' => $perTahun->npwp_path,
@@ -196,7 +196,7 @@
             'Ijazah SD' => $perTahun->ijazah_sd_path,
             'Ijazah SMP' => $perTahun->ijazah_smp_path,
             'Ijazah SMA atau PGA' => $perTahun->ijazah_sma_pga_path,
-            'Surat Keterangan PNS atau GTY' => $perTahun->sk_pns_gty_path,
+            'Surat Keputusan PNS atau GTY' => $perTahun->sk_pns_gty_path,
             'Ijazah S1' => $perTahun->ijazah_s1_path,
             'Transkrip Nilai S1' => $perTahun->transkrip_nilai_s1_path,
         ] as $label => $path)

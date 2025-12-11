@@ -115,7 +115,7 @@
                 @foreach ([
             'biodata_path' => 'Biodata',
             'sertifikat_pendidik_path' => 'Sertifikat Pendidik',
-            'sk_dirjen_kelulusan_path' => 'Surat Keterangan Dirjen atau Kelulusan',
+            'sk_dirjen_kelulusan_path' => 'Surat Keputusan Dirjen atau Kelulusan',
             'nrg_path' => 'NRG - Nomor Registrasi Guru',
             'nuptk_path' => 'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan',
             'npwp_path' => 'NPWP - Nomor Pokok Wajib Pajak',
@@ -123,7 +123,7 @@
             'ijazah_sd_path' => 'Ijazah SD',
             'ijazah_smp_path' => 'Ijazah SMP',
             'ijazah_sma_pga_path' => 'Ijazah SMA atau PGA',
-            'sk_pns_gty_path' => 'Surat Keterangan PNS atau GTY',
+            'sk_pns_gty_path' => 'Surat Keputusan PNS atau GTY',
             'ijazah_s1_path' => 'Ijazah S1',
             'transkrip_nilai_s1_path' => 'Transkrip Nilai S1',
         ] as $field => $label)

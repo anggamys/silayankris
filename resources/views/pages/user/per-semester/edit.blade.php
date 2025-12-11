@@ -192,8 +192,8 @@
 
                     @php
                         $files = [
-                            'Surat Keterangan PBM' => $perSemester->sk_pbm_path,
-                            'Surat Keterangan Terakhir atau Berkala' => $perSemester->sk_terakhir_berkala_path,
+                            'Surat Keputusan PBM' => $perSemester->sk_pbm_path,
+                            'Surat Keputusan Terakhir atau Berkala' => $perSemester->sk_terakhir_berkala_path,
                             'Surat Pernyataan Bersedia Mengembalikan' => $perSemester->sp_bersedia_mengembalikan_path,
                             'Surat Pernyataan Kebenaran Berkas' => $perSemester->sp_kebenaran_berkas_path,
                             'Surat Pernyataan Perangkat Pembelajaran' => $perSemester->sp_perangkat_pembelajaran_path,
@@ -209,8 +209,8 @@
                     @foreach ($files as $label => $filePath)
                         @php
                             $fieldName = collect([
-                                'Surat Keterangan PBM' => 'sk_pbm_path',
-                                'Surat Keterangan Terakhir atau Berkala' => 'sk_terakhir_berkala_path',
+                                'Surat Keputusan PBM' => 'sk_pbm_path',
+                                'Surat Keputusan Terakhir atau Berkala' => 'sk_terakhir_berkala_path',
                                 'Surat Pernyataan Bersedia Mengembalikan' => 'sp_bersedia_mengembalikan_path',
                                 'Surat Pernyataan Kebenaran Berkas' => 'sp_kebenaran_berkas_path',
                                 'Surat Pernyataan Perangkat Pembelajaran' => 'sp_perangkat_pembelajaran_path',
