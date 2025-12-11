@@ -258,14 +258,14 @@
                         <div class="card-body">
 
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Surat Keterangan PBM (PDF)</label>
+                                <label class="form-label fw-semibold">Surat Keputusan PBM (PDF)</label>
                                 <input type="file" name="sk_pbm_path" class="form-control" accept=".pdf"
                                     placeholder="Pilih file PDF">
                                 <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Surat Keterangan Terakhir atau Berkala (PDF)</label>
+                                <label class="form-label fw-semibold">Surat Keputusan Terakhir atau Berkala (PDF)</label>
                                 <input type="file" name="sk_terakhir_berkala_path" class="form-control"
                                     accept=".pdf" placeholder="Pilih file PDF">
                                 <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>

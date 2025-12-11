@@ -43,8 +43,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Periode</label>
                     <input type="text" name="periode_per_semester" class="form-control"
-                        placeholder="Contoh: Semester Genap 2024/2025"
-                        value="{{ old('periode_per_semester') }}" required>
+                        placeholder="Contoh: Semester Genap 2024/2025" value="{{ old('periode_per_semester') }}" required>
                     <small class="text-muted d-block mt-1">Contoh: Semester Genap 2025/2026</small>
 
                     @error('periode_per_semester')
@@ -55,17 +54,17 @@
                 {{-- Dokumen-dokumen Persemester (semua optional sesuai Request) --}}
                 @php
                     $fields = [
-                        'sk_pbm_path' => 'SK PBM (File)',
-                        'sk_terakhir_path' => 'SK Terakhir (File)',
-                        'sk_berkala_path' => 'SK Berkala (File)',
-                        'sp_bersedia_mengembalikan_path' => 'Surat Pernyataan Bersedia Mengembalikan (File)',
-                        'sp_perangkat_pembelajaran_path' => 'Surat Pernyataan Perangkat Pembelajaran (File)',
-                        'keaktifan_simpatika_path' => 'Keaktifan Simpatika (File)',
-                        'berkas_s28a_path' => 'Berkas S28a (File)',
-                        'berkas_skmt_path' => 'Berkas SKMT (File)',
-                        'permohonan_skbk_path' => 'Permohonan SKBK (File)',
-                        'berkas_skbk_path' => 'Berkas SKBK (File)',
-                        'sertifikat_pengembangan_diri_path' => 'Sertifikat Pengembangan Diri (File)',
+                        'sk_pbm_path' => 'Surat Keputusan PBM',
+                        'sk_terakhir_berkala_path' => 'Surat Keputusan Terakhir atau Berkala',
+                        'sp_bersedia_mengembalikan_path' => 'Surat Pernyataan Bersedia Mengembalikan',
+                        'sp_kebenaran_berkas_path' => 'Surat Pernyataan Kebenaran Berkas',
+                        'sp_perangkat_pembelajaran_path' => 'Surat Pernyataan Perangkat Pembelajaran',
+                        'keaktifan_simpatika_path' => 'Bukti Keaktifan di Simpatika',
+                        'berkas_s28a_path' => 'Berkas S28a',
+                        'berkas_skmt_path' => 'Berkas SKMT',
+                        'permohonan_skbk_path' => 'Surat Permohonan SKBK',
+                        'berkas_skbk_path' => 'Berkas SKBK',
+                        'sertifikat_pengembangan_diri_path' => 'Sertifikat Pengembangan Diri',
                     ];
                 @endphp
 
