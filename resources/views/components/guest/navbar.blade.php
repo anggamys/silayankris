@@ -191,10 +191,9 @@
     if (auth()->check()) {
         $profilePhoto = auth()->user()->profile_photo_path;
         if ($profilePhoto) {
-            $profilePhotoName = basename($profilePhoto, '.' . pathinfo($profilePhoto, PATHINFO_EXTENSION)) . '.jpg';
-            $profilePhotoPath = public_path('storage/profiles/' . $profilePhotoName);
+            $profilePhotoPath = public_path('storage/' . $profilePhoto);
             if (file_exists($profilePhotoPath)) {
-                $profilePhotoUrl = asset('storage/profiles/' . $profilePhotoName);
+                $profilePhotoUrl = asset('storage/' . $profilePhoto);
             }
         }
         $nameParts = preg_split('/\s+/', trim(auth()->user()->name));
@@ -237,8 +236,8 @@
                     <a data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
                             @if (!empty($profilePhotoUrl))
-                                <img src="{{ $profilePhotoUrl }}" class="rounded-circle w-px-40 h-auto" width="40"
-                                    height="40">
+                                <img src="{{ $profilePhotoUrl }}" class="rounded-circle"
+                                    style="width:40px;height:40px;object-fit:cover;">
                             @else
                                 <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
                                     style="width:40px;height:40px;font-weight:600;background: var(--primary);">
@@ -266,10 +265,9 @@
                             </div>
                         </li>
 
-                        <li><a class="dropdown-item dropdown-user-item" href="#"><i class="bx bx-user"></i> Profil</a>
-                        </li>
-                        <li><a class="dropdown-item dropdown-user-item" href="#"><i class="bx bx-cog"></i>
-                                Pengaturan</a></li>
+                        <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i
+                                    class="bx bx-cog"></i>
+                                Pengaturan Akun</a></li>
                         <li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
                                 <i class="bx bx-power-off"></i> Keluar</a>
                         </li>
@@ -332,8 +330,8 @@
                         <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                             <div class="avatar avatar-online me-2">
                                 @if (!empty($profilePhotoUrl))
-                                    <img src="{{ $profilePhotoUrl }}" class="rounded-circle w-px-40 h-auto" width="38"
-                                        height="38">
+                                    <img src="{{ $profilePhotoUrl }}" class="rounded-circle"
+                                        style="width:40px;height:40px;object-fit:cover;">
                                 @else
                                     <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
                                         style="width:40px;height:40px;font-weight:600;background: var(--primary);">
@@ -359,10 +357,9 @@
                                 </div>
                             </li>
 
-                            <li><a class="dropdown-item dropdown-user-item" href="#"><i class="bx bx-user"></i>
-                                    Profil</a></li>
-                            <li><a class="dropdown-item dropdown-user-item" href="#"><i class="bx bx-cog"></i>
-                                    Pengaturan</a></li>
+                            <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i
+                                        class="bx bx-cog"></i>
+                                    Pengaturan Akun</a></li>
                             <li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}"><i
                                         class="bx bx-power-off"></i> Keluar</a></li>
                         </ul>

@@ -84,46 +84,18 @@
                                         class="btn btn-sm btn-warning text-light">
                                         <i class="bx bx-pencil"></i> Ubah
                                     </a>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modalCenter{{ $user->id }}">
-                                        <i class="bx bx-trash"></i> Hapus
-                                    </button>
-                                    
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalCenter{{ $user->id }}" tabindex="-1"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        Apakah anda yakin ingin menghapus
-                                                        <strong>{{ Str::limit($user->name, 15, '...') }}</strong> ?
-                                                    </p>
 
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">
-                                                            Tidak
-                                                        </button>
-                                                        <form action="{{ route('admin.users.destroy', $user) }}"
-                                                            method="POST" onsubmit=" ">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-danger">
-                                                                <i class="bx bx-trash"></i> Hapus
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @if (auth()->id() !== $user->id)
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modalCenter{{ $user->id }}">
+                                            <i class="bx bx-trash"></i> Hapus
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-secondary btn-sm" disabled
+                                            title="Tidak dapat menghapus akun sendiri">
+                                            <i class="bx bx-trash"></i> Hapus
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -137,6 +109,46 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Modal -->
+            @foreach ($users as $user)
+                @if (auth()->id() !== $user->id)
+                    <div class="modal fade" id="modalCenter{{ $user->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Apakah anda yakin ingin menghapus
+                                        <strong>{{ Str::limit($user->name, 15, '...') }}</strong>?
+                                        <br><br>
+                                        Semua data yang pernah dibuat oleh pengguna ini akan terhapus juga.
+                                    </p>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Tidak
+                                        </button>
+                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
+                                            onsubmit=" ">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">
+                                                <i class="bx bx-trash"></i> Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+
 
             {{-- Pagination --}}
             <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">

@@ -122,7 +122,7 @@
                             <i class="bi bi-telephone-fill"></i>
                         </div>
                         <div class="footer-info-text">
-                            (031) 829-2944
+                            (031) 828-5319
                         </div>
                     </div>
 
@@ -141,7 +141,7 @@
 
             <!-- Quick Link -->
             <div class="col-lg-2 col-md-4 mb-4">
-                <h5 class="footer-title">Quick Link</h5>
+                <h5 class="footer-title">Tautan Cepat</h5>
                 <ul class="footer-links">
                     <li><a href="/home">Home</a></li>
                     <li><a href="/berita">Berita</a></li>
@@ -151,7 +151,7 @@
 
             <!-- Services -->
             <div class="col-lg-2 col-md-4 mb-4">
-                <h5 class="footer-title">Service</h5>
+                <h5 class="footer-title">Layanan</h5>
                 <ul class="footer-links">
                     <li><a href="/login">Berkas TPG Guru</a></li>
                     <li><a href="/login">Pendataan Gereja</a></li>
@@ -160,7 +160,7 @@
 
             <!-- Help -->
             <div class="col-lg-3 col-md-4 mb-4">
-                <h5 class="footer-title">Help & Support</h5>
+                <h5 class="footer-title">Bantuan & Dukungan</h5>
                 <ul class="footer-links">
                     <li><a href="#" target="_blank">Hubungi Whatsapp</a></li>
                 </ul>
