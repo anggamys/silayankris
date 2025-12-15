@@ -87,6 +87,15 @@
                                     </button>
                                 </div>
 
+                                <div id="photoError" class="text-danger small mt-2" style="display:none;">
+                                    <i class="bx bx-error-circle"></i> <span id="photoErrorMsg"></span>
+                                </div>
+
+                                @error('profile_photo')
+                                    <div class="text-danger small mt-2">
+                                        <i class="bx bx-error-circle"></i> {{ $message }}
+                                    </div>
+                                @enderror
 
                             </div>
                         </form>
@@ -204,7 +213,8 @@
                             <div class="password-wrapper">
                                 <input type="password" id="new_password" name="new_password"
                                     class="form-control @error('new_password') is-invalid @enderror"
-                                    placeholder="Masukkan password baru (minimal 8 karakter dengan huruf besar, huruf kecil, dan angka)" required>
+                                    placeholder="Masukkan password baru (minimal 8 karakter dengan huruf besar, huruf kecil, dan angka)"
+                                    required>
                                 <span class="toggle-password" data-target="new_password">
                                     <i class="bx bx-hide"></i>
                                 </span>
@@ -242,7 +252,30 @@
     <script>
         function previewPhoto(event) {
             const file = event.target.files[0];
+            const photoError = document.getElementById('photoError');
+            const photoErrorMsg = document.getElementById('photoErrorMsg');
+
             if (!file) return;
+
+            // Validasi tipe file
+            if (!file.type.startsWith('image/')) {
+                photoErrorMsg.textContent = 'Format file harus berupa gambar (jpg, jpeg, png)';
+                photoError.style.display = 'block';
+                event.target.value = '';
+                return;
+            }
+
+            // Validasi ukuran file (2MB = 2097152 bytes)
+            if (file.size > 2097152) {
+                photoErrorMsg.textContent = 'Ukuran file maksimal adalah 2MB. File Anda berukuran ' + (file.size / 1048576)
+                    .toFixed(2) + 'MB';
+                photoError.style.display = 'block';
+                event.target.value = '';
+                return;
+            }
+
+            // Jika valid, sembunyikan error message
+            photoError.style.display = 'none';
 
             const reader = new FileReader();
             reader.onload = e => {
