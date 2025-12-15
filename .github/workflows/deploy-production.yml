@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies (Composer + NPM)
         run: |
           composer install --no-dev --optimize-autoloader
-          npm install && npm run build:ssr
+          npm install && npm run build
 
       - name: 🚀 Deploy Laravel app (without build)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
