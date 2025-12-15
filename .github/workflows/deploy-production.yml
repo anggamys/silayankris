@@ -57,7 +57,6 @@ jobs:
             .editorconfig
           timeout: 60000
           protocol: ftps
-          pasv: true
 
       - name: 🧹 Clean and deploy build assets
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -69,4 +68,3 @@ jobs:
           local-dir: ./public/build/
           dangerous-clean-slate: true
           protocol: ftps
-          pasv: true
