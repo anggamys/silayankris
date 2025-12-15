@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/img/logo.png') }}">
+
     <title>@yield('title', '') - SILAYANKRIS</title>
     @vite(['resources/js/app.js', 'resources/scss/app.scss'])
 </head>
@@ -15,8 +19,6 @@
 
     @include('components.guest.footer')
     <script>
-        // Guard AOS init: only call if AOS is available (prevents "AOS is not defined" errors
-        // when module-bundled scripts haven't executed yet).
         if (typeof AOS !== 'undefined' && AOS && typeof AOS.init === 'function') {
             AOS.init();
         }

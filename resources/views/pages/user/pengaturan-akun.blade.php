@@ -348,6 +348,16 @@
                                         </button>
                                     </div>
 
+                                    <div id="photoError" class="text-danger small mt-2 text-center" style="display:none;">
+                                        <i class="bx bx-error-circle"></i> <span id="photoErrorMsg"></span>
+                                    </div>
+
+                                    @error('profile_photo')
+                                        <div class="text-danger small mt-2 text-center">
+                                            <i class="bx bx-error-circle"></i> {{ $message }}
+                                        </div>
+                                    @enderror
+
                                 </div>
 
                             </form>
@@ -411,7 +421,8 @@
 
                                 <label class="form-label">Asal Sekolah Induk</label>
                                 @forelse ($guru->sekolah as $sekolah)
-                                    <input type="text" class="form-control mb-2" value="{{ $sekolah->nama }}" readonly>
+                                    <input type="text" class="form-control mb-2" value="{{ $sekolah->nama }}"
+                                        readonly>
                                 @empty
                                     <input type="text" class="form-control" value="-" readonly>
                                 @endforelse
@@ -468,7 +479,8 @@
                             <div class="password-wrapper">
                                 <input type="password" id="new_password" name="new_password"
                                     class="form-control @error('new_password') is-invalid @enderror"
-                                    placeholder="Masukkan password baru (minimal 8 karakter dengan huruf besar, huruf kecil, dan angka)" required>
+                                    placeholder="Masukkan password baru (minimal 8 karakter dengan huruf besar, huruf kecil, dan angka)"
+                                    required>
                                 <span class="toggle-password" data-target="new_password">
                                     <i class="bx bx-hide"></i>
                                 </span>
@@ -505,27 +517,50 @@
         <script>
             function previewPhoto(event) {
                 const file = event.target.files[0];
-                if (file && file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const preview = document.getElementById('photoPreview');
+                const photoError = document.getElementById('photoError');
+                const photoErrorMsg = document.getElementById('photoErrorMsg');
 
-                        // Jika masih div inisial, ganti dengan img
-                        if (preview.tagName === 'DIV') {
-                            const newImg = document.createElement('img');
-                            newImg.id = 'photoPreview';
-                            newImg.className = 'photo-preview';
-                            newImg.alt = 'Profile Photo';
-                            preview.parentNode.replaceChild(newImg, preview);
-                            document.getElementById('photoPreview').src = e.target.result;
-                        } else {
-                            preview.src = e.target.result;
-                        }
+                if (!file) return;
 
-                        document.getElementById('saveFotoBtn').style.display = 'inline-block';
-                    };
-                    reader.readAsDataURL(file);
+                // Validasi tipe file
+                if (!file.type.startsWith('image/')) {
+                    photoErrorMsg.textContent = 'Format file harus berupa gambar (jpg, jpeg, png)';
+                    photoError.style.display = 'block';
+                    event.target.value = '';
+                    return;
                 }
+
+                // Validasi ukuran file (2MB = 2097152 bytes)
+                if (file.size > 2097152) {
+                    photoErrorMsg.textContent = 'Ukuran file maksimal adalah 2MB. File Anda berukuran ' + (file.size / 1048576)
+                        .toFixed(2) + 'MB';
+                    photoError.style.display = 'block';
+                    event.target.value = '';
+                    return;
+                }
+
+                // Jika valid, sembunyikan error message
+                photoError.style.display = 'none';
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('photoPreview');
+
+                    // Jika masih div inisial, ganti dengan img
+                    if (preview.tagName === 'DIV') {
+                        const newImg = document.createElement('img');
+                        newImg.id = 'photoPreview';
+                        newImg.className = 'photo-preview';
+                        newImg.alt = 'Profile Photo';
+                        preview.parentNode.replaceChild(newImg, preview);
+                        document.getElementById('photoPreview').src = e.target.result;
+                    } else {
+                        preview.src = e.target.result;
+                    }
+
+                    document.getElementById('saveFotoBtn').style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
             }
         </script>
 

@@ -269,7 +269,7 @@
                         <div class="col-lg-4 col-md-12 col-sm-12 text-center">
                             {{-- col-12 col-md-6 col-lg-3 --}}
                             <div class="profil-photo-wrapper">
-                                <img src="{{ asset('assets/img/foto bu ester 34.png') }}" class="img-fluid shadow-sm"
+                                <img src="{{ asset('assets/img/foto bu ester fix_34.svg') }}" class="img-fluid shadow-sm"
                                     alt="Penyelenggara Kristen">
                             </div>
                         </div>
@@ -389,7 +389,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/endah.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/endah.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Endah Priyatiningsih, S.Th.</h5>
                             <p class="text-muted mb-3">Pengawas Pendidikan <br> Agama Kristen</p>
@@ -400,7 +400,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/agus.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/agus.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Agus <br> Widodo, S.Th.</h5>
                             <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
@@ -411,7 +411,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/agustien.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/agustien.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Agustien <br> Indrawati, S.Pd.K.</h5>
                             <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
@@ -422,7 +422,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="500">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/surja.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/surja.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Surja <br> Permana, S.Th.</h5>
                             <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
@@ -433,7 +433,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="600">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/natalia.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/natalia.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Natalia <br> Parhusip, S.Th.</h5>
                             <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
@@ -444,7 +444,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="700">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/stefanus.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/stefanus.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Stefanus <br> Alexander, S.Th.</h5>
                             <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
@@ -455,7 +455,7 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="800">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/febrima.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/febrima.svg') }}" class="rounded-circle img-fluid">
                             </div>
                             <h5 class="fw-bold mb-0">Febrima Yuliana Mouwlaka, S.Si.Teol.</h5>
                             <p class="text-muted mb-3">Penyuluh Agama Ahli Pertama</p>
@@ -474,13 +474,13 @@
 
                     <!-- Logo 1 -->
                     <div class="col-12 col-lg-5 logo-wrapper">
-                        <img src="{{ asset('assets/img/logo Kemenag_silayan fix2.png') }}" class="brand-logo"
+                        <img src="{{ asset('assets/img/Logo kemenag_silayan fix2.svg') }}" class="brand-logo"
                             alt="Logo 1">
                     </div>
 
                     <!-- Logo 2 -->
                     <div class="col-12 col-lg-5 logo-wrapper">
-                        <img src="{{ asset('assets/img/Logo upn_silayan fix2.png') }}" class="brand-logo"
+                        <img src="{{ asset('assets/img/Logo upn_silayan fix2.svg') }}" class="brand-logo"
                             alt="Logo 2">
                     </div>
 
