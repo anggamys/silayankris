@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Berita;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -13,8 +14,6 @@ class BeritaSeeder extends Seeder
      */
     public function run(): void
     {
-        $userId = "00000000-0000-0000-0000-000000000001"; // UUID user kamu
-
         $data = [
             [
                 'judul' => 'Kegiatan Pelayanan Minggu Sekolah',
@@ -80,7 +79,7 @@ class BeritaSeeder extends Seeder
 
         foreach ($data as $item) {
             Berita::create([
-                'user_id' => $userId,
+                'user_id' => User::first()->id,
                 'judul' => $item['judul'],
                 'slug' => Str::slug($item['judul']) . '-' . strtolower(Str::random(5)),
                 'isi' => $item['isi'],
