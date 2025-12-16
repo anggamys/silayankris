@@ -48,6 +48,7 @@ class PerSemester extends Model
      * Casting tipe data tertentu.
      */
     protected $casts = [
+        'guru_id' => 'integer',
         'status' => 'string',
     ];
 }
