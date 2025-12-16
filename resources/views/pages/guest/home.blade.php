@@ -227,17 +227,17 @@
                                 Selamat Datang di SILAYANKRIS
                             </h1>
                             <p class="fs-5 mb-3">
-                                Sistem Informasi Layanan Penyelenggara Kristen
+                                <strong>SILAYANKRIS</strong> - Sistem Informasi Layanan Penyelenggara Kristen <br>
                                 Kementerian Agama Kota Surabaya
                             </p>
-                            <p class="text-muted mb-4">
-                                Akses berbagai layanan dan informasi penyelenggaraan Kristen
+                            <p class="text-muted mb-5">
+                                Akses berbagai layanan dan informasi penyelenggaraan Kristen <br>
                                 secara cepat, mudah, dan terintegrasi dalam satu sistem.
                             </p>
                             <a href="/layanan">
-                            <button class="btn btn-primary btn-lg">
-                                Masuk Layanan
-                            </button>
+                                <button class="btn btn-primary btn-lg">
+                                    Hubungi Kami
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -247,13 +247,14 @@
                 </div>
             </div>
         </section>
+        
         {{-- PROFIL SECTION --}}
         <section class="profil-section" data-aos="fade-up">
             <div class="container py-5">
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL SEKSI</h6>
+                    <h6 class="fw-bold mb-1 text-uppercase">PROFIL</h6>
                     <h2 class="fw-bold mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="section-subtitle fs-6 mb-0">
@@ -268,7 +269,7 @@
                         <div class="col-lg-4 col-md-12 col-sm-12 text-center">
                             {{-- col-12 col-md-6 col-lg-3 --}}
                             <div class="profil-photo-wrapper">
-                                <img src="{{ asset('assets/img/foto bu ester 34.png') }}" class="img-fluid shadow-sm"
+                                <img src="{{ asset('assets/img/foto bu ester fix_34.svg') }}" class="img-fluid shadow-sm"
                                     alt="Penyelenggara Kristen">
                             </div>
                         </div>
@@ -276,7 +277,8 @@
 
                         {{-- Konten --}}
                         <div class="col-lg-8 col-md-12 col-sm-12 ">
-                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1" style="letter-spacing: .5px;">
+                            <p class="text-uppercase text-secondary text-center text-lg-start fw-semibold mb-1"
+                                style="letter-spacing: .5px;">
                                 Penyelenggara Kristen
                             </p>
 
@@ -289,12 +291,11 @@
 
                             <div class="p-4 mb-2 rounded" style="background: #f7f9fb; border-left: 4px solid #008080;">
                                 <p class="text-muted lh-lg mb-0" style="font-size: 0.97rem;">
-                                    Selamat datang di Website Resmi <strong>Seksi Penyelenggara Kristen</strong>
-                                    Kantor Kementerian Agama Kota Surabaya. Melalui platform ini, kami menyediakan
+                                    Selamat datang di Website Resmi <strong>Penyelenggara Kristen</strong>
+                                    Kantor Kementerian Agama Kota Surabaya. Melalui Website ini, kami menyediakan
                                     pusat informasi dan layanan terpadu yang berkaitan dengan pendidikan, pembinaan,
                                     serta pelayanan umat Kristen di Kota Surabaya.
-                                    Kami berkomitmen memberikan akses yang mudah bagi para pendidik, peserta didik,
-                                    lembaga keagamaan, dan masyarakat umum terhadap berbagai program, kebijakan,
+                                    Kami berkomitmen memberikan akses yang mudah bagi para guru, pengurus gereja, lembaga keagamaan, dan masyarakat umum terhadap berbagai program, kebijakan,
                                     data, dan berita terbaru. Harapan kami, layanan ini dapat mendukung terwujudnya
                                     pembinaan kehidupan umat beragama yang harmonis, berkualitas, dan berkarakter.
                                     <br><br>
@@ -317,7 +318,7 @@
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PELAYANAN SEKSI</h6>
+                    <h6 class="fw-bold text-secondary mb-1">JENIS LAYANAN</h6>
                     <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
                     <div class="partner-divider mx-auto mb-3"></div>
                     <p class="text-muted fs-6 mb-0">
@@ -335,7 +336,7 @@
                                 </div>
                                 <h5 class="card-title fw-bold mb-3">Layanan Gereja</h5>
                                 <p class="card-text text-muted">
-                                    Akses informasi dan pengelolaan data gereja di wilayah Surabaya.
+                                    Pendataan data Gereja <br> di wilayah Surabaya secara digital dan terintegrasi.
                                 </p>
                                 <a href="{{ route('login', ['type' => 'gereja']) }}" class="btn btn-primary mt-3">
                                     Masuk ke Layanan Gereja
@@ -343,20 +344,20 @@
                             </div>
                         </div>
                     </div>
+                    
                     {{-- Card 2 --}}
-
                     <div class="col-md-6 mb-4 fade-up">
                         <div class="card border-0 shadow-lg h-100 pelayanan-card">
                             <div class="card-body text-center py-5">
                                 <div class="mb-3">
                                     <i class="bi bi-person-badge fs-1 text-primary"></i>
                                 </div>
-                                <h5 class="card-title fw-bold mb-3">Pelayanan TPG Guru</h5>
+                                <h5 class="card-title fw-bold mb-3">Layanan TPG Guru</h5>
                                 <p class="card-text text-muted">
-                                    Unggah dan kelola berkas Tunjangan Profesi Guru secara online.
+                                    Pendataan berkas Tunjangan Profesi Guru <br> di wilayah Surabaya secara digital dan terintegrasi.
                                 </p>
                                 <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-primary mt-3">
-                                    Masuk ke Pelayanan TPG Guru
+                                    Masuk ke Layanan TPG Guru
                                 </a>
                             </div>
                         </div>
@@ -367,30 +368,31 @@
         </section>
 
         {{-- PEGAWAI SECTION --}}
-        <section class="pegawai-section bg-light" data-aos="fade-up" data-aos-delay="0">
-
+        <section class="pegawai-section" style="background-color: #008080; color: #ffffff;" data-aos="fade-up" data-aos-delay="0">
             <div class="container py-5 border-bottom">
 
                 {{-- Header --}}
                 <div class="text-center mb-5">
-                    <h6 class="fw-bold text-secondary mb-1">PEGAWAI SEKSI</h6>
-                    <h2 class="fw-bold text-dark mb-2">Penyelenggara Kristen</h2>
-                    <div class="partner-divider mx-auto mb-3"></div>
-                    <p class="text-muted fs-6 mb-0">
-                        Daftar pegawai yang bertugas pada Seksi Penyelenggara Kristen.
+                    <h6 class="fw-bold mb-1 text-uppercase">PEGAWAI</h6>
+                    <h2 class="fw-bold mb-2">Penyelenggara Kristen</h2>
+                    <div class="partner-divider mx-auto mb-3" style="background: #ffc107;"></div>
+                    <p class="text-muted fs-6 mb-0" style="color: rgba(255, 255, 255, 0.8);">
+                        <span style="color: rgba(255,255,255,0.8);">
+                            Daftar pegawai yang bertugas pada Penyelenggara Kristen.
+                        </span>
                     </p>
                 </div>
 
-                <div class="row g-4">
+                <div class="row g-4 justify-content-center">
 
                     {{-- CARD 1 --}}
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/endah.svg') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">Nama Pegawai 1</h5>
-                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                            <h5 class="fw-bold mb-0">Endah Priyatiningsih, S.Th.</h5>
+                            <p class="text-muted mb-3">Pengawas Pendidikan <br> Agama Kristen</p>
                         </div>
                     </div>
 
@@ -398,10 +400,10 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/32.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/agus.svg') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">Nama Pegawai 2</h5>
-                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                            <h5 class="fw-bold mb-0">Agus <br> Widodo, S.Th.</h5>
+                            <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
                         </div>
                     </div>
 
@@ -409,10 +411,10 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/33.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/agustien.svg') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">Nama Pegawai 3</h5>
-                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                            <h5 class="fw-bold mb-0">Agustien <br> Indrawati, S.Pd.K.</h5>
+                            <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
                         </div>
                     </div>
 
@@ -420,13 +422,45 @@
                     <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="500">
                         <div class="card shadow border-0 text-center p-4 pegawai-card">
                             <div class="team-img mx-auto mb-3">
-                                <img src="{{ asset('assets/img/32.png') }}" class="rounded-circle img-fluid">
+                                <img src="{{ asset('assets/img/surja.svg') }}" class="rounded-circle img-fluid">
                             </div>
-                            <h5 class="fw-bold mb-0">Nama Pegawai 4</h5>
-                            <p class="text-muted mb-3">Posisi/Jabatan</p>
+                            <h5 class="fw-bold mb-0">Surja <br> Permana, S.Th.</h5>
+                            <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
                         </div>
                     </div>
 
+                    {{-- CARD 5 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/natalia.svg') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Natalia <br> Parhusip, S.Th.</h5>
+                            <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
+                        </div>
+                    </div>
+
+                    {{-- CARD 6 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/stefanus.svg') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Stefanus <br> Alexander, S.Th.</h5>
+                            <p class="text-muted mb-3">Penyuluh Agama Kristen</p>
+                        </div>
+                    </div>
+
+                    {{-- CARD 7 --}}
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="card shadow border-0 text-center p-4 pegawai-card">
+                            <div class="team-img mx-auto mb-3">
+                                <img src="{{ asset('assets/img/febrima.svg') }}" class="rounded-circle img-fluid">
+                            </div>
+                            <h5 class="fw-bold mb-0">Febrima Yuliana Mouwlaka, S.Si.Teol.</h5>
+                            <p class="text-muted mb-3">Penyuluh Agama Ahli Pertama</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -440,13 +474,13 @@
 
                     <!-- Logo 1 -->
                     <div class="col-12 col-lg-5 logo-wrapper">
-                        <img src="{{ asset('assets/img/logo Kemenag_silayan fix2.png') }}" class="brand-logo"
+                        <img src="{{ asset('assets/img/Logo kemenag_silayan fix2.svg') }}" class="brand-logo"
                             alt="Logo 1">
                     </div>
 
                     <!-- Logo 2 -->
                     <div class="col-12 col-lg-5 logo-wrapper">
-                        <img src="{{ asset('assets/img/Logo upn_silayan fix2.png') }}" class="brand-logo"
+                        <img src="{{ asset('assets/img/Logo upn_silayan fix2.svg') }}" class="brand-logo"
                             alt="Logo 2">
                     </div>
 

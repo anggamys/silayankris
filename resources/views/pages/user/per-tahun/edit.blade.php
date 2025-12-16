@@ -128,8 +128,8 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">NIP</label>
-                        <input type="text" class="form-control" value="{{ $perTahun->guru->nip }}" readonly>
+                        <label class="form-label">NIK</label>
+                        <input type="text" class="form-control" value="{{ $perTahun->guru->nik }}" readonly>
                     </div>
 
                     <div class="col-md-4">
@@ -195,7 +195,7 @@
                         $files = [
                             'Biodata' => $perTahun->biodata_path,
                             'Sertifikat Pendidik' => $perTahun->sertifikat_pendidik_path,
-                            'Surat Keterangan Dirjen atau Kelulusan' => $perTahun->sk_dirjen_kelulusan_path,
+                            'Surat Keputusan Dirjen atau Kelulusan' => $perTahun->sk_dirjen_kelulusan_path,
                             'NRG - Nomor Registrasi Guru' => $perTahun->nrg_path,
                             'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan' => $perTahun->nuptk_path,
                             'NPWP - Nomor Pokok Wajib Pajak' => $perTahun->npwp_path,
@@ -203,7 +203,7 @@
                             'Ijazah SD' => $perTahun->ijazah_sd_path,
                             'Ijazah SMP' => $perTahun->ijazah_smp_path,
                             'Ijazah SMA atau PGA' => $perTahun->ijazah_sma_pga_path,
-                            'Surat Keterangan PNS atau GTY' => $perTahun->sk_pns_gty_path,
+                            'Surat Keputusan PNS atau GTY' => $perTahun->sk_pns_gty_path,
                             'Ijazah S1' => $perTahun->ijazah_s1_path,
                             'Transkrip Nilai S1' => $perTahun->transkrip_nilai_s1_path,
                         ];
@@ -214,7 +214,7 @@
                             $fieldName = collect([
                                 'Biodata' => 'biodata_path',
                                 'Sertifikat Pendidik' => 'sertifikat_pendidik_path',
-                                'Surat Keterangan Dirjen atau Kelulusan' => 'sk_dirjen_kelulusan_path',
+                                'Surat Keputusan Dirjen atau Kelulusan' => 'sk_dirjen_kelulusan_path',
                                 'NRG - Nomor Registrasi Guru' => 'nrg_path',
                                 'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan' => 'nuptk_path',
                                 'NPWP - Nomor Pokok Wajib Pajak' => 'npwp_path',
@@ -222,7 +222,7 @@
                                 'Ijazah SD' => 'ijazah_sd_path',
                                 'Ijazah SMP' => 'ijazah_smp_path',
                                 'Ijazah SMA atau PGA' => 'ijazah_sma_pga_path',
-                                'Surat Keterangan PNS atau GTY' => 'sk_pns_gty_path',
+                                'Surat Keputusan PNS atau GTY' => 'sk_pns_gty_path',
                                 'Ijazah S1' => 'ijazah_s1_path',
                                 'Transkrip Nilai S1' => 'transkrip_nilai_s1_path',
                             ])[$label];
@@ -252,7 +252,7 @@
                     {{-- SUBMIT --}}
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-send me-1"></i> Kirim
+                            <i class="bi bi-send me-1"></i> Simpan
                         </button>
                     </div>
 

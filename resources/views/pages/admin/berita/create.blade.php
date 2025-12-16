@@ -13,7 +13,7 @@
     <div class="card shadow-sm border-0 mb-4 p-3">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-semibold fs-4">Tambah Berita</h5>
-            
+
             <a href="{{ route('admin.berita.index') }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Batal
             </a>
@@ -87,4 +87,5 @@
             }
         }
     </script>
+
 @endsection

@@ -13,6 +13,11 @@ class GuruSekolah extends Model
         'sekolah_id',
     ];
 
+    protected $casts = [
+        'guru_id' => 'integer',
+        'sekolah_id' => 'integer',
+    ];
+
     public function guru()
     {
         return $this->belongsTo(Guru::class);

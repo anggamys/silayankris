@@ -27,7 +27,7 @@
                         style="display: flex; flex-direction: row; justify-content: space-between;">
                         @php
                             $guruOptions = $gurus
-                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nik ?? 'Guru #' . $g->id)])
                                 ->toArray();
                         @endphp
                         <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"
@@ -52,10 +52,11 @@
                 {{-- Daftar Gaji --}}
                 <div class="mb-3">
                     <label for="daftar_gaji_path" class="form-label">Daftar Gaji (File)</label>
-                    <input type="file" name="daftar_gaji_path" id="daftar_gaji_path" class="form-control" accept=".pdf">
-                    <hint class="form-text">Format file harus .pdf</hint>
+                    <input type="file" name="daftar_gaji_path" id="daftar_gaji_path" class="form-control" accept=".pdf"
+                        placeholder="Pilih file PDF">
+                    <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                     @error('daftar_gaji_path')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -63,10 +64,10 @@
                 <div class="mb-3">
                     <label for="daftar_hadir_path" class="form-label">Daftar Hadir (File)</label>
                     <input type="file" name="daftar_hadir_path" id="daftar_hadir_path" class="form-control"
-                        accept=".pdf">
-                    <hint class="form-text">Format file harus .pdf</hint>
+                        accept=".pdf" placeholder="Pilih file PDF">
+                    <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                     @error('daftar_hadir_path')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -74,20 +75,21 @@
                 <div class="mb-3">
                     <label for="rekening_bank_path" class="form-label">Rekening Bank (File)</label>
                     <input type="file" name="rekening_bank_path" id="rekening_bank_path" class="form-control"
-                        accept=".pdf">
-                    <hint class="form-text">Format file harus .pdf</hint>
+                        accept=".pdf" placeholder="Pilih file PDF">
+                    <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                     @error('rekening_bank_path')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 {{-- Ceklist Berkas --}}
                 <div class="mb-3">
                     <label for="ceklist_berkas" class="form-label">Ceklist Berkas (File)</label>
-                    <input type="file" name="ceklist_berkas" id="ceklist_berkas" class="form-control" accept=".pdf">
-                    <hint class="form-text">Format file harus .pdf</hint>
+                    <input type="file" name="ceklist_berkas" id="ceklist_berkas" class="form-control" accept=".pdf"
+                        placeholder="Pilih file PDF">
+                    <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                     @error('ceklist_berkas')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 

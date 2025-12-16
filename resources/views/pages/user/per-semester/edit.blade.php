@@ -125,8 +125,8 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">NIP</label>
-                        <input type="text" class="form-control" value="{{ $perSemester->guru->nip }}" readonly>
+                        <label class="form-label">NIK</label>
+                        <input type="text" class="form-control" value="{{ $perSemester->guru->nik }}" readonly>
                     </div>
 
                     <div class="col-md-4">
@@ -192,8 +192,8 @@
 
                     @php
                         $files = [
-                            'Surat Keterangan PBM' => $perSemester->sk_pbm_path,
-                            'Surat Keterangan Terakhir atau Berkala' => $perSemester->sk_terakhir_berkala_path,
+                            'Surat Keputusan PBM' => $perSemester->sk_pbm_path,
+                            'Surat Keputusan Terakhir atau Berkala' => $perSemester->sk_terakhir_berkala_path,
                             'Surat Pernyataan Bersedia Mengembalikan' => $perSemester->sp_bersedia_mengembalikan_path,
                             'Surat Pernyataan Kebenaran Berkas' => $perSemester->sp_kebenaran_berkas_path,
                             'Surat Pernyataan Perangkat Pembelajaran' => $perSemester->sp_perangkat_pembelajaran_path,
@@ -209,8 +209,8 @@
                     @foreach ($files as $label => $filePath)
                         @php
                             $fieldName = collect([
-                                'Surat Keterangan PBM' => 'sk_pbm_path',
-                                'Surat Keterangan Terakhir atau Berkala' => 'sk_terakhir_berkala_path',
+                                'Surat Keputusan PBM' => 'sk_pbm_path',
+                                'Surat Keputusan Terakhir atau Berkala' => 'sk_terakhir_berkala_path',
                                 'Surat Pernyataan Bersedia Mengembalikan' => 'sp_bersedia_mengembalikan_path',
                                 'Surat Pernyataan Kebenaran Berkas' => 'sp_kebenaran_berkas_path',
                                 'Surat Pernyataan Perangkat Pembelajaran' => 'sp_perangkat_pembelajaran_path',
@@ -247,7 +247,7 @@
                     {{-- SUBMIT --}}
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-send me-1"></i> Kirim
+                            <i class="bi bi-send me-1"></i> Simpan
                         </button>
                     </div>
 

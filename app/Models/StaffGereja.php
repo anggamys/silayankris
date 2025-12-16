@@ -21,8 +21,15 @@ class StaffGereja extends Model
      */
     protected $fillable = [
         'user_id',
-        'gembala_sidang',
         'gereja_id',
+    ];
+
+    /**
+     * Casting untuk tipe data tertentu.
+     */
+    protected $casts = [
+        'user_id' => 'string',
+        'gereja_id' => 'integer',
     ];
 
     /**

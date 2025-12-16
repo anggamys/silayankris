@@ -125,15 +125,10 @@
 
                                     {{-- AKSI --}}
                                     <td>
-                                        @if ($isIncomplete && $item->status !== 'ditolak')
+                                        @if ($isIncomplete || $item->status === 'ditolak')
                                             <a href="{{ route('user.pertahun.edit', $item) }}"
                                                 class="btn btn-sm btn-warning text-white">
                                                 <i class="bi bi-pencil"></i> Lengkapi
-                                            </a>
-                                        @elseif ($item->status === 'ditolak')
-                                            <a href="{{ route('user.pertahun.show', $item) }}"
-                                                class="btn btn-sm btn-primary">
-                                                <i class="bi bi-eye"></i> Buka
                                             </a>
                                         @else
                                             <a href="{{ route('user.pertahun.show', $item) }}"
@@ -202,8 +197,8 @@
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label">NIP</label>
-                                    <input type="text" class="form-control" value="{{ $guru->nip }}" readonly>
+                                    <label class="form-label">NIK</label>
+                                    <input type="text" class="form-control" value="{{ $guru->nik }}" readonly>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -267,68 +262,95 @@
                         <div class="card-body">
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Biodata (PDF)</label>
-                             <input type="file" name="biodata_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Biodata (PDF)</label>
+                                <input type="file" name="biodata_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Sertifikat Pendidik (PDF)</label>
-                             <input type="file" name="sertifikat_pendidik_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Sertifikat Pendidik (PDF)</label>
+                                <input type="file" name="sertifikat_pendidik_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Surat Keterangan Dirjen atau Kelulusan (PDF)</label>
-                             <input type="file" name="sk_dirjen_kelulusan_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Surat Keputusan Dirjen atau Kelulusan (PDF)</label>
+                                <input type="file" name="sk_dirjen_kelulusan_path" class="form-control"
+                                    accept=".pdf" placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">NRG - Nomor Registrasi Guru (PDF)</label>
-                             <input type="file" name="nrg_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">NRG - Nomor Registrasi Guru (PDF)</label>
+                                <input type="file" name="nrg_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan (PDF)</label>
-                             <input type="file" name="nuptk_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan
+                                    (PDF)</label>
+                                <input type="file" name="nuptk_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">NPWP - Nomor Pokok Wajib Pajak (PDF)</label>
-                             <input type="file" name="npwp_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">NPWP - Nomor Pokok Wajib Pajak (PDF)</label>
+                                <input type="file" name="npwp_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">KTP - Kartu Tanda Penduduk (PDF)</label>
-                             <input type="file" name="ktp_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">KTP - Kartu Tanda Penduduk (PDF)</label>
+                                <input type="file" name="ktp_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Ijazah SD (PDF)</label>
-                             <input type="file" name="ijazah_sd_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Ijazah SD (PDF)</label>
+                                <input type="file" name="ijazah_sd_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Ijazah SMP (PDF)</label>
-                             <input type="file" name="ijazah_smp_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Ijazah SMP (PDF)</label>
+                                <input type="file" name="ijazah_smp_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Ijazah SMA atau PGA (PDF)</label>
-                             <input type="file" name="ijazah_sma_pga_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Ijazah SMA atau PGA (PDF)</label>
+                                <input type="file" name="ijazah_sma_pga_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Surat Keterangan PNS atau GTY (PDF)</label>
-                             <input type="file" name="sk_pns_gty_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Surat Keputusan PNS atau GTY (PDF)</label>
+                                <input type="file" name="sk_pns_gty_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Ijazah S1 (PDF)</label>
-                             <input type="file" name="ijazah_s1_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Ijazah S1 (PDF)</label>
+                                <input type="file" name="ijazah_s1_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
-                             <label class="form-label fw-semibold">Transkrip Nilai S1 (PDF)</label>
-                             <input type="file" name="transkrip_nilai_s1_path" class="form-control" accept=".pdf">
+                                <label class="form-label fw-semibold">Transkrip Nilai S1 (PDF)</label>
+                                <input type="file" name="transkrip_nilai_s1_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
                         </div>
                     </div>
@@ -337,7 +359,7 @@
                     {{-- SUBMIT --}}
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-send me-1"></i> Kirim
+                            <i class="bi bi-send me-1"></i> Simpan
                         </button>
                     </div>
 

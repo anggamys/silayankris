@@ -96,7 +96,7 @@
             <div class="mb-3">
                 <label class="form-label">Guru</label>
                 <input type="text" class="form-control"
-                    value="{{ $perSemester->guru->user->name ?? ($perSemester->guru->nip ?? 'Guru #' . $perSemester->guru->id) }}"
+                    value="{{ $perSemester->guru->user->name ?? ($perSemester->guru->nik ?? 'Guru #' . $perSemester->guru->id) }}"
                     readonly>
             </div>
 

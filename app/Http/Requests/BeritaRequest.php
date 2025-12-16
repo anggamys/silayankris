@@ -25,7 +25,7 @@ class BeritaRequest extends FormRequest
         $rules = [
             'judul' => ['required', 'string', 'max:255'],
             'isi' => ['required', 'string', 'max:5000'],
-            'gambar_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'gambar_path' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'], // Max 2MB
         ];
 
         return $rules;

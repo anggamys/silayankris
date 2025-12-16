@@ -50,13 +50,13 @@ class UserRequest extends FormRequest
         // RULES GURU
         if ($this->input('role') === User::ROLE_GURU) {
             $rules = array_merge($rules, [
-                'nip' => [
+                'nik' => [
                     'required',
                     'string',
                     'max:50',
                     $this->isMethod('post')
-                        ? Rule::unique('gurus', 'nip')
-                        : Rule::unique('gurus', 'nip')->ignore(optional($user->guru)->id)
+                        ? Rule::unique('gurus', 'nik')
+                        : Rule::unique('gurus', 'nik')->ignore(optional($user->guru)->id)
                 ],
                 'tempat_lahir' => ['required', 'string', 'max:100'],
                 'tanggal_lahir' => ['required', 'date'],
@@ -68,7 +68,6 @@ class UserRequest extends FormRequest
         // RULES STAFF GEREJA
         if ($this->input('role') === User::ROLE_STAFF_GEREJA) {
             $rules = array_merge($rules, [
-                'gembala_sidang' => ['required', 'string', 'max:100'],
                 'gereja_id' => ['required', 'exists:gerejas,id'],
             ]);
         }
@@ -81,13 +80,13 @@ class UserRequest extends FormRequest
     {
         $user = $this->route('user');
         $guruRules = [
-            'nip' => [
+            'nik' => [
                 'required',
                 'string',
                 'max:50',
                 $this->isMethod('post')
-                    ? Rule::unique('gurus', 'nip')
-                    : Rule::unique('gurus', 'nip')
+                    ? Rule::unique('gurus', 'nik')
+                    : Rule::unique('gurus', 'nik')
                     ->ignore(optional($user->guru)->id)
                     ->where(fn($q) => $q->where('user_id', $user->id))
             ],
@@ -103,7 +102,6 @@ class UserRequest extends FormRequest
     public function staffGerejaRules(): array
     {
         $staffGerejaRules = [
-            'gembala_sidang' => ['required', 'string', 'max:100'],
             'gereja_id' => ['required', 'exists:gerejas,id'],
         ];
 

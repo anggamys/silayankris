@@ -6,7 +6,7 @@
     <!-- Toast Notification -->
     <x-toast />
 
-    <!-- Breadcrumb --> 
+    <!-- Breadcrumb -->
     <div class="container-fluid pt-3 text-dark border-bottom">
         <div class="container pb-3">
             <a href="/home" class="text-dark text-decoration-none">Home</a>
@@ -40,8 +40,9 @@
             </div>
 
             <div class="card-body">
-                @if($gereja)
-                    <form id="formGereja" action="{{ route('user.gereja.update', $gereja->id) }}" method="POST">
+                @if ($gereja)
+                    <form id="formGereja" action="{{ route('user.gereja.update', $gereja->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -136,7 +137,8 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                <input type="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
                                     value="{{ old('email', $gereja->email) }}" placeholder="Masukkan email gereja">
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -147,38 +149,98 @@
                                 <label class="form-label">Nomor Telepon</label>
                                 <input type="text" name="nomor_telepon"
                                     class="form-control @error('nomor_telepon') is-invalid @enderror"
-                                    value="{{ old('nomor_telepon', $gereja->nomor_telepon) }}" placeholder="Masukkan nomor telepon"
-                                    maxlength="20">
+                                    value="{{ old('nomor_telepon', $gereja->nomor_telepon) }}"
+                                    placeholder="Masukkan nomor telepon" maxlength="20">
                                 @error('nomor_telepon')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
-                        {{-- Nama Pendeta --}}
+                        {{-- Nama Pendeta atau Gembala Sidang --}}
                         <div class="mb-3">
-                            <label class="form-label">Nama Pendeta</label>
-                            <input type="text" name="nama_pendeta"
-                                class="form-control @error('nama_pendeta') is-invalid @enderror"
-                                value="{{ old('nama_pendeta', $gereja->nama_pendeta) }}" placeholder="Masukkan nama pendeta">
+                            <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
+                            <div id="pendeta-wrapper">
+                                @php
+                                    $oldPendetas = old('nama_pendeta', $gereja->nama_pendeta ?? []);
+                                    if (!is_array($oldPendetas)) {
+                                        $oldPendetas = $oldPendetas ? [$oldPendetas] : [''];
+                                    }
+                                    if (empty($oldPendetas)) {
+                                        $oldPendetas = [''];
+                                    }
+                                @endphp
+
+                                @foreach ($oldPendetas as $idx => $nama)
+                                    <div class="mb-2 pendeta-group d-flex gap-2 align-items-center">
+                                        <input type="text" name="nama_pendeta[]"
+                                            class="form-control @error('nama_pendeta.' . $idx) is-invalid @enderror"
+                                            value="{{ $nama }}"
+                                            placeholder="Masukkan nama pendeta atau gembala sidang">
+                                        <button type="button" class="btn btn-danger remove-pendeta"
+                                            {{ $idx === 0 ? 'disabled' : '' }}>
+                                            &times;
+                                        </button>
+                                        @error('nama_pendeta.' . $idx)
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <small id="pendeta-help-text" class="text-muted mb-2" style="display: none;">Untuk menambah
+                                pendeta atau gembala sidang, silakan klik tombol <strong>"Tambah"</strong> di bawah</small>
+                            <button type="button" id="add-pendeta" class="btn btn-outline-secondary rounded px-3 py-1">
+                                <i class="bi bi-plus-lg"></i> Tambah
+                            </button>
+
                             @error('nama_pendeta')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
                         {{-- Status Gereja --}}
                         <div class="mb-3">
                             <label class="form-label">Status Gereja</label>
-                            <x-select-input id="status_gereja" label="Status Gereja" name="status_gereja" :options="[
-                                'permanen' => 'Permanen',
-                                'semi-permanen' => 'Semi Permanen',
-                                'tidak-permanen' => 'Tidak Permanen',
-                            ]"
-                                placeholder="Pilih Status" :selected="old('status_gereja', $gereja->status_gereja)" :searchable="false" />
+                            <x-select-input id="status_gereja" label="Status Gereja" name="status_gereja"
+                                :options="[
+                                    'permanen' => 'Permanen',
+                                    'semi-permanen' => 'Semi Permanen',
+                                    'tidak-permanen' => 'Tidak Permanen',
+                                ]" placeholder="Pilih Status" :selected="old('status_gereja', $gereja->status_gereja)" :searchable="false" />
                             @error('status_gereja')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Sertifikat Sekolah Minggu --}}
+                        <div class="mb-3">
+                            <label class="form-label">Sertifikat Sekolah Minggu (File)</label>
+
+                            <input type="file" name="sertifikat_sekolah_minggu_path"
+                                class="form-control @error('sertifikat_sekolah_minggu_path') is-invalid @enderror"
+                                accept=".pdf">
+
+                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                @if ($gereja->sertifikat_sekolah_minggu_path)
+                                    <a href="{{ route('gdrive.preview', ['path' => $gereja->sertifikat_sekolah_minggu_path]) }}"
+                                        target="_blank" class="text-primary text-decoration-underline">
+                                        Lihat File Lama
+                                    </a>
+
+                                    <span class="text-muted">
+                                        {{ basename($gereja->sertifikat_sekolah_minggu_path) }}
+                                    </span>
+                                @else
+                                    <span class="text-muted">Belum ada file</span>
+                                @endif
+                            </div>
+
+                            @error('sertifikat_sekolah_minggu_path')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
                         {{-- JSON Fields --}}
                         <h5 class="mt-4 fw-bold">Data Jemaat</h5>
@@ -189,7 +251,8 @@
 
                                 <div class="input-group mb-1">
                                     <input type="number" name="jumlah_umat[laki_laki]" class="form-control"
-                                        placeholder="Jumlah laki-laki" value="{{ old('jumlah_umat.laki_laki', $gereja->jumlah_umat['laki_laki'] ?? 0) }}"
+                                        placeholder="Jumlah laki-laki"
+                                        value="{{ old('jumlah_umat.laki_laki', $gereja->jumlah_umat['laki_laki'] ?? 0) }}"
                                         min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
@@ -202,7 +265,8 @@
 
                                 <div class="input-group">
                                     <input type="number" name="jumlah_umat[perempuan]" class="form-control"
-                                        placeholder="Jumlah perempuan" value="{{ old('jumlah_umat.perempuan', $gereja->jumlah_umat['perempuan'] ?? 0) }}"
+                                        placeholder="Jumlah perempuan"
+                                        value="{{ old('jumlah_umat.perempuan', $gereja->jumlah_umat['perempuan'] ?? 0) }}"
                                         min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
@@ -220,7 +284,8 @@
 
                                 <div class="input-group mb-1">
                                     <input type="number" name="jumlah_majelis[laki_laki]" class="form-control"
-                                        placeholder="Jumlah laki-laki" value="{{ old('jumlah_majelis.laki_laki', $gereja->jumlah_majelis['laki_laki'] ?? 0) }}"
+                                        placeholder="Jumlah laki-laki"
+                                        value="{{ old('jumlah_majelis.laki_laki', $gereja->jumlah_majelis['laki_laki'] ?? 0) }}"
                                         min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
@@ -233,7 +298,8 @@
 
                                 <div class="input-group">
                                     <input type="number" name="jumlah_majelis[perempuan]" class="form-control"
-                                        placeholder="Jumlah perempuan" value="{{ old('jumlah_majelis.perempuan', $gereja->jumlah_majelis['perempuan'] ?? 0) }}"
+                                        placeholder="Jumlah perempuan"
+                                        value="{{ old('jumlah_majelis.perempuan', $gereja->jumlah_majelis['perempuan'] ?? 0) }}"
                                         min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
@@ -251,7 +317,8 @@
 
                                 <div class="input-group mb-1">
                                     <input type="number" name="jumlah_pemuda[laki_laki]" class="form-control"
-                                        placeholder="Jumlah laki-laki" value="{{ old('jumlah_pemuda.laki_laki', $gereja->jumlah_pemuda['laki_laki'] ?? 0) }}"
+                                        placeholder="Jumlah laki-laki"
+                                        value="{{ old('jumlah_pemuda.laki_laki', $gereja->jumlah_pemuda['laki_laki'] ?? 0) }}"
                                         min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
@@ -264,7 +331,8 @@
 
                                 <div class="input-group">
                                     <input type="number" name="jumlah_pemuda[perempuan]" class="form-control"
-                                        placeholder="Jumlah perempuan" value="{{ old('jumlah_pemuda.perempuan', $gereja->jumlah_pemuda['perempuan'] ?? 0) }}"
+                                        placeholder="Jumlah perempuan"
+                                        value="{{ old('jumlah_pemuda.perempuan', $gereja->jumlah_pemuda['perempuan'] ?? 0) }}"
                                         min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
@@ -281,9 +349,10 @@
                                 <label class="form-label">Jumlah Guru Sekolah Minggu</label>
 
                                 <div class="input-group mb-1">
-                                    <input type="number" name="jumlah_guru_sekolah_minggu[laki_laki]" class="form-control"
-                                        placeholder="Jumlah laki-laki"
-                                        value="{{ old('jumlah_guru_sekolah_minggu.laki_laki', $gereja->jumlah_guru_sekolah_minggu['laki_laki'] ?? 0) }}" min="0">
+                                    <input type="number" name="jumlah_guru_sekolah_minggu[laki_laki]"
+                                        class="form-control" placeholder="Jumlah laki-laki"
+                                        value="{{ old('jumlah_guru_sekolah_minggu.laki_laki', $gereja->jumlah_guru_sekolah_minggu['laki_laki'] ?? 0) }}"
+                                        min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
                                         Laki-laki
@@ -294,9 +363,10 @@
                                 @enderror
 
                                 <div class="input-group">
-                                    <input type="number" name="jumlah_guru_sekolah_minggu[perempuan]" class="form-control"
-                                        placeholder="Jumlah perempuan"
-                                        value="{{ old('jumlah_guru_sekolah_minggu.perempuan', $gereja->jumlah_guru_sekolah_minggu['perempuan'] ?? 0) }}" min="0">
+                                    <input type="number" name="jumlah_guru_sekolah_minggu[perempuan]"
+                                        class="form-control" placeholder="Jumlah perempuan"
+                                        value="{{ old('jumlah_guru_sekolah_minggu.perempuan', $gereja->jumlah_guru_sekolah_minggu['perempuan'] ?? 0) }}"
+                                        min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
                                         Perempuan
@@ -312,9 +382,10 @@
                                 <label class="form-label">Jumlah Murid Sekolah Minggu</label>
 
                                 <div class="input-group mb-1">
-                                    <input type="number" name="jumlah_murid_sekolah_minggu[laki_laki]" class="form-control"
-                                        placeholder="Jumlah laki-laki"
-                                        value="{{ old('jumlah_murid_sekolah_minggu.laki_laki', $gereja->jumlah_murid_sekolah_minggu['laki_laki'] ?? 0) }}" min="0">
+                                    <input type="number" name="jumlah_murid_sekolah_minggu[laki_laki]"
+                                        class="form-control" placeholder="Jumlah laki-laki"
+                                        value="{{ old('jumlah_murid_sekolah_minggu.laki_laki', $gereja->jumlah_murid_sekolah_minggu['laki_laki'] ?? 0) }}"
+                                        min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
                                         Laki-laki
@@ -325,9 +396,10 @@
                                 @enderror
 
                                 <div class="input-group">
-                                    <input type="number" name="jumlah_murid_sekolah_minggu[perempuan]" class="form-control"
-                                        placeholder="Jumlah perempuan"
-                                        value="{{ old('jumlah_murid_sekolah_minggu.perempuan', $gereja->jumlah_murid_sekolah_minggu['perempuan'] ?? 0) }}" min="0">
+                                    <input type="number" name="jumlah_murid_sekolah_minggu[perempuan]"
+                                        class="form-control" placeholder="Jumlah perempuan"
+                                        value="{{ old('jumlah_murid_sekolah_minggu.perempuan', $gereja->jumlah_murid_sekolah_minggu['perempuan'] ?? 0) }}"
+                                        min="0">
                                     <span class="input-group-text d-flex align-items-center justify-content-center"
                                         style="width: 30%">
                                         Perempuan
@@ -351,17 +423,24 @@
                         // Fungsi untuk toggle form state
                         function toggleFormState(enable) {
                             const form = document.getElementById('formGereja');
-                            const inputs = form.querySelectorAll('input, select, textarea');
-                            const dropdownButtons = form.querySelectorAll('[id^="btn-"]');
                             const btnEdit = document.getElementById('btnEdit');
                             const btnCancel = document.getElementById('btnCancel');
                             const btnSubmit = document.getElementById('btnSubmit');
-                            
-                            inputs.forEach(input => {
+
+                            // Toggle readonly untuk text/date/email/number inputs
+                            form.querySelectorAll(
+                                'input[type="text"], input[type="date"], input[type="email"], input[type="number"], textarea').forEach(
+                                input => {
+                                    input.readOnly = !enable;
+                                });
+
+                            // Toggle file input
+                            form.querySelectorAll('input[type="file"]').forEach(input => {
                                 input.disabled = !enable;
                             });
 
-                            // Disable/enable dropdown buttons
+                            // Toggle dropdown buttons
+                            const dropdownButtons = form.querySelectorAll('[id^="btn-"]');
                             dropdownButtons.forEach(btn => {
                                 btn.disabled = !enable;
                                 if (!enable) {
@@ -374,6 +453,19 @@
                                     btn.style.opacity = '1';
                                 }
                             });
+
+                            // Toggle pendeta buttons (add/remove)
+                            const pendetaButtons = form.querySelectorAll('#add-pendeta, .remove-pendeta');
+                            pendetaButtons.forEach(btn => {
+                                btn.disabled = !enable;
+                                btn.style.display = enable ? 'inline-block' : 'none';
+                            });
+
+                            // Toggle pendeta help text
+                            const pendetaHelpText = document.getElementById('pendeta-help-text');
+                            if (pendetaHelpText) {
+                                pendetaHelpText.style.display = enable ? 'block' : 'none';
+                            }
 
                             if (enable) {
                                 btnEdit.style.display = 'none';
@@ -402,6 +494,10 @@
                         document.addEventListener('DOMContentLoaded', function() {
                             toggleFormState(false);
                         });
+
+                        // Langsung hide help text saat script load
+                        const helpText = document.getElementById('pendeta-help-text');
+                        if (helpText) helpText.style.display = 'none';
 
                         // Handle Dropdown Kota
                         document.addEventListener("DOMContentLoaded", function() {
@@ -531,8 +627,47 @@
                                 });
                             });
                         }
-                    </script>
 
+                        // ============ Multiple Pendeta Input ============
+                        function clonePendetaGroup() {
+                            const wrapper = document.getElementById('pendeta-wrapper');
+                            const base = wrapper.querySelector('.pendeta-group');
+                            const clone = base.cloneNode(true);
+
+                            // Reset input value
+                            const input = clone.querySelector('input[name="nama_pendeta[]"]');
+                            if (input) {
+                                input.value = '';
+                                input.classList.remove('is-invalid');
+                            }
+
+                            // Enable remove button
+                            const removeBtn = clone.querySelector('.remove-pendeta');
+                            if (removeBtn) removeBtn.disabled = false;
+
+                            // Remove error message if exists
+                            const errorDiv = clone.querySelector('.invalid-feedback');
+                            if (errorDiv) errorDiv.remove();
+
+                            wrapper.appendChild(clone);
+                        }
+
+                        // Bind add button
+                        const addPendetaBtn = document.getElementById('add-pendeta');
+                        if (addPendetaBtn) {
+                            addPendetaBtn.addEventListener('click', clonePendetaGroup);
+                        }
+
+                        // Delegated remove button
+                        document.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('remove-pendeta')) {
+                                const groups = document.querySelectorAll('.pendeta-group');
+                                if (groups.length > 1) {
+                                    e.target.closest('.pendeta-group').remove();
+                                }
+                            }
+                        });
+                    </script>
                 @else
                     <div class="alert alert-warning">
                         <i class="bi bi-exclamation-triangle me-2"></i>

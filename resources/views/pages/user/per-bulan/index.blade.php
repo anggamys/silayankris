@@ -116,15 +116,10 @@
 
                                     {{-- AKSI --}}
                                     <td>
-                                        @if ($isIncomplete && $item->status !== 'ditolak')
+                                        @if ($isIncomplete || $item->status === 'ditolak')
                                             <a href="{{ route('user.perbulan.edit', $item) }}"
                                                 class="btn btn-sm btn-warning text-white">
                                                 <i class="bi bi-pencil"></i> Lengkapi
-                                            </a>
-                                        @elseif ($item->status === 'ditolak')
-                                            <a href="{{ route('user.perbulan.show', $item) }}"
-                                                class="btn btn-sm btn-primary">
-                                                <i class="bi bi-eye"></i> Buka
                                             </a>
                                         @else
                                             <a href="{{ route('user.perbulan.show', $item) }}"
@@ -193,8 +188,8 @@
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label">NIP</label>
-                                    <input type="text" class="form-control" value="{{ $guru->nip }}" readonly>
+                                    <label class="form-label">NIK</label>
+                                    <input type="text" class="form-control" value="{{ $guru->nik }}" readonly>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -260,22 +255,30 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Daftar Gaji (PDF)</label>
-                                <input type="file" name="daftar_gaji_path" class="form-control" accept=".pdf">
+                                <input type="file" name="daftar_gaji_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Daftar Hadir (PDF)</label>
-                                <input type="file" name="daftar_hadir_path" class="form-control" accept=".pdf">
+                                <input type="file" name="daftar_hadir_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Rekening Bank (PDF)</label>
-                                <input type="file" name="rekening_bank_path" class="form-control" accept=".pdf">
+                                <input type="file" name="rekening_bank_path" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Ceklist Berkas (PDF)</label>
-                                <input type="file" name="ceklist_berkas" class="form-control" accept=".pdf">
+                                <input type="file" name="ceklist_berkas" class="form-control" accept=".pdf"
+                                    placeholder="Pilih file PDF">
+                                <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                             </div>
                         </div>
                     </div>
@@ -284,7 +287,7 @@
                     {{-- SUBMIT --}}
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-send me-1"></i> Kirim
+                            <i class="bi bi-send me-1"></i> Simpan
                         </button>
                     </div>
 

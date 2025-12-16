@@ -20,7 +20,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.gereja.update', $gereja->id) }}" method="POST">
+            <form action="{{ route('admin.gereja.update', $gereja->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -134,14 +134,44 @@
                     </div>
                 </div>
 
-                {{-- Nama Pendeta --}}
+                {{-- Nama Pendeta atau Gembala Sidang --}}
                 <div class="mb-3">
-                    <label class="form-label">Nama Pendeta</label>
-                    <input type="text" name="nama_pendeta"
-                        class="form-control @error('nama_pendeta') is-invalid @enderror"
-                        value="{{ old('nama_pendeta', $gereja->nama_pendeta) }}" placeholder="Masukkan nama pendeta">
+                    <label class="form-label">Nama Pendeta atau Gembala Sidang</label>
+                    <div id="pendeta-wrapper">
+                        @php
+                            $oldPendetas = old('nama_pendeta', $gereja->nama_pendeta ?? []);
+                            if (!is_array($oldPendetas)) {
+                                $oldPendetas = $oldPendetas ? [$oldPendetas] : [''];
+                            }
+                            if (empty($oldPendetas)) {
+                                $oldPendetas = [''];
+                            }
+                        @endphp
+
+                        @foreach ($oldPendetas as $idx => $nama)
+                            <div class="mb-2 pendeta-group d-flex gap-2 align-items-center">
+                                <input type="text" name="nama_pendeta[]"
+                                    class="form-control @error('nama_pendeta.' . $idx) is-invalid @enderror"
+                                    value="{{ $nama }}" placeholder="Masukkan nama pendeta atau gembala sidang">
+                                <button type="button" class="btn btn-danger remove-pendeta"
+                                    {{ $idx === 0 ? 'disabled' : '' }}>
+                                    &times;
+                                </button>
+                                @error('nama_pendeta.' . $idx)
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <small class="text-muted mb-2" style="display: block;">Untuk menambah pendeta atau
+                        gembala sidang, silakan klik tombol <strong>"Tambah"</strong> di bawah</small>
+                    <button type="button" id="add-pendeta" class="btn btn-outline-secondary rounded px-3 py-1">
+                        <i class="bi bi-plus-lg"></i> Tambah
+                    </button>
+
                     @error('nama_pendeta')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -159,6 +189,31 @@
                     @enderror
                 </div>
 
+                {{-- Sertifikat Sekolah Minggu --}}
+                <div class="mb-3">
+                    <label class="form-label">Sertifikat Sekolah Minggu (File)</label>
+
+                    <input type="file" name="sertifikat_sekolah_minggu_path"
+                        class="form-control @error('sertifikat_sekolah_minggu_path') is-invalid @enderror" accept=".pdf">
+
+                    <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                        @if ($gereja->sertifikat_sekolah_minggu_path)
+                            <a href="{{ route('gdrive.preview', ['path' => $gereja->sertifikat_sekolah_minggu_path]) }}"
+                                target="_blank" class="text-primary text-decoration-underline">
+                                Lihat File Lama
+                            </a>
+                            <span class="text-muted">
+                                {{ basename($gereja->sertifikat_sekolah_minggu_path) }}
+                            </span>
+                        @else
+                            <span class="text-muted">Belum ada file</span>
+                        @endif
+                    </div>
+                    @error('sertifikat_sekolah_minggu_path')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 {{-- JSON Fields --}}
                 <h5 class="mt-4 fw-bold">Data Jemaat</h5>
                 <div class="row">
@@ -168,7 +223,8 @@
 
                         <div class="input-group mb-1">
                             <input type="number" name="jumlah_umat[laki_laki]" class="form-control"
-                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_umat.laki_laki', $gereja->jumlah_umat['laki_laki'] ?? 0) }}"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_umat.laki_laki', $gereja->jumlah_umat['laki_laki'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
@@ -181,7 +237,8 @@
 
                         <div class="input-group">
                             <input type="number" name="jumlah_umat[perempuan]" class="form-control"
-                                placeholder="Jumlah perempuan" value="{{ old('jumlah_umat.perempuan', $gereja->jumlah_umat['perempuan'] ?? 0) }}"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_umat.perempuan', $gereja->jumlah_umat['perempuan'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
@@ -199,7 +256,8 @@
 
                         <div class="input-group mb-1">
                             <input type="number" name="jumlah_majelis[laki_laki]" class="form-control"
-                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_majelis.laki_laki', $gereja->jumlah_majelis['laki_laki'] ?? 0) }}"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_majelis.laki_laki', $gereja->jumlah_majelis['laki_laki'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
@@ -212,7 +270,8 @@
 
                         <div class="input-group">
                             <input type="number" name="jumlah_majelis[perempuan]" class="form-control"
-                                placeholder="Jumlah perempuan" value="{{ old('jumlah_majelis.perempuan', $gereja->jumlah_majelis['perempuan'] ?? 0) }}"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_majelis.perempuan', $gereja->jumlah_majelis['perempuan'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
@@ -230,7 +289,8 @@
 
                         <div class="input-group mb-1">
                             <input type="number" name="jumlah_pemuda[laki_laki]" class="form-control"
-                                placeholder="Jumlah laki-laki" value="{{ old('jumlah_pemuda.laki_laki', $gereja->jumlah_pemuda['laki_laki'] ?? 0) }}"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_pemuda.laki_laki', $gereja->jumlah_pemuda['laki_laki'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
@@ -243,7 +303,8 @@
 
                         <div class="input-group">
                             <input type="number" name="jumlah_pemuda[perempuan]" class="form-control"
-                                placeholder="Jumlah perempuan" value="{{ old('jumlah_pemuda.perempuan', $gereja->jumlah_pemuda['perempuan'] ?? 0) }}"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_pemuda.perempuan', $gereja->jumlah_pemuda['perempuan'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
@@ -262,7 +323,8 @@
                         <div class="input-group mb-1">
                             <input type="number" name="jumlah_guru_sekolah_minggu[laki_laki]" class="form-control"
                                 placeholder="Jumlah laki-laki"
-                                value="{{ old('jumlah_guru_sekolah_minggu.laki_laki', $gereja->jumlah_guru_sekolah_minggu['laki_laki'] ?? 0) }}" min="0">
+                                value="{{ old('jumlah_guru_sekolah_minggu.laki_laki', $gereja->jumlah_guru_sekolah_minggu['laki_laki'] ?? 0) }}"
+                                min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Laki-laki
@@ -275,7 +337,8 @@
                         <div class="input-group">
                             <input type="number" name="jumlah_guru_sekolah_minggu[perempuan]" class="form-control"
                                 placeholder="Jumlah perempuan"
-                                value="{{ old('jumlah_guru_sekolah_minggu.perempuan', $gereja->jumlah_guru_sekolah_minggu['perempuan'] ?? 0) }}" min="0">
+                                value="{{ old('jumlah_guru_sekolah_minggu.perempuan', $gereja->jumlah_guru_sekolah_minggu['perempuan'] ?? 0) }}"
+                                min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Perempuan
@@ -293,7 +356,8 @@
                         <div class="input-group mb-1">
                             <input type="number" name="jumlah_murid_sekolah_minggu[laki_laki]" class="form-control"
                                 placeholder="Jumlah laki-laki"
-                                value="{{ old('jumlah_murid_sekolah_minggu.laki_laki', $gereja->jumlah_murid_sekolah_minggu['laki_laki'] ?? 0) }}" min="0">
+                                value="{{ old('jumlah_murid_sekolah_minggu.laki_laki', $gereja->jumlah_murid_sekolah_minggu['laki_laki'] ?? 0) }}"
+                                min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Laki-laki
@@ -306,7 +370,8 @@
                         <div class="input-group">
                             <input type="number" name="jumlah_murid_sekolah_minggu[perempuan]" class="form-control"
                                 placeholder="Jumlah perempuan"
-                                value="{{ old('jumlah_murid_sekolah_minggu.perempuan', $gereja->jumlah_murid_sekolah_minggu['perempuan'] ?? 0) }}" min="0">
+                                value="{{ old('jumlah_murid_sekolah_minggu.perempuan', $gereja->jumlah_murid_sekolah_minggu['perempuan'] ?? 0) }}"
+                                min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Perempuan
@@ -454,6 +519,46 @@
                         });
                     });
                 }
+
+                // ============ Multiple Pendeta Input ============
+                function clonePendetaGroup() {
+                    const wrapper = document.getElementById('pendeta-wrapper');
+                    const base = wrapper.querySelector('.pendeta-group');
+                    const clone = base.cloneNode(true);
+
+                    // Reset input value
+                    const input = clone.querySelector('input[name="nama_pendeta[]"]');
+                    if (input) {
+                        input.value = '';
+                        input.classList.remove('is-invalid');
+                    }
+
+                    // Enable remove button
+                    const removeBtn = clone.querySelector('.remove-pendeta');
+                    if (removeBtn) removeBtn.disabled = false;
+
+                    // Remove error message if exists
+                    const errorDiv = clone.querySelector('.invalid-feedback');
+                    if (errorDiv) errorDiv.remove();
+
+                    wrapper.appendChild(clone);
+                }
+
+                // Bind add button
+                const addPendetaBtn = document.getElementById('add-pendeta');
+                if (addPendetaBtn) {
+                    addPendetaBtn.addEventListener('click', clonePendetaGroup);
+                }
+
+                // Delegated remove button
+                document.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-pendeta')) {
+                        const groups = document.querySelectorAll('.pendeta-group');
+                        if (groups.length > 1) {
+                            e.target.closest('.pendeta-group').remove();
+                        }
+                    }
+                });
             </script>
 
         </div>

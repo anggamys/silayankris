@@ -41,6 +41,7 @@ class PerBulan extends Model
      * Casting tipe data (jika diperlukan).
      */
     protected $casts = [
+        'guru_id' => 'integer',
         'status' => 'string',
     ];
 }

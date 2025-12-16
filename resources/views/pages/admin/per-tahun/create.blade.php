@@ -28,7 +28,7 @@
                         style="display: flex; flex-direction: row; justify-content: space-between;">
                         @php
                             $guruOptions = $gurus
-                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nip ?? 'Guru #' . $g->id)])
+                                ->mapWithKeys(fn($g) => [$g->id => $g->user->name ?? ($g->nik ?? 'Guru #' . $g->id)])
                                 ->toArray();
                         @endphp
                         <x-select-input id="guru" name="guru_id" label="Guru" :options="$guruOptions" :selected="old('guru_id')"
@@ -58,7 +58,7 @@
                     $fields = [
                         'biodata_path' => 'Biodata (File)',
                         'sertifikat_pendidik_path' => 'Sertifikat Pendidik (File)',
-                        'sk_dirjen_kelulusan_path' => 'Surat Keterangan Dirjen atau Kelulusan (File)',
+                        'sk_dirjen_kelulusan_path' => 'Surat Keputusan Dirjen atau Kelulusan (File)',
                         'nrg_path' => 'NRG - Nomor Registrasi Guru (File)',
                         'nuptk_path' => 'NUPTK - Nomor Unik Pendidik dan Tenaga Kependidikan (File)',
                         'npwp_path' => 'NPWP - Nomor Pokok Wajib Pajak (File)',
@@ -66,7 +66,7 @@
                         'ijazah_sd_path' => 'Ijazah SD (File)',
                         'ijazah_smp_path' => 'Ijazah SMP (File)',
                         'ijazah_sma_pga_path' => 'Ijazah SMA atau PGA (File)',
-                        'sk_pns_gty_path' => 'Surat Keterangan PNS atau GTY (File)',
+                        'sk_pns_gty_path' => 'Surat Keputusan PNS atau GTY (File)',
                         'ijazah_s1_path' => 'Ijazah S1 (File)',
                         'transkrip_nilai_s1_path' => 'Transkrip Nilai S1 (File)',
                     ];
@@ -76,10 +76,10 @@
                     <div class="mb-3">
                         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
                         <input type="file" name="{{ $name }}" id="{{ $name }}" class="form-control"
-                            accept=".pdf">
-                        <hint class="form-text">Format file harus .pdf</hint>
+                            accept=".pdf" placeholder="Pilih file PDF">
+                        <small class="form-text text-muted">Format: .pdf | Maks: 5MB</small>
                         @error($name)
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                 @endforeach
