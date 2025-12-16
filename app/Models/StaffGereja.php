@@ -28,7 +28,7 @@ class StaffGereja extends Model
      * Casting untuk tipe data tertentu.
      */
     protected $casts = [
-        'user_id' => 'integer',
+        'user_id' => 'string',
         'gereja_id' => 'integer',
     ];
 
