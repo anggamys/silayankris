@@ -25,6 +25,14 @@ class StaffGereja extends Model
     ];
 
     /**
+     * Casting untuk tipe data tertentu.
+     */
+    protected $casts = [
+        'user_id' => 'integer',
+        'gereja_id' => 'integer',
+    ];
+
+    /**
      * Relasi: setiap staff gereja terhubung dengan satu user.
      */
     public function user()

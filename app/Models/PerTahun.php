@@ -50,6 +50,7 @@ class PerTahun extends Model
      * Casting untuk kolom tertentu.
      */
     protected $casts = [
+        'guru_id' => 'integer',
         'status' => 'string',
     ];
 }

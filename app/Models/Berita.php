@@ -21,6 +21,10 @@ class Berita extends Model
         'status',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+    ];
+
     /**
      * Boot method untuk generate slug otomatis.
      */
@@ -52,8 +56,8 @@ class Berita extends Model
         // Cek apakah slug sudah ada
         while (
             static::where('slug', $slug)
-                ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
-                ->exists()
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()
         ) {
             $slug = "{$original}-{$counter}";
             $counter++;
