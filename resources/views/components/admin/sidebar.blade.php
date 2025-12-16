@@ -109,17 +109,3 @@
     </div>
 
 </aside>
-
-<style>
-    /* Enable vertical scrolling when menu items exceed viewport height */
-    #layout-menu {
-        max-height: 100vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    /* If template constrains inner container, ensure it can scroll too */
-    #layout-menu>.menu-inner {
-        overflow-y: auto;
-    }
-</style>
