@@ -66,25 +66,6 @@
                     <div>Data Gereja</div>
                 </a>
             </li>
-            <li class="menu-item {{ request()->is(ltrim('admin/gereja*', '/')) ? 'active' : '' }}">
-                <a href="{{ route('admin.gereja.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-hospital"></i>
-                    <div>Data Gereja</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is(ltrim('admin/gereja*', '/')) ? 'active' : '' }}">
-                <a href="{{ route('admin.gereja.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-hospital"></i>
-                    <div>Data Gereja</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is(ltrim('admin/gereja*', '/')) ? 'active' : '' }}">
-                <a href="{{ route('admin.gereja.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-hospital"></i>
-                    <div>Data Gereja</div>
-                </a>
-            </li>
-
             <li
                 class="menu-item {{ request()->is('admin/per-bulan*') || request()->is('admin/per-semester*') || request()->is('admin/per-tahun*') ? 'open' : '' }}">
                 <a href="" class="menu-link menu-toggle text-decoration-none">
