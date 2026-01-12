@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
-  
+
   public function run(): void
   {
     $users = [
@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         'role' => 'admin',
         'status' => 'aktif',
       ],
-      [ 
+      [
         'name' => 'Sang Guru',
         'email' => 'guru@gmail.com',
         'password' => bcrypt('Guru123'),
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
     // make guru in user 
     Guru::create([
       'user_id' => User::where('email', 'guru@gmail.com')->first()->id,
-      'nip' => '1234567890',
+      'nik' => '1234567890',
       'tempat_lahir' => 'Jakarta',
       'tanggal_lahir' => '1980-01-01',
     ]);
@@ -51,7 +51,6 @@ class UserSeeder extends Seeder
     // make gereja in user
     StaffGereja::create([
       'user_id' => User::where('email', 'gereja@gmail.com')->first()->id,
-      'gembala_sidang' => 'Pendeta John Doe',
       'gereja_id' => 1, // Sesuaikan dengan ID gereja yang ada
     ]);
   }

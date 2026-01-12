@@ -26,9 +26,9 @@
 
                 {{-- Nama Gereja --}}
                 <div class="mb-3">
-                    <label class="form-label">Nama Gereja</label>
+                    <label class="form-label">Nama Gereja <span class="text-danger">*</span></label>
                     <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                        value="{{ old('nama', $gereja->nama) }}" placeholder="Masukkan nama gereja">
+                        value="{{ old('nama', $gereja->nama) }}" placeholder="Masukkan nama gereja" required>
                     @error('nama')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
