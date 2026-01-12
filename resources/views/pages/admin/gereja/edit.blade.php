@@ -189,27 +189,27 @@
                     @enderror
                 </div>
 
-                {{-- Sertifikat Sekolah Minggu --}}
+                {{-- piagam Sekolah Minggu --}}
                 <div class="mb-3">
-                    <label class="form-label">Sertifikat Sekolah Minggu (File)</label>
+                    <label class="form-label">Piagam Sekolah Minggu (File)</label>
 
-                    <input type="file" name="sertifikat_sekolah_minggu_path"
-                        class="form-control @error('sertifikat_sekolah_minggu_path') is-invalid @enderror" accept=".pdf">
+                    <input type="file" name="piagam_sekolah_minggu_path"
+                        class="form-control @error('piagam_sekolah_minggu_path') is-invalid @enderror" accept=".pdf">
 
                     <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                        @if ($gereja->sertifikat_sekolah_minggu_path)
-                            <a href="{{ route('gdrive.preview', ['path' => $gereja->sertifikat_sekolah_minggu_path]) }}"
+                        @if ($gereja->piagam_sekolah_minggu_path)
+                            <a href="{{ route('gdrive.preview', ['path' => $gereja->piagam_sekolah_minggu_path]) }}"
                                 target="_blank" class="text-primary text-decoration-underline">
                                 Lihat File Lama
                             </a>
                             <span class="text-muted">
-                                {{ basename($gereja->sertifikat_sekolah_minggu_path) }}
+                                {{ basename($gereja->piagam_sekolah_minggu_path) }}
                             </span>
                         @else
                             <span class="text-muted">Belum ada file</span>
                         @endif
                     </div>
-                    @error('sertifikat_sekolah_minggu_path')
+                    @error('piagam_sekolah_minggu_path')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
@@ -250,35 +250,134 @@
                         @enderror
                     </div>
 
-                    {{-- Jumlah Majelis --}}
+                    {{-- Jumlah Majelis (Pendeta)--}}
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Jumlah Majelis</label>
+                        <label class="form-label">Jumlah Majelis (Pendeta)</label>
 
                         <div class="input-group mb-1">
-                            <input type="number" name="jumlah_majelis[laki_laki]" class="form-control"
+                            <input type="number" name="jumlah_majelis_pendeta[laki_laki]" class="form-control"
                                 placeholder="Jumlah laki-laki"
-                                value="{{ old('jumlah_majelis.laki_laki', $gereja->jumlah_majelis['laki_laki'] ?? 0) }}"
+                                value="{{ old('jumlah_majelis_pendeta.laki_laki', $gereja->jumlah_majelis_pendeta['laki_laki'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Laki-laki
                             </span>
                         </div>
-                        @error('jumlah_majelis.laki_laki')
+                        @error('jumlah_majelis_pendeta.laki_laki')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
 
                         <div class="input-group">
-                            <input type="number" name="jumlah_majelis[perempuan]" class="form-control"
+                            <input type="number" name="jumlah_majelis_pendeta[perempuan]" class="form-control"
                                 placeholder="Jumlah perempuan"
-                                value="{{ old('jumlah_majelis.perempuan', $gereja->jumlah_majelis['perempuan'] ?? 0) }}"
+                                value="{{ old('jumlah_majelis_pendeta.perempuan', $gereja->jumlah_majelis_pendeta['perempuan'] ?? 0) }}"
                                 min="0">
                             <span class="input-group-text d-flex align-items-center justify-content-center"
                                 style="width: 30%">
                                 Perempuan
                             </span>
                         </div>
-                        @error('jumlah_majelis.perempuan')
+                        @error('jumlah_majelis_pendeta.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Majelis (Penetua)--}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Majelis (Penetua)</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_majelis_penetua[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_majelis_penetua.laki_laki', $gereja->jumlah_majelis_penetua['laki_laki'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_majelis_penetua.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_majelis_penetua[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_majelis_penetua.perempuan', $gereja->jumlah_majelis_penetua['perempuan'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span> 
+                        </div>  
+                        @error('jumlah_majelis_penetua.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Majelis (Diaken)--}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Majelis (Diaken)</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_majelis_diaken[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_majelis_diaken.laki_laki', $gereja->jumlah_majelis_diaken['laki_laki'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span> 
+                        </div>
+                        @error('jumlah_majelis_diaken.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+
+                        <div class="input-group">
+                            <input type="number" name="jumlah_majelis_diaken[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_majelis_diaken.perempuan', $gereja->jumlah_majelis_diaken['perempuan'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span>
+                        </div>
+                        @error('jumlah_majelis_diaken.perempuan')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah Majelis (Tua-Tua Jemaat) --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Jumlah Majelis (Tua-Tua Jemaat)</label>
+
+                        <div class="input-group mb-1">
+                            <input type="number" name="jumlah_majelis_tua_jemaat[laki_laki]" class="form-control"
+                                placeholder="Jumlah laki-laki"
+                                value="{{ old('jumlah_majelis_tua_jemaat.laki_laki', $gereja->jumlah_majelis_tua_jemaat['laki_laki'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Laki-laki
+                            </span>
+                        </div>
+                        @error('jumlah_majelis_tua_jemaat.laki_laki')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                        
+                        <div class="input-group">
+                            <input type="number" name="jumlah_majelis_tua_jemaat[perempuan]" class="form-control"
+                                placeholder="Jumlah perempuan"
+                                value="{{ old('jumlah_majelis_tua_jemaat.perempuan', $gereja->jumlah_majelis_tua_jemaat['perempuan'] ?? 0) }}"
+                                min="0">
+                            <span class="input-group-text d-flex align-items-center justify-content-center"
+                                style="width: 30%">
+                                Perempuan
+                            </span> 
+                        </div>
+                        @error('jumlah_majelis_tua_jemaat.perempuan')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
