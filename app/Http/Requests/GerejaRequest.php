@@ -22,8 +22,8 @@ class GerejaRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         // Remove file path field if it's not an actual file upload (prevent string values from passing through)
-        if (!$this->hasFile('sertifikat_sekolah_minggu_path') && $this->has('sertifikat_sekolah_minggu_path')) {
-            $this->request->remove('sertifikat_sekolah_minggu_path');
+        if (!$this->hasFile('piagam_sekolah_minggu_path') && $this->has('piagam_sekolah_minggu_path')) {
+            $this->request->remove('piagam_sekolah_minggu_path');
         }
     }
 
@@ -46,16 +46,28 @@ class GerejaRequest extends FormRequest
             'nama_pendeta' => ['nullable', 'array'],
             'nama_pendeta.*' => ['nullable', 'string', 'max:255'],
             'status_gereja' => ['nullable', 'in:permanen,semi-permanen,tidak-permanen'],
-            'sertifikat_sekolah_minggu_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
+            'piagam_sekolah_minggu_path' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
 
             // Field JSON
             'jumlah_umat' => ['nullable', 'array'],
             'jumlah_umat.laki_laki' => ['nullable', 'integer', 'min:0'],
             'jumlah_umat.perempuan' => ['nullable', 'integer', 'min:0'],
 
-            'jumlah_majelis' => ['nullable', 'array'],
-            'jumlah_majelis.laki_laki' => ['nullable', 'integer', 'min:0'],
-            'jumlah_majelis.perempuan' => ['nullable', 'integer', 'min:0'],
+            'jumlah_majelis_pendeta' => ['nullable', 'array'],
+            'jumlah_majelis_pendeta.laki_laki' => ['nullable', 'integer', 'min:0'],
+            'jumlah_majelis_pendeta.perempuan' => ['nullable', 'integer', 'min:0'],
+
+            'jumalah_majelis_penetua' => ['nullable', 'array'],
+            'jumalah_majelis_penetua.laki_laki' => ['nullable', 'integer', 'min:0'],
+            'jumalah_majelis_penetua.perempuan' => ['nullable', 'integer', 'min:0'],
+
+            'jumlah_majelis_diaken' => ['nullable', 'array'],
+            'jumlah_majelis_diaken.laki_laki' => ['nullable', 'integer', 'min:0'],
+            'jumlah_majelis_diaken.perempuan' => ['nullable', 'integer', 'min:0'],
+
+            'jumlah_majelis_tua_jamaat' => ['nullable', 'array'],
+            'jumlah_majelis_tua_jamaat.laki_laki' => ['nullable', 'integer', 'min:0'],
+            'jumlah_majelis_tua_jamaat.perempuan' => ['nullable', 'integer', 'min:0'],
 
             'jumlah_pemuda' => ['nullable', 'array'],
             'jumlah_pemuda.laki_laki' => ['nullable', 'integer', 'min:0'],

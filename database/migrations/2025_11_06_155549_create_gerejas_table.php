@@ -28,10 +28,13 @@ return new class extends Migration
             $table->enum('status_gereja', ['permanen', 'semi-permanen', 'tidak-permanen'])
                   ->default('permanen')
                   ->nullable();
-            $table->string('sertifikat_sekolah_minggu_path')->nullable();
+            $table->string('piagam_sekolah_minggu_path')->nullable();
 
             $table->json('jumlah_umat')->nullable();
-            $table->json('jumlah_majelis')->nullable();
+            $table->json('jumlah_majelis_pendeta')->nullable();
+            $table->json('jumalah_majelis_penetua')->nullable();
+            $table->json('jumlah_majelis_diaken')->nullable();
+            $table->json('jumlah_majelis_tua_jamaat')->nullable();
             $table->json('jumlah_guru_sekolah_minggu')->nullable();
             $table->json('jumlah_murid_sekolah_minggu')->nullable();
             $table->json('jumlah_pemuda')->nullable();

@@ -34,11 +34,11 @@ class GerejaService
     public function store(array $data): Gereja
     {
         // Handle file upload
-        if (isset($data['sertifikat_sekolah_minggu_path']) && $data['sertifikat_sekolah_minggu_path'] instanceof UploadedFile) {
-            $data['sertifikat_sekolah_minggu_path'] = FileUploads::upload(
-                $data['sertifikat_sekolah_minggu_path'],
+        if (isset($data['piagam_sekolah_minggu_path']) && $data['piagam_sekolah_minggu_path'] instanceof UploadedFile) {
+            $data['piagam_sekolah_minggu_path'] = FileUploads::upload(
+                $data['piagam_sekolah_minggu_path'],
                 'gerejas',
-                'sertifikat_sekolah_minggu',
+                'piagam_sekolah_minggu',
                 $data['nama']
             );
         }
@@ -64,22 +64,22 @@ class GerejaService
     public function update(Gereja $gereja, array $data): Gereja
     {
         // Handle file upload and deletion
-        if (isset($data['sertifikat_sekolah_minggu_path']) && $data['sertifikat_sekolah_minggu_path'] instanceof UploadedFile) {
+        if (isset($data['piagam_sekolah_minggu_path']) && $data['piagam_sekolah_minggu_path'] instanceof UploadedFile) {
             // Delete old file if exists
-            if ($gereja->sertifikat_sekolah_minggu_path) {
-                FileUploads::delete($gereja->sertifikat_sekolah_minggu_path);
+            if ($gereja->piagam_sekolah_minggu_path) {
+                FileUploads::delete($gereja->piagam_sekolah_minggu_path);
             }
 
             // Upload new file
-            $data['sertifikat_sekolah_minggu_path'] = FileUploads::upload(
-                $data['sertifikat_sekolah_minggu_path'],
+            $data['piagam_sekolah_minggu_path'] = FileUploads::upload(
+                $data['piagam_sekolah_minggu_path'],
                 'gerejas',
-                'sertifikat_sekolah_minggu',
+                'piagam_sekolah_minggu',
                 $data['nama']
             );
         } else {
             // Don't update file path if no new file was uploaded
-            unset($data['sertifikat_sekolah_minggu_path']);
+            unset($data['piagam_sekolah_minggu_path']);
         }
 
         // Filter empty pendeta names
@@ -133,7 +133,10 @@ class GerejaService
     {
         $jsonFields = [
             'jumlah_umat',
-            'jumlah_majelis',
+            'jumlah_majelis_pendeta',
+            'jumalah_majelis_penetua',
+            'jumlah_majelis_diaken',
+            'jumlah_majelis_tua_jamaat',
             'jumlah_pemuda',
             'jumlah_guru_sekolah_minggu',
             'jumlah_murid_sekolah_minggu',

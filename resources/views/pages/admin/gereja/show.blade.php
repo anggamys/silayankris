@@ -106,15 +106,15 @@
                 <input type="text" class="form-control" value="{{ ucfirst($gereja->status_gereja) }}" readonly>
             </div>
 
-            {{-- Sertifikat Sekolah Minggu --}}
+            {{-- Piagam Sekolah Minggu --}}
             <div class="mb-3">
-                <label class="form-label">Sertifikat Sekolah Minggu (File)</label>
+                <label class="form-label">Piagam Sekolah Minggu (File)</label>
 
-                <input type="text" class="form-control mb-2" value="{{ basename($gereja->sertifikat_sekolah_minggu_path) ?? 'Belum ada file' }}" readonly>
+                <input type="text" class="form-control mb-2" value="{{ basename($gereja->piagam_sekolah_minggu_path) ?? 'Belum ada file' }}" readonly>
 
                 <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
-                    @if ($gereja->sertifikat_sekolah_minggu_path)
-                        <a href="{{ route('gdrive.preview', ['path' => $gereja->sertifikat_sekolah_minggu_path]) }}" target="_blank"
+                    @if ($gereja->piagam_sekolah_minggu_path)
+                        <a href="{{ route('gdrive.preview', ['path' => $gereja->piagam_sekolah_minggu_path]) }}" target="_blank"
                             class="text-primary text-decoration-underline">
                             Lihat File
                         </a>
@@ -136,13 +136,40 @@
                         value="Perempuan: {{ $gereja->jumlah_umat['perempuan'] ?? 0 }}" readonly>
                 </div>
 
-                {{-- Jumlah Majelis --}}
+                {{-- Jumlah Majelis (Pendeta)--}}
                 <div class="col-md-4 mb-3">
-                    <label class="form-label">Jumlah Majelis</label>
+                    <label class="form-label">Jumlah Majelis (Pendeta)</label>
                     <input type="text" class="form-control mb-2"
-                        value="Laki-laki: {{ $gereja->jumlah_majelis['laki_laki'] ?? 0 }}" readonly>
+                        value="Laki-laki: {{ $gereja->jumlah_majelis_pendeta['laki_laki'] ?? 0 }}" readonly>
                     <input type="text" class="form-control"
-                        value="Perempuan: {{ $gereja->jumlah_majelis['perempuan'] ?? 0 }}" readonly>
+                        value="Perempuan: {{ $gereja->jumlah_majelis_pendeta['perempuan'] ?? 0 }}" readonly>
+                </div>
+
+                {{-- Jumlah Majelis (Penetua)--}}
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Jumlah Majelis (Penetua)</label>
+                    <input type="text" class="form-control mb-2"
+                        value="Laki-laki: {{ $gereja->jumlah_majelis_penetua['laki_laki'] ?? 0 }}" readonly>
+                    <input type="text" class="form-control"
+                        value="Perempuan: {{ $gereja->jumlah_majelis_penetua['perempuan'] ?? 0 }}" readonly>
+                </div>
+
+                {{-- Jumlah Majelis (Diaken)--}}
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Jumlah Majelis (Diaken)</label>
+                    <input type="text" class="form-control mb-2"
+                        value="Laki-laki: {{ $gereja->jumlah_majelis_diaken['laki_laki'] ?? 0 }}" readonly>
+                    <input type="text" class="form-control"
+                        value="Perempuan: {{ $gereja->jumlah_majelis_diaken['perempuan'] ?? 0 }}" readonly>
+                </div>
+
+                {{-- Jumlah Majelis (Tua-Tua Majelis) --}}
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Jumlah Majelis (Tua-Tua Majelis)</label>
+                    <input type="text" class="form-control mb-2"
+                        value="Laki-laki: {{ $gereja->jumlah_majelis_tua_jamaat['laki_laki'] ?? 0 }}" readonly>
+                    <input type="text" class="form-control"
+                        value="Perempuan: {{ $gereja->jumlah_majelis_tua_jamaat['perempuan'] ?? 0 }}" readonly>
                 </div>
 
                 {{-- Jumlah Pemuda --}}
