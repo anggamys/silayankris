@@ -66,7 +66,7 @@
 			@guest
 				<p class="text-center">
 					<span>Tidak dapat masuk? </span>
-					<a href="/#contact" class="text-primary ">
+					<a href='https://wa.me/6287812329077' class="text-primary ">
 						<span>Hubungi Kami</span>
 					</a>
 				</p>

@@ -162,7 +162,7 @@
             <div class="col-lg-3 col-md-4 mb-4">
                 <h5 class="footer-title">Bantuan & Dukungan</h5>
                 <ul class="footer-links">
-                    <li><a href="#" target="_blank">Hubungi Whatsapp</a></li>
+                    <li><a href="https://wa.me/6287812329077" target="_blank">Hubungi Whatsapp</a></li>
                 </ul>
             </div>
 
