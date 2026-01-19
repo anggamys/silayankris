@@ -53,7 +53,7 @@ class LoginRequest extends FormRequest
         $user = Auth::user();
 
         $message = match ($user->status) {
-            'nonaktif' => 'Akun Anda sedang tidak aktif.',
+            'nonaktif' => 'Mohon maaf, akun anda tidak aktif.',
             'aktif' => null,
             default => null,
         };
